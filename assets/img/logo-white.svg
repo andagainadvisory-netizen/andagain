@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1379 340.77">
+  <defs>
+    <style>
+      .cls-1 {
+        letter-spacing: 0em;
+      }
+
+      .cls-2 {
+        font-size: 135.76px;
+      }
+
+      .cls-2, .cls-3, .cls-4 {
+        fill: #fff;
+      }
+
+      .cls-5 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-6 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-7 {
+        letter-spacing: 0em;
+      }
+
+      .cls-8 {
+        font-family: TASAExplorer-ExtraBold, 'TASA Explorer';
+        font-weight: 700;
+      }
+
+      .cls-9, .cls-4 {
+        font-family: TASAExplorer-Regular, 'TASA Explorer';
+      }
+
+      .cls-4 {
+        font-size: 80.37px;
+      }
+    </style>
+  </defs>
+  <path class="cls-3" d="M479.36,159.3l-15.99-26.83-12.66-21.22-50.84-85.22h-208.92l-49.82,83.53v.04l-11.56,19.32-17.13,28.69-27.72,46.53,49.44,98.34v.04l.34.59c15.1-4.26,30.33-7.85,45.65-10.84,1.43-.3,2.87-.55,4.3-.8,14.81-2.83,29.74-5.1,44.72-6.75,44.64-4.98,89.65-4.94,134.24.13,15.44,1.73,30.8,4.13,46.07,7.13.97.17,1.94.34,2.91.55,14.98,2.95,29.87,6.5,44.64,10.63l.59,1.01,49.49-98.34-27.76-46.53ZM438.52,206l-7.72,22.95c-6.88-1.6-13.75-3.08-20.67-4.43-4.98-.97-10-1.9-15.02-2.7-65.39-11.05-132.18-11.1-197.65-.21-5.61.93-11.22,1.94-16.83,3.04-5.86,1.14-11.69,2.36-17.51,3.71l-7.76-22.99c10.17-2.49,20.38-4.64,30.63-6.58,3.75-.67,7.47-1.35,11.22-1.94L295.42,26.03l98.17,170.74c4.35.67,8.69,1.48,12.99,2.28,10.72,2.03,21.35,4.3,31.94,6.92v.04Z"/>
+  <text class="cls-2" transform="translate(595.33 152.84)"><tspan class="cls-8"><tspan x="0" y="0">AND </tspan><tspan class="cls-5" x="303.14" y="0">A</tspan><tspan x="386.77" y="0">GAIN</tspan></tspan><tspan class="cls-9"><tspan x="0" y="116.95">A</tspan><tspan class="cls-6" x="82.81" y="116.95">D</tspan><tspan class="cls-1" x="177.02" y="116.95">VISO</tspan><tspan class="cls-7" x="481.12" y="116.95">R</tspan><tspan x="560.67" y="116.95">Y</tspan></tspan></text>
+  <text class="cls-4" transform="translate(1248.46 259.13)"><tspan x="0" y="0">®</tspan></text>
+</svg>

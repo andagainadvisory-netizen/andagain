@@ -1,0 +1,2 @@
+# Netlify: force www -> apex (301). Requires andagain.ae as primary domain in Netlify domain settings.
+https://www.andagain.ae/* https://andagain.ae/:splat 301!
