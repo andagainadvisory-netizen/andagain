@@ -237,11 +237,20 @@ footer{background:var(--navy-deep);color:var(--muted);border-top:1px solid rgba(
       <a href="index.html#suite">Services</a>
       <a href="index.html#structure">Free Zone &amp; Mainland</a>
       <a href="index.html#journey">How it works</a>
+      <a href="index.html#insights">Insights</a>
       <a href="news.html">UAE Business News</a>
       <a class="on" href="become-a-partner.html">Become a Partner</a>
       <a class="btn btn-gold" href="#apply">Apply Now</a>
-      <button class="menu" aria-label="Menu">&#9776;</button>
+      <button class="menu" id="menubtn" aria-label="Menu">&#9776;</button>
     </nav>
+  </div>
+  <div class="mpanel" id="mpanel" style="display:none;background:var(--paper);border-bottom:1px solid var(--line);padding:18px 20px 24px">
+    <a href="index.html#suite" style="display:block;padding:12px 4px;font-size:16px;font-weight:600;color:var(--ink);border-bottom:1px solid var(--line)">Services</a>
+    <a href="index.html#structure" style="display:block;padding:12px 4px;font-size:16px;font-weight:600;color:var(--ink);border-bottom:1px solid var(--line)">Free Zone &amp; Mainland</a>
+    <a href="index.html#insights" style="display:block;padding:12px 4px;font-size:16px;font-weight:600;color:var(--ink);border-bottom:1px solid var(--line)">Insights</a>
+    <a href="news.html" style="display:block;padding:12px 4px;font-size:16px;font-weight:600;color:var(--ink);border-bottom:1px solid var(--line)">UAE Business News</a>
+    <a href="become-a-partner.html" style="display:block;padding:12px 4px;font-size:16px;font-weight:600;color:var(--ink);border-bottom:1px solid var(--line)">Become a Partner</a>
+    <a href="partner-referrals.html" style="display:block;padding:12px 4px;font-size:16px;font-weight:600;color:var(--ink)">Register a Referral</a>
   </div>
 </header>
 
@@ -812,6 +821,16 @@ footer{background:var(--navy-deep);color:var(--muted);border-top:1px solid rgba(
         err.style.display='block'; err.scrollIntoView({behavior:'smooth',block:'center'});
       });
   });
+})();
+</script>
+<script>
+(function(){
+  var mb=document.getElementById('menubtn'),mp=document.getElementById('mpanel');
+  if(mb&&mp){mb.addEventListener('click',function(){
+    var open=mp.style.display==='none';
+    mp.style.display=open?'block':'none';
+    mb.innerHTML=open?'&times;':'&#9776;';
+  });}
 })();
 </script>
 </body>

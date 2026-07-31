@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UAE Trade Show Calendar 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#151c2c;
+    --ink-soft:#5b6474;
+    --paper:#fdfdfb;
+    --panel:#ffffff;
+    --line:#e4e2da;
+    --gold:#b98a2f;
+    --gold-soft:#f5ecd9;
+    --teal:#2e6e6a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-size:14px;line-height:1.5;padding:36px 28px 64px}
+  .shell{max-width:1240px;margin:0 auto}
+
+  header{display:flex;flex-wrap:wrap;align-items:flex-end;gap:20px;margin-bottom:10px}
+  .eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:6px}
+  h1{font-family:'Sora',sans-serif;font-size:clamp(26px,3.4vw,38px);font-weight:700;letter-spacing:-.02em;line-height:1.1}
+  .lede{color:var(--ink-soft);max-width:560px;margin-top:8px}
+  .stats{margin-left:auto;display:flex;gap:26px;text-align:right}
+  .stat b{display:block;font-family:'Sora',sans-serif;font-size:24px;font-weight:700}
+  .stat span{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+
+  .toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:26px 0 14px;position:sticky;top:0;background:var(--paper);padding:12px 0;z-index:5;border-bottom:1px solid var(--line)}
+  .search{flex:1 1 220px;min-width:180px;position:relative}
+  .search input{width:100%;padding:9px 14px 9px 34px;border:1px solid var(--line);border-radius:9px;font:inherit;background:var(--panel);color:var(--ink);outline:none;transition:border-color .15s}
+  .search input:focus{border-color:var(--gold)}
+  .search svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:15px;height:15px;stroke:var(--ink-soft)}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:var(--panel);font:inherit;font-size:12.5px;color:var(--ink-soft);cursor:pointer;transition:all .12s;white-space:nowrap}
+  .chip:hover{border-color:var(--gold);color:var(--ink)}
+  .chip.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  .count{margin-left:auto;font-size:12px;color:var(--ink-soft);white-space:nowrap;font-variant-numeric:tabular-nums}
+
+  .tablewrap{border:1px solid var(--line);border-radius:14px;background:var(--panel);overflow:auto;box-shadow:0 1px 3px rgba(21,28,44,.05)}
+  table{width:100%;border-collapse:collapse;min-width:1020px}
+  thead th{position:sticky;top:0;background:var(--panel);text-align:left;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;padding:13px 16px;border-bottom:2px solid var(--ink);cursor:pointer;user-select:none;white-space:nowrap;z-index:2}
+  thead th:hover{color:var(--gold)}
+  thead th .arrow{display:inline-block;width:10px;color:var(--gold)}
+  tbody td{padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:#faf8f2}
+
+  .evname{font-family:'Sora',sans-serif;font-weight:600;font-size:14px;letter-spacing:-.01em}
+  .note{display:block;font-size:12px;color:var(--ink-soft);margin-top:3px;max-width:280px}
+  .sector-tag{display:inline-block;font-size:11px;font-weight:600;padding:3px 9px;border-radius:5px;background:var(--gold-soft);color:#7a5a17;white-space:nowrap}
+  .sub{display:block;font-size:12px;color:var(--ink-soft);margin-top:4px}
+  .loc b{font-weight:600}
+  .dates{white-space:nowrap;font-variant-numeric:tabular-nums;font-weight:500}
+  .rec{font-size:12.5px;color:var(--ink-soft)}
+  .pkg{font-size:12.5px;max-width:210px}
+
+  /* Signature: 12-month position strip */
+  .yearbar{display:grid;grid-template-columns:repeat(12,1fr);gap:2px;width:132px;margin-top:6px}
+  .yearbar i{height:5px;border-radius:2px;background:#eeece4}
+  .yearbar i.hit{background:var(--gold)}
+  .yearbar i.tbc{background:var(--teal);opacity:.55}
+  .legend{display:flex;gap:18px;align-items:center;margin:12px 4px 0;font-size:11.5px;color:var(--ink-soft)}
+  .legend i{display:inline-block;width:14px;height:5px;border-radius:2px;margin-right:6px;vertical-align:middle}
+  .legend .g{background:var(--gold)} .legend .t{background:var(--teal);opacity:.55}
+
+  .empty{padding:48px;text-align:center;color:var(--ink-soft)}
+  footer{margin-top:18px;font-size:12px;color:var(--ink-soft)}
+  @media (max-width:640px){body{padding:20px 12px 48px}.stats{margin-left:0}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <header>
+    <div>
+      <div class="eyebrow">ExpoReach · Market Intelligence</div>
+      <h1>UAE Trade Show Calendar 2026</h1>
+      <p class="lede">Tier-1 exhibitions across Dubai, Abu Dhabi and Sharjah, with recommended ExpoReach coverage packages. Sort any column, filter by sector, or search.</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="stTotal">–</b><span>Events</span></div>
+      <div class="stat"><b id="stSectors">–</b><span>Sectors</span></div>
+      <div class="stat"><b>3</b><span>Emirates</span></div>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <div class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input id="q" type="search" placeholder="Search events, venues, packages…" aria-label="Search events">
+    </div>
+    <div class="chips" id="chips"></div>
+    <span class="count" id="count"></span>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr>
+          <th data-k="name">Event <span class="arrow" data-a="name"></span></th>
+          <th data-k="sector">Sector <span class="arrow" data-a="sector"></span></th>
+          <th data-k="city">Location <span class="arrow" data-a="city"></span></th>
+          <th data-k="sort">Dates 2026 <span class="arrow" data-a="sort"></span></th>
+          <th data-k="rec">Cycle <span class="arrow" data-a="rec"></span></th>
+          <th data-k="pkg">Recommended package <span class="arrow" data-a="pkg"></span></th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div class="empty" id="empty" hidden>No events match — try a different search or sector.</div>
+  </div>
+
+  <div class="legend">
+    <span><i class="g"></i>Confirmed month</span>
+    <span><i class="t"></i>Date to be confirmed / outside 2026</span>
+  </div>
+  <footer>Dates as provided; entries marked TBC pending organiser confirmation. IDEX &amp; NAVDEX next run Feb 2027; Dubai Airshow last ran Nov 2025 (biennial).</footer>
+</div>
+
+<script>
+const DATA = [
+["Gulfood","Food & Beverage","General F&B","Dubai","DWTC","Jan 26–30",1,"2026-01-26","Annual","Season Pass + Booth Support","Global F&B trade show, very high international exhibitor mix",0],
+["Gulfood Manufacturing","Food & Beverage","Processing & Packaging","Dubai","DWTC","Nov 10–12",11,"2026-11-10","Annual","Roaming Scout or Booth Support","Processing, ingredients, packaging, strong B2B",0],
+["The Big 5 Global","Construction & Building","General construction","Dubai","DWTC","Dec 1–4",12,"2026-12-01","Annual","Season Pass + Booth Support","Largest regional construction show",0],
+["SteelFab","Construction & Building","Metalworking","Sharjah","Expo Centre Sharjah","Jan 12–15",1,"2026-01-12","Annual","Roaming Scout","Steel fabrication, industrial buyers",0],
+["Index Dubai","Construction & Building","Interiors","Dubai","DWTC","Jun 2–4",6,"2026-06-02","Annual","Roaming Scout or Booth Support","Interiors and furniture, regional sourcing hub",0],
+["World Future Energy Summit (WFES)","Energy & Environment","Clean energy","Abu Dhabi","ADNEC","Jan 13–15",1,"2026-01-13","Annual","Energy Season Pass + Roaming Scout","Flagship clean-energy and sustainability event",0],
+["Middle East Energy","Energy & Environment","Power & grid","Dubai","DWTC","Apr 7–9",4,"2026-04-07","Annual","Energy Season Pass + Roaming Scout","Power, grid, renewables, regional utility buyers",0],
+["Intersolar / Energy Storage ME","Energy & Environment","Solar & storage","Dubai","DWTC","Apr 7–9",4,"2026-04-07","Annual","Energy Season Pass","Co-located with MEE, solar and storage suppliers",0],
+["WETEX & Dubai Solar Show","Energy & Environment","Water & sustainability","Dubai","DWTC","Oct 20–22",10,"2026-10-20","Annual","Energy Season Pass","DEWA-backed sustainability and clean-tech show",0],
+["ADIPEC","Energy & Environment","Oil & gas","Abu Dhabi","ADNEC","Nov · TBC",11,"2026-11-15","Annual","Energy Season Pass + Booth Support","Global oil & gas and energy transition platform",1],
+["World Health Expo (ex-Arab Health)","Healthcare & Life Sciences","Healthcare & medtech","Dubai","Expo City Dubai","Feb 9–12",2,"2026-02-09","Annual","Health Season Pass + Booth Support","Major MEA hospital and medtech sourcing show",0],
+["MEDLAB Middle East","Healthcare & Life Sciences","Lab & diagnostics","Dubai","DWTC","Feb 10–13",2,"2026-02-10","Annual","Health Season Pass","Laboratory and diagnostics, co-located with health",0],
+["DUPHAT","Healthcare & Life Sciences","Pharma","Dubai","DWTC","Mar 24–26",3,"2026-03-24","Annual","Health Season Pass","Pharma manufacturing & distribution",0],
+["Dubai Derma","Healthcare & Life Sciences","Dermatology","Dubai","DWTC","Mar 23–25",3,"2026-03-23","Annual","Roaming Scout","Dermatology and aesthetics, strong HCP presence",0],
+["AEEDC Dubai","Healthcare & Life Sciences","Dental","Dubai","DWTC","Jan 19–21",1,"2026-01-19","Annual","Roaming Scout","Large dental conference and exhibition",0],
+["GITEX Global","Technology & Digital","ICT & AI","Dubai","Expo City Dubai","Dec 8–11",12,"2026-12-08","Annual","Tech Season Pass + Booth Support","Flagship regional tech and ICT show",0],
+["GISEC Global","Technology & Digital","Cybersecurity","Dubai","Expo City Dubai","May 5–7",5,"2026-05-05","Annual","Tech Season Pass","Cybersecurity vendors & enterprise buyers",0],
+["Seamless Middle East","Technology & Digital","Fintech & payments","Dubai","DWTC","Sep 22–24",9,"2026-09-22","Annual","Tech Season Pass","Fintech, payments, banking and retail tech",0],
+["Intersec","Security & Defence","Safety & security","Dubai","DWTC","Jan 12–14",1,"2026-01-12","Annual","Roaming Scout","Security, fire & safety, cyber",0],
+["ISNR Abu Dhabi","Security & Defence","Homeland security","Abu Dhabi","ADNEC","May 19–21",5,"2026-05-19","Biennial","Roaming Scout","Homeland security & resilience",0],
+["IDEX","Security & Defence","Defence","Abu Dhabi","ADNEC","Feb 2027 · next ed.",0,"2027-02-01","Biennial","Roaming Scout","Major global defence show (next edition 2027)",1],
+["NAVDEX","Security & Defence","Naval defence","Abu Dhabi","ADNEC","Feb 2027 · next ed.",0,"2027-02-01","Biennial","Roaming Scout","Naval defence, co-located with IDEX",1],
+["UMEX & SimTEX","Security & Defence","Unmanned systems","Abu Dhabi","ADNEC","Jan 19–21",1,"2026-01-19","Biennial","Roaming Scout","Unmanned systems and simulation",0],
+["Dubai Airshow","Aviation & Maritime","Aviation & aerospace","Dubai","Dubai World Central","Nov 2025 · last ed.",0,"2025-11-01","Biennial","Roaming Scout + Booth Support","Global aviation and aerospace platform",1],
+["AIME – Aircraft Interiors ME","Aviation & Maritime","Aircraft interiors","Dubai","DWTC","Feb 4–5",2,"2026-02-04","Annual","Roaming Scout","Aircraft cabin interiors & services",0],
+["MRO Middle East","Aviation & Maritime","MRO","Dubai","DWTC","Feb 4–5",2,"2026-02-04","Annual","Roaming Scout","Aviation MRO and aftermarket",0],
+["Automechanika Dubai","Automotive & Mobility","Aftermarket","Dubai","DWTC","Nov 10–12",11,"2026-11-10","Annual","Roaming Scout + Booth Support","Largest regional automotive aftermarket show",0],
+["METAS – Tyre, Auto & Spare Parts","Automotive & Mobility","Tyres & parts","Sharjah","Expo Centre Sharjah","Aug 3–5",8,"2026-08-03","Annual","Roaming Scout","Tyres and spare parts for MEA",0],
+["EVS United Arab Emirates","Automotive & Mobility","EV & components","Sharjah","Expo Centre Sharjah","Nov 25–28",11,"2026-11-25","Annual","Roaming Scout","Electric vehicles and EV parts",0],
+["Breakbulk Middle East","Logistics & Trade","Project cargo","Dubai","DWTC","Feb 4–5",2,"2026-02-04","Annual","Roaming Scout","Project cargo and heavy-lift logistics",0],
+["Annual Investment Meeting (AIM)","Logistics & Trade","FDI & investment","Dubai","DWTC","Sep 7–9",9,"2026-09-07","Annual","Roaming Scout","FDI, investment promotion, government + investors",0],
+["Beautyworld Middle East","Beauty & Lifestyle","Beauty & cosmetics","Dubai","DWTC","Oct 6–8",10,"2026-10-06","Annual","Roaming Scout + Booth Support","Major cosmetics & fragrance trade show",0],
+["Mideast Watch & Jewellery Show","Beauty & Lifestyle","Jewellery","Sharjah","Expo Centre Sharjah","Apr · TBC",4,"2026-04-15","Biannual","Roaming Scout","Biannual regional jewellery fair (also Oct)",1],
+["Sharjah International Book Fair","Education & Publishing","Books & publishing","Sharjah","Expo Centre Sharjah","Nov 4–15",11,"2026-11-04","Annual","Roaming Scout","Large regional book fair",0],
+["Abu Dhabi International Book Fair","Education & Publishing","Books & publishing","Abu Dhabi","ADNEC","Sep 13–18",9,"2026-09-13","Annual","Roaming Scout","Publishing and rights market",0],
+["World Art Dubai","Education & Publishing","Art market","Dubai","DWTC","Apr 22–26",4,"2026-04-22","Annual","Roaming Scout","Art fair with gallery and trade presence",0]
+].map(r=>({name:r[0],sector:r[1],sub:r[2],city:r[3],venue:r[4],dates:r[5],month:r[6],sort:r[7],rec:r[8],pkg:r[9],note:r[10],tbc:r[11]}));
+
+const sectors=[...new Set(DATA.map(d=>d.sector))];
+document.getElementById('stTotal').textContent=DATA.length;
+document.getElementById('stSectors').textContent=sectors.length;
+
+let activeSector='All',query='',sortKey='sort',sortDir=1;
+
+const chips=document.getElementById('chips');
+['All',...sectors].forEach(s=>{
+  const b=document.createElement('button');
+  b.className='chip'+(s==='All'?' on':'');
+  b.textContent=s;
+  b.onclick=()=>{activeSector=s;[...chips.children].forEach(c=>c.classList.remove('on'));b.classList.add('on');render();};
+  chips.appendChild(b);
+});
+
+document.getElementById('q').addEventListener('input',e=>{query=e.target.value.toLowerCase();render();});
+
+document.querySelectorAll('thead th').forEach(th=>{
+  th.addEventListener('click',()=>{
+    const k=th.dataset.k;
+    if(sortKey===k)sortDir*=-1;else{sortKey=k;sortDir=1;}
+    render();
+  });
+});
+
+function yearbar(m,tbc){
+  let cells='';
+  for(let i=1;i<=12;i++){
+    cells+='<i class="'+(i===m?(tbc?'tbc':'hit'):'')+'"></i>';
+  }
+  return '<div class="yearbar" title="Position in the year">'+cells+'</div>';
+}
+
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+
+function render(){
+  let rows=DATA.filter(d=>(activeSector==='All'||d.sector===activeSector)&&
+    (!query||(d.name+' '+d.sector+' '+d.sub+' '+d.city+' '+d.venue+' '+d.note+' '+d.pkg+' '+d.dates).toLowerCase().includes(query)));
+  rows.sort((a,b)=>((a[sortKey]>b[sortKey])-(a[sortKey]<b[sortKey]))*sortDir);
+
+  document.querySelectorAll('.arrow').forEach(a=>a.textContent=a.dataset.a===sortKey?(sortDir===1?'↑':'↓'):'');
+
+  document.getElementById('rows').innerHTML=rows.map(d=>`
+    <tr>
+      <td><span class="evname">${esc(d.name)}</span><span class="note">${esc(d.note)}</span></td>
+      <td><span class="sector-tag">${esc(d.sector)}</span><span class="sub">${esc(d.sub)}</span></td>
+      <td class="loc"><b>${d.city}</b><span class="sub">${esc(d.venue)}</span></td>
+      <td><span class="dates">${esc(d.dates)}</span>${yearbar(d.month,d.tbc)}</td>
+      <td class="rec">${d.rec}</td>
+      <td class="pkg">${esc(d.pkg)}</td>
+    </tr>`).join('');
+
+  document.getElementById('empty').hidden=rows.length>0;
+  document.getElementById('count').textContent=rows.length+' of '+DATA.length+' events';
+}
+render();
+</script>
+</body>
+</html>
