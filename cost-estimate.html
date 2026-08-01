@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cost Estimate | And Again Advisory</title>
+<meta name="description" content="Four questions, an honest indicative range. Government costs and advisory fee shown separately, never blended.">
+<link rel="icon" type="image/png" href="assets/img/andagain-emblem-transparent-fullcolor.png">
+<link rel="stylesheet" href="assets/css/aaa.css">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="logo" href="index.html"><img src="assets/img/logo-primary.png" alt="And Again Advisory"></a>
+    <ul>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="free-zone-or-mainland.html">Free Zone &amp; Mainland</a></li>
+      <li><a href="how-it-works.html">How it works</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="news.html">News</a></li>
+      <li><a href="become-a-partner.html">Become a Partner</a></li>
+      <li><a class="cta" href="cost-estimate.html">Get a Cost Estimate</a></li>
+    </ul>
+    <button class="burger" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<section class="bignum" style="padding:120px 0 70px">
+  <div class="hex"></div>
+  <div class="wrap rv" style="text-align:left">
+    <span class="label">Cost estimate</span>
+    <h1 style="color:var(--white);font-size:clamp(34px,4.6vw,56px)">Four questions.<br><em style="font-style:normal;color:var(--gold-bright)">An honest indicative range.</em></h1>
+    <p style="color:rgba(255,255,255,.75);font-size:18px;max-width:640px;margin-top:18px">Government costs in one column, our fee in another. Never blended. The exact figure follows a short conversation about your activity.</p>
+  </div>
+</section>
+
+<section class="on-light">
+  <div class="wrap" style="max-width:900px">
+    <div class="rv">
+
+      <div class="est-q">
+        <h3><span class="chip" style="display:inline-flex;margin-right:10px">01</span>Where do you want to set up?</h3>
+        <div class="est-opts" data-q="jurisdiction">
+          <button data-v="meydan">Meydan Free Zone<span>Dubai · our home zone</span></button>
+          <button data-v="spc">SPC Free Zone<span>Sharjah · lowest entry cost</span></button>
+          <button data-v="mainland">UAE Mainland<span>Full local market access</span></button>
+          <button data-v="unsure">Recommend for me<span>We'll weigh it with you</span></button>
+        </div>
+      </div>
+
+      <div class="est-q">
+        <h3><span class="chip" style="display:inline-flex;margin-right:10px">02</span>How many residence visas to start?</h3>
+        <div class="est-opts" data-q="visas">
+          <button data-v="0">None yet<span>Licence only</span></button>
+          <button data-v="1">One<span>Typically the investor</span></button>
+          <button data-v="2">Two<span>Investor plus one</span></button>
+          <button data-v="3">Three or more<span>Small team</span></button>
+        </div>
+      </div>
+
+      <div class="est-q">
+        <h3><span class="chip" style="display:inline-flex;margin-right:10px">03</span>What best describes your activity?</h3>
+        <div class="est-opts" data-q="activity">
+          <button data-v="simple">Services or consulting<span>No external regulator</span></button>
+          <button data-v="trading">Trading or e-commerce<span>Goods, import and export</span></button>
+          <button data-v="regulated">Regulated sector<span>Food, health, finance, education</span></button>
+        </div>
+      </div>
+
+      <div class="est-q">
+        <h3><span class="chip" style="display:inline-flex;margin-right:10px">04</span>When do you want to start?</h3>
+        <div class="est-opts" data-q="timeline">
+          <button data-v="now">As soon as possible</button>
+          <button data-v="quarter">Within three months</button>
+          <button data-v="exploring">Still exploring</button>
+        </div>
+      </div>
+
+      <div id="est-result" style="display:none;margin-top:44px">
+        <span class="label">Your indicative range</span>
+        <h2 id="est-headline" style="margin-top:12px"></h2>
+        <div style="overflow-x:auto">
+        <table id="est-table" style="width:100%;border-collapse:collapse;margin-top:18px;font-size:15.5px"></table>
+        </div>
+        <p id="est-note" style="margin-top:18px;color:var(--slate);font-size:14.5px"></p>
+        <p style="margin-top:10px;color:var(--slate);font-size:13.5px">This estimate is prepared for consultation and guidance purposes only. All government, licensing, visa, and third-party fees are payable directly to the respective authorities. And Again Advisory does not collect or process these payments unless explicitly stated. Figures are indicative and confirmed in an itemised written estimate before you commit.</p>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:24px">
+          <a id="est-wa" class="btn btn-wa" href="#">Send this to us on WhatsApp</a>
+          <a id="est-mail" class="btn btn-navy" href="#">Request the written estimate</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+.est-q { margin-bottom:34px; }
+.est-q h3 { font-size:19px; margin-bottom:14px; }
+.est-opts { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:10px; }
+.est-opts button { font-family:var(--font); text-align:left; background:var(--white); border:1px solid var(--hairline); padding:14px 16px; font-size:15.5px; font-weight:700; color:var(--navy); cursor:pointer; transition:border-color .15s,background .15s; }
+.est-opts button span { display:block; font-weight:400; font-size:13px; color:var(--slate); margin-top:3px; }
+.est-opts button:hover { border-color:var(--gold); }
+.est-opts button.sel { border-color:var(--navy); background:var(--pale-gold); }
+#est-table td,#est-table th { border-bottom:1px solid var(--hairline); padding:9px 10px; text-align:left; }
+#est-table th { font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--slate); }
+#est-table td:last-child,#est-table th:last-child { text-align:right; white-space:nowrap; }
+#est-table tr.total td { font-weight:800; color:var(--navy); border-top:2px solid var(--navy); }
+</style>
+
+<script>
+(function(){
+  var sel={};
+  var DATA={
+    meydan:{name:"Meydan Free Zone",base:[["Business licence, new setup",12125],["Co-working space, standard package",375]],perVisaFixed:[["Establishment card registration, 2 years",2000]],perVisa:[["Visa allocation, per visa",1850],["Investor or employee visa, per visa (medical, Emirates ID and stamping included)",4000]]},
+    spc:{name:"SPC Free Zone",base:[["Business licence, new setup",6510],["Co-working space, standard package",375],["E-channel registration",2280]],perVisaFixed:[["Establishment card registration, 2 years",640]],perVisa:[["Visa allocation, per visa",1600],["Investor or employee visa, per visa",2200]]}
+  };
+  var AAA_FZ=4000, ML={simple:["M1 Simple",6000],trading:["M2 Standard",9000],regulated:["M3 Regulated",15000]};
+  function fmt(n){return "AED "+n.toLocaleString();}
+  document.querySelectorAll('.est-opts').forEach(function(g){
+    g.querySelectorAll('button').forEach(function(b){
+      b.addEventListener('click',function(){
+        g.querySelectorAll('button').forEach(function(x){x.classList.remove('sel')});
+        b.classList.add('sel'); sel[g.dataset.q]=b.dataset.v; render();
+      });
+    });
+  });
+  function render(){
+    if(!(sel.jurisdiction&&sel.visas!==undefined&&sel.activity&&sel.timeline))return;
+    var res=document.getElementById('est-result'), tbl=document.getElementById('est-table'),
+        head=document.getElementById('est-headline'), note=document.getElementById('est-note');
+    var visas=parseInt(sel.visas,10), rows="", summary="", gov=0;
+    if(sel.jurisdiction==='mainland'||((sel.jurisdiction==='unsure')&&sel.activity==='regulated')){
+      var tier=ML[sel.activity];
+      head.textContent="Mainland: "+tier[0]+", And Again Advisory fee "+fmt(tier[1]);
+      rows="<tr><th>Item</th><th>Amount</th></tr>";
+      rows+="<tr><td>Authority and government fees (licence, immigration, premises)</td><td>At cost, per emirate and activity</td></tr>";
+      rows+="<tr><td>And Again Advisory service fee, "+tier[0]+" tier, flat</td><td>"+fmt(tier[1])+"</td></tr>";
+      tbl.innerHTML=rows;
+      note.textContent="Mainland government fees differ by emirate and activity and pass through at cost with no markup, stated line by line on the written estimate. Refundable deposits are shown as memo lines, never inside totals. Annual renewal handling retainer: AED 3,500.";
+      summary="Mainland ("+tier[0]+"), "+visas+" visa(s), activity: "+sel.activity+", timeline: "+sel.timeline;
+    } else {
+      var z=DATA[sel.jurisdiction==='unsure'?'meydan':sel.jurisdiction];
+      rows="<tr><th>Government and third-party costs</th><th>Amount</th></tr>";
+      z.base.forEach(function(r){rows+="<tr><td>"+r[0]+"</td><td>"+fmt(r[1])+"</td></tr>";gov+=r[1];});
+      if(visas>0){
+        z.perVisaFixed.forEach(function(r){rows+="<tr><td>"+r[0]+"</td><td>"+fmt(r[1])+"</td></tr>";gov+=r[1];});
+        z.perVisa.forEach(function(r){var amt=r[1]*visas;rows+="<tr><td>"+r[0]+(visas>1?" × "+visas:"")+"</td><td>"+fmt(amt)+"</td></tr>";gov+=amt;});
+      }
+      rows+="<tr><td><b>Subtotal, paid directly to the authority</b></td><td><b>"+fmt(gov)+"</b></td></tr>";
+      rows+="<tr><th style='padding-top:16px'>And Again Advisory fee</th><th></th></tr>";
+      rows+="<tr><td>Bundled service fee: structuring, formation, visas, basic medical insurance, corporate bank account setup, first-year compliance</td><td>"+fmt(AAA_FZ)+"</td></tr>";
+      rows+="<tr class='total'><td>Indicative combined outlay</td><td>"+fmt(gov+AAA_FZ)+"</td></tr>";
+      tbl.innerHTML=rows;
+      head.textContent=z.name+": indicative combined outlay "+fmt(gov+AAA_FZ);
+      note.textContent=(sel.jurisdiction==='unsure'?"Shown on Meydan Free Zone figures as a reference point; we may recommend differently once we understand your activity. ":"")+(visas>0?"If an applicant is already in the UAE on a visit or tourist visa, a change of status applies, payable to the authority. ":"")+(sel.activity==='regulated'?"Regulated activities can carry additional approvals; these are mapped before anything is filed. ":"")+"Renewals from year two typically run 10 to 20 percent below year one.";
+      summary=z.name+", "+visas+" visa(s), activity: "+sel.activity+", timeline: "+sel.timeline+", indicative "+fmt(gov+AAA_FZ);
+    }
+    var msg="Hello And Again Advisory. I used the cost estimator on andagain.ae. "+summary+". I'd like the written estimate.";
+    document.getElementById('est-wa').href="https://wa.me/971559330941?text="+encodeURIComponent(msg);
+    document.getElementById('est-mail').href="mailto:info@andagain.ae?subject="+encodeURIComponent("Cost estimate request, andagain.ae")+"&body="+encodeURIComponent(msg);
+    res.style.display='block';
+    res.scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+})();
+</script>
+
+
+<footer class="site">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <img class="mark" src="assets/img/andagain-emblem-transparent-whitetext-for-navy.png" alt="And Again Advisory emblem">
+        <p>We don't just help you register a company. We help you build the foundation to operate one.</p>
+        <p class="values-line" style="margin-top:14px">Clarity · Coordination · Continuity · Confidence</p>
+        <p class="am" style="margin-top:10px">በአማርኛ እናገለግላለን።</p>
+      </div>
+      <div>
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="free-zone-or-mainland.html">Free Zone &amp; Mainland</a></li>
+          <li><a href="how-it-works.html">How it works</a></li>
+          <li><a href="about.html">About the firm</a></li>
+          <li><a href="news.html">UAE Business News</a></li>
+          <li><a href="become-a-partner.html">Become a Partner</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services.html">UAE Business Setup</a></li>
+          <li><a href="services.html">Feasibility Studies</a></li>
+          <li><a href="services.html">Business Plans</a></li>
+          <li><a href="services.html">Corporate Tax &amp; Compliance</a></li>
+          <li><a href="services.html">Relocation &amp; Concierge</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Registered &amp; licensed</h4>
+        <p class="reg">
+          <b>And Again Advisory L.L.C-FZ</b><br>
+          Trade Licence <b>2542849.01</b> · Meydan Free Zone<br>
+          Corporate Tax TRN <b>105355766400001</b><br>
+          Meydan Grandstand, 6th Floor, Meydan Road,<br>Nad Al Sheba, Dubai, U.A.E.<br><br>
+          <a href="mailto:info@andagain.ae">info@andagain.ae</a> · <a href="https://www.andagain.ae">www.andagain.ae</a><br>
+          <a href="https://wa.me/971559330941">+971 55 933 0941</a> · <a href="https://wa.me/971559967220">+971 55 996 7220</a>
+        </p>
+      </div>
+    </div>
+    <div class="legal">
+      <span>© 2026 And Again Advisory®. All Rights Reserved.</span>
+      <span>Build. Scale. Begin Again.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/aaa.js"></script>
+</body>
+</html>

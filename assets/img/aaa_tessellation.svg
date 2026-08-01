@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <pattern id="hex" x="0" y="0" width="120" height="138.56" patternUnits="userSpaceOnUse">
+      <!-- Pointy-top hexagon, side=40px, centered at (60, 46.19) -->
+      <!-- Vertices: top, top-right, bot-right, bot, bot-left, top-left -->
+      <polygon
+        points="60,6.19 94.64,26.19 94.64,66.19 60,86.19 25.36,66.19 25.36,26.19"
+        fill="none" stroke="#2233BB" stroke-width="1.2" opacity="0.55"/>
+      <!-- Offset hex row below-right -->
+      <polygon
+        points="120,75.47 154.64,95.47 154.64,135.47 120,155.47 85.36,135.47 85.36,95.47"
+        fill="none" stroke="#2233BB" stroke-width="1.2" opacity="0.55"/>
+      <!-- Offset hex row below-left -->
+      <polygon
+        points="0,75.47 34.64,95.47 34.64,135.47 0,155.47 -34.64,135.47 -34.64,95.47"
+        fill="none" stroke="#2233BB" stroke-width="1.2" opacity="0.55"/>
+    </pattern>
+  </defs>
+  <!-- Deep royal blue background -->
+  <rect width="1920" height="1080" fill="#0D1580"/>
+  <!-- Tessellation overlay -->
+  <rect width="1920" height="1080" fill="url(#hex)"/>
+</svg>
