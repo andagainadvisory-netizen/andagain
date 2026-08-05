@@ -1,2 +1,3 @@
-# Netlify: force www -> apex (301). Requires andagain.ae as primary domain in Netlify domain settings.
-https://www.andagain.ae/* https://andagain.ae/:splat 301!
+# Cloudflare Pages / Netlify fallback. Put at the deploy ROOT.
+/pathway      /pathway/index.html          200
+/pathway-am   /pathway/index.html?lang=am  301

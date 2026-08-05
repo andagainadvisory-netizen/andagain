@@ -1,0 +1,30 @@
+# And Again Advisory  ·  Pathway Session page
+# Drop this file at the ROOT of what you deploy (beside the pathway/ folder).
+
+[[headers]]
+  for = "/pathway/video/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Accept-Ranges = "bytes"
+
+[[headers]]
+  for = "/pathway/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/pathway/*"
+  [headers.values]
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Clean URL: andagain.ae/pathway
+[[redirects]]
+  from = "/pathway"
+  to = "/pathway/index.html"
+  status = 200
+
+# Amharic deep link for the diaspora ad set
+[[redirects]]
+  from = "/pathway-am"
+  to = "/pathway/index.html?lang=am"
+  status = 301

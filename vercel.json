@@ -1,0 +1,23 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/pathway", "destination": "/pathway/index.html" }
+  ],
+  "redirects": [
+    { "source": "/pathway-am", "destination": "/pathway/index.html?lang=am", "permanent": true }
+  ],
+  "headers": [
+    {
+      "source": "/pathway/(video|fonts)/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/pathway/(.*)",
+      "headers": [
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+      ]
+    }
+  ]
+}
