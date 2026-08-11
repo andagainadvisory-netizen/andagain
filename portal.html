@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Partner Portal — And Again Advisory</title>
+<style>
+  :root{--navy:#06037A;--navy-deep:#04024E;--gold:#D2AA24;--gold-deep:#A8871B;--gold-bright:#FFD663;--paper:#FAF8F2;--ink:#16142E;--slate:#6B7280;--line:#E5E1D4;--card:#FFFFFF;
+        --green:#1E7F4F;--red:#C0392B;--blue:#2563EB;--violet:#7C3AED;--orange:#C2601D}
+  *{margin:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--paper);color:var(--ink);min-height:100vh}
+  button{font:inherit;cursor:pointer;border:none;background:none}
+  input,select,textarea{font:inherit;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:9px;padding:10px 12px;width:100%;outline:none}
+  input:focus,select:focus,textarea:focus{border-color:var(--gold)}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 18px 90px}
+  .hidden{display:none!important}
+  /* login */
+  .gate{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:var(--navy-deep);color:#fff}
+  .gate .card{max-width:420px;width:100%;text-align:center}
+  .mark{font-size:12px;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:16px}
+  .gate h1{font-size:26px;font-weight:600;margin-bottom:10px}
+  .gate p{color:#B9B7E0;font-size:15px;line-height:1.6;margin-bottom:24px}
+  .gate input{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.18);color:#fff;text-align:center}
+  .gate input::placeholder{color:#8B88CE}
+  .btn-gold{display:inline-block;background:var(--gold);color:var(--navy-deep);font-weight:700;font-size:15px;padding:13px 26px;border-radius:10px;width:100%;margin-top:16px}
+  .btn-gold:hover{background:var(--gold-bright)}
+  .btn-gold:disabled{opacity:.6;cursor:default}
+  .err{color:#FF9D8F;font-size:14px;margin-top:12px}
+  .err2{color:var(--red);font-size:14px;margin-top:10px}
+  /* header */
+  header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding:20px 0;border-bottom:2px solid var(--navy)}
+  .logo{font-weight:800;font-size:18px;color:var(--navy)}
+  .logo small{font-weight:600;color:var(--slate);font-size:13px;margin-left:8px}
+  .badge{background:#F3EDD8;border:1px solid var(--gold);color:var(--gold-deep);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;padding:5px 12px;border-radius:999px}
+  .signout{color:var(--slate);font-size:14px;font-weight:600}
+  .signout:hover{color:var(--ink)}
+  /* stats */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:20px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .stat b{font-size:24px;color:var(--navy)}
+  .stat.gold b{color:var(--gold-deep)} .stat.green b{color:var(--green)} .stat.gray b{color:var(--slate)}
+  .stat span{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--slate);margin-top:3px}
+  @media(max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}}
+  /* toolbar */
+  .bar{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;align-items:center}
+  .bar input[type=text]{flex:1;min-width:200px}
+  .bar select{width:auto}
+  .btn-add{border:2px solid var(--navy);color:var(--navy);font-weight:700;font-size:14px;padding:9px 18px;border-radius:999px}
+  .btn-add:hover{background:var(--navy);color:#fff}
+  .btn-imp{border:1px solid var(--line);color:var(--ink);font-weight:600;font-size:14px;padding:9px 18px;border-radius:999px;background:#fff}
+  .btn-imp:hover{border-color:var(--gold);color:var(--gold-deep)}
+  .btn-exp{color:var(--slate);font-size:14px;font-weight:600;text-decoration:underline;text-underline-offset:4px}
+  /* flash */
+  .flash{margin-top:14px;background:#EAF6EE;border:1px solid var(--green);color:var(--green);border-radius:10px;padding:11px 14px;font-size:14px}
+  .flash.bad{background:#FBEDEB;border-color:var(--red);color:var(--red)}
+  /* table */
+  .tblwrap{margin-top:16px;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th{background:#F5F2E8;color:var(--slate);font-size:11px;text-transform:uppercase;letter-spacing:.1em;text-align:left;padding:11px 14px}
+  td{padding:12px 14px;border-top:1px solid var(--line);vertical-align:top}
+  tbody tr{cursor:pointer} tbody tr:hover{background:#FBF9F1}
+  td .n{font-weight:700} td .s{color:var(--slate);font-size:12px;margin-top:2px}
+  .empty{padding:60px 20px;text-align:center;color:var(--slate);font-size:14px}
+  .pill{display:inline-block;white-space:nowrap;font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;border:1px solid}
+  /* mobile cards */
+  .cards{display:none;margin-top:16px;gap:10px}
+  .lcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:left;width:100%}
+  .lcard .top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+  .lcard .n{font-weight:700} .lcard .s{color:var(--slate);font-size:12px;margin-top:4px}
+  @media(max-width:760px){.tblwrap{display:none}.cards{display:grid}}
+  /* drawer + modal */
+  .ovl{position:fixed;inset:0;background:rgba(22,20,46,.5);z-index:40}
+  .drawer{position:fixed;top:0;right:0;bottom:0;width:100%;max-width:430px;background:var(--card);z-index:50;overflow-y:auto;padding:22px;border-left:4px solid var(--gold)}
+  .drawer h2{font-size:20px;color:var(--navy)}
+  .close{color:var(--slate);font-weight:700;font-size:14px} .close:hover{color:var(--ink)}
+  .dhead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+  dl{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px;margin-top:16px;font-size:14px}
+  dt{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--slate)}
+  dd{font-weight:600;margin-top:2px;word-break:break-word}
+  .notesbox,.upd,.ev{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px;margin-top:14px;font-size:14px}
+  .upd .cap{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--gold-deep)}
+  .upd select,.upd textarea{margin-top:10px}
+  .upd .row{display:flex;justify-content:flex-end;margin-top:10px}
+  .btn-save{background:var(--navy);color:#fff;font-weight:700;font-size:14px;padding:9px 20px;border-radius:999px}
+  .btn-save:hover{background:var(--navy-deep)} .btn-save:disabled{opacity:.5;cursor:default}
+  .cap2{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--slate);margin-top:20px}
+  .ev .who{font-weight:700;color:var(--navy)} .ev .who.osac{color:var(--gold-deep)}
+  .ev .when{float:right;color:var(--slate);font-size:12px}
+  .ev .what{color:var(--slate);margin-top:3px} .ev .txt{margin-top:5px;white-space:pre-wrap}
+  .admrow{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);margin-top:18px;padding-top:14px;font-size:14px}
+  .lnk{font-weight:600;color:var(--navy)} .lnk:hover{color:var(--gold-deep)}
+  .danger{color:var(--slate);font-weight:600} .danger:hover{color:var(--red)}
+  .confirm{font-size:13px;color:var(--slate)} .confirm b{color:var(--red);cursor:pointer;margin-left:8px}
+  .confirm u{cursor:pointer;margin-left:8px}
+  .modal{position:fixed;z-index:50;top:50%;left:50%;transform:translate(-50%,-50%);width:calc(100% - 32px);max-width:520px;max-height:88vh;overflow-y:auto;background:var(--card);border-radius:14px;padding:22px;border-top:4px solid var(--gold)}
+  .modal h2{font-size:18px;color:var(--navy)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+  .grid2 .full{grid-column:1/-1}
+  @media(max-width:520px){.grid2{grid-template-columns:1fr}}
+  .mrow{display:flex;justify-content:flex-end;gap:10px;margin-top:16px}
+  .btn-cancel{color:var(--slate);font-weight:600;padding:9px 12px}
+  .tpl{color:var(--gold-deep);font-weight:700;text-decoration:underline;cursor:pointer}
+  .preview{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:11px 13px;font-size:13px;margin-top:10px}
+  .mono{font-family:ui-monospace,Menlo,monospace;font-size:12px}
+  footer{margin-top:40px;font-size:12px;color:var(--slate);text-align:center}
+</style>
+</head>
+<body>
+
+<div id="gate" class="gate hidden">
+  <div class="card">
+    <div class="mark">And Again Advisory</div>
+    <h1>Partner Portal</h1>
+    <p>The shared referral lead ledger of And Again Advisory and its partners. Enter your team passcode to open it.</p>
+    <input id="pass" type="password" placeholder="Team passcode" autocomplete="current-password">
+    <div id="gerr" class="err hidden"></div>
+    <button id="enter" class="btn-gold">Enter portal &rarr;</button>
+  </div>
+</div>
+
+<div id="loading" class="gate"><div class="card"><div class="mark">And Again Advisory</div><p>Opening the ledger&hellip;</p></div></div>
+
+<div id="app" class="wrap hidden">
+  <header>
+    <div class="logo">Partner Portal<small>Lead Ledger</small></div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <span id="badge" class="badge"></span>
+      <button id="signout" class="signout">Sign out</button>
+    </div>
+  </header>
+  <div id="flash" class="flash hidden"></div>
+  <div class="stats">
+    <div class="stat"><b id="st-total">0</b><span>In the ledger</span></div>
+    <div class="stat gold"><b id="st-active">0</b><span>Active</span></div>
+    <div class="stat green"><b id="st-won">0</b><span>Closed won</span></div>
+    <div class="stat gray"><b id="st-lost">0</b><span>Lost / unreachable</span></div>
+  </div>
+  <div class="bar">
+    <input id="q" type="text" placeholder="Search name, phone, email, area...">
+    <select id="sf"><option>All</option></select>
+    <button id="badd" class="btn-add hidden">+ Add lead</button>
+    <button id="bimp" class="btn-imp hidden">Import CSV</button>
+    <button id="bexp" class="btn-exp">Export CSV</button>
+  </div>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>Lead</th><th>Interest</th><th>Area</th><th>Status</th><th>Last update</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div id="empty" class="empty hidden"></div>
+  </div>
+  <div id="cards" class="cards"></div>
+  <footer>And Again Advisory — private partner tool</footer>
+</div>
+
+<div id="ovl" class="ovl hidden"></div>
+<div id="panel"></div>
+
+<script>
+"use strict";
+var API="/api/portal";
+var STATUSES=["New","Contacted","Meeting / Viewing","Negotiation","Closed - Won","Closed - Lost","Unreachable"];
+var SCOLOR={"New":"#A8871B","Contacted":"#2563EB","Meeting / Viewing":"#7C3AED","Negotiation":"#C2601D","Closed - Won":"#1E7F4F","Closed - Lost":"#C0392B","Unreachable":"#6B7280"};
+var INTERESTS=["Buy","Rent","Invest","Sell","Commercial"];
+var PTYPES=["Apartment","Villa","Townhouse","Penthouse","Office","Retail","Warehouse","Land","Other"];
+var FIELDS=["name","phone","email","nationality","interest","property_type","budget","area","notes","referred_by"];
+var role=null, leads=[], q="", sf="All";
+
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function fmtD(iso,long){try{var o={timeZone:"Asia/Dubai",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"};if(long)o.year="numeric";return new Date(iso).toLocaleString("en-GB",o)+(long?" (Dubai)":"")}catch(e){return iso}}
+function api(op,body){
+  var init=body?{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(Object.assign({op:op},body))}:undefined;
+  var url=body?API:API+"?op="+op;
+  return fetch(url,init).then(function(r){return r.json().then(function(d){if(!r.ok)throw new Error(d.error||"Something went wrong.");return d})})
+}
+function apiGet(op,params){var u=API+"?op="+op+(params||"");return fetch(u).then(function(r){return r.json().then(function(d){if(!r.ok)throw new Error(d.error||"Something went wrong.");return d})})}
+function pill(s){var c=SCOLOR[s]||"#6B7280";return '<span class="pill" style="color:'+c+';border-color:'+c+';background:'+c+'14">'+esc(s)+'</span>'}
+function flash(msg,bad){var f=$("flash");f.textContent=msg;f.className="flash"+(bad?" bad":"");setTimeout(function(){f.className="flash hidden"},5000)}
+
+// ---------------- boot
+apiGet("me").then(function(d){ role=d.role; $("loading").classList.add("hidden");
+  if(role){openApp()}else{$("gate").classList.remove("hidden")}
+}).catch(function(){$("loading").classList.add("hidden");$("gate").classList.remove("hidden")});
+
+$("enter").onclick=doLogin;
+$("pass").addEventListener("keydown",function(e){if(e.key==="Enter")doLogin()});
+function doLogin(){
+  var b=$("enter");b.disabled=true;$("gerr").classList.add("hidden");
+  api("login",{passcode:$("pass").value}).then(function(d){role=d.role;$("gate").classList.add("hidden");openApp()})
+  .catch(function(e){var g=$("gerr");g.textContent=e.message;g.classList.remove("hidden")})
+  .finally(function(){b.disabled=false});
+}
+$("signout").onclick=function(){api("logout",{}).then(function(){location.reload()})};
+
+function openApp(){
+  $("app").classList.remove("hidden");
+  $("badge").textContent = role==="aaa" ? "And Again Advisory" : "Partner - OSAC Properties";
+  if(role==="aaa"){$("badd").classList.remove("hidden");$("bimp").classList.remove("hidden")}
+  var sel=$("sf");STATUSES.forEach(function(s){var o=document.createElement("option");o.textContent=s;sel.appendChild(o)});
+  $("q").oninput=function(){q=this.value;render()};
+  sel.onchange=function(){sf=this.value;render()};
+  $("badd").onclick=function(){openForm(null)};
+  $("bimp").onclick=openImport;
+  $("bexp").onclick=exportCsv;
+  load();
+}
+function load(){apiGet("list").then(function(d){leads=d.leads;render()}).catch(function(e){flash(e.message,true)})}
+
+// ---------------- list rendering
+function filtered(){var s=q.trim().toLowerCase();return leads.filter(function(l){
+  if(sf!=="All"&&l.status!==sf)return false;
+  if(!s)return true;
+  return [l.name,l.phone,l.email,l.area,l.nationality,l.referred_by].join(" ").toLowerCase().indexOf(s)>=0})}
+function render(){
+  var won=0,lost=0;leads.forEach(function(l){if(l.status==="Closed - Won")won++;else if(l.status==="Closed - Lost"||l.status==="Unreachable")lost++});
+  $("st-total").textContent=leads.length;$("st-active").textContent=leads.length-won-lost;$("st-won").textContent=won;$("st-lost").textContent=lost;
+  var f=filtered(),rows=$("rows"),cards=$("cards"),emp=$("empty");
+  if(!f.length){rows.innerHTML="";cards.innerHTML="";emp.classList.remove("hidden");
+    emp.textContent=leads.length? "Nothing matches that search." : (role==="aaa"?"The ledger is empty. Add your first referral lead.":"No leads have been referred yet.");
+  }else{emp.classList.add("hidden");
+    rows.innerHTML=f.map(function(l){return '<tr data-id="'+l.id+'"><td><div class="n">'+esc(l.name)+'</div><div class="s">'+esc([l.phone,l.email].filter(Boolean).join(" · ")||"No contact")+'</div></td>'+
+      '<td><div>'+esc([l.interest,l.property_type].filter(Boolean).join(" · "))+'</div>'+(l.budget?'<div class="s">'+esc(l.budget)+'</div>':"")+'</td>'+
+      '<td>'+esc(l.area||"-")+'</td><td>'+pill(l.status)+'</td><td class="s">'+esc(fmtD(l.updated_at))+'</td></tr>'}).join("");
+    cards.innerHTML=f.map(function(l){return '<button class="lcard" data-id="'+l.id+'"><div class="top"><span class="n">'+esc(l.name)+'</span>'+pill(l.status)+'</div>'+
+      '<div class="s">'+esc([l.phone,l.interest,l.area].filter(Boolean).join(" · "))+'</div><div class="s">Updated '+esc(fmtD(l.updated_at))+'</div></button>'}).join("");
+    Array.prototype.forEach.call(document.querySelectorAll("[data-id]"),function(el){el.onclick=function(){openDrawer(el.getAttribute("data-id"))}});
+  }
+}
+
+// ---------------- drawer
+function closePanel(){$("ovl").classList.add("hidden");$("panel").innerHTML=""}
+$("ovl").onclick=closePanel;
+function openDrawer(id){
+  $("ovl").classList.remove("hidden");
+  $("panel").innerHTML='<div class="drawer"><div class="empty">Loading...</div></div>';
+  apiGet("detail","&id="+encodeURIComponent(id)).then(function(d){drawDrawer(d.lead,d.events)})
+  .catch(function(e){closePanel();flash(e.message,true)});
+}
+function drawDrawer(lead,events){
+  var det=[["Phone",lead.phone],["Email",lead.email],["Nationality",lead.nationality],["Interest",lead.interest],["Property type",lead.property_type],["Budget",lead.budget],["Preferred area",lead.area],["Referred by",lead.referred_by],["Referred on",lead.created_at?fmtD(lead.created_at,true):""]];
+  var h='<div class="drawer"><div class="dhead"><div><h2>'+esc(lead.name)+'</h2><div style="margin-top:8px">'+pill(lead.status)+'</div></div><button class="close" id="dclose">Close</button></div>';
+  h+='<dl>'+det.filter(function(p){return p[1]}).map(function(p){return '<div><dt>'+esc(p[0])+'</dt><dd>'+esc(p[1])+'</dd></div>'}).join("")+'</dl>';
+  if(lead.notes)h+='<div class="notesbox"><dt>Notes from AAA</dt><div style="margin-top:5px;white-space:pre-wrap">'+esc(lead.notes)+'</div></div>';
+  h+='<div class="upd"><div class="cap">Update this lead</div><select id="dstat">'+STATUSES.map(function(s){return '<option'+(s===lead.status?" selected":"")+'>'+s+'</option>'}).join("")+'</select>';
+  h+='<textarea id="dnote" rows="3" placeholder="Add a note (call outcome, viewing feedback, next step...)"></textarea>';
+  h+='<div id="derr" class="err2 hidden"></div><div class="row"><button class="btn-save" id="dsave">Save update</button></div></div>';
+  h+='<div class="cap2">Activity</div>';
+  h+=events.length? events.map(function(ev){
+    var who=ev.actor==="OSAC"?'<span class="who osac">OSAC Properties</span>':'<span class="who">And Again Advisory</span>';
+    var what=ev.type==="created"?"Lead added to the ledger":ev.type==="edited"?"Lead details edited":ev.type==="status"?("Status changed to "+pill(ev.status||"")):"Left a note";
+    return '<div class="ev"><span class="when">'+esc(fmtD(ev.created_at))+'</span>'+who+'<div class="what">'+what+'</div>'+(ev.comment?'<div class="txt">'+esc(ev.comment)+'</div>':"")+'</div>'}).join("")
+    :'<div class="ev">No activity yet.</div>';
+  if(role==="aaa"){
+    h+='<div class="admrow"><button class="lnk" id="dedit">Edit details</button><span id="ddelzone"><button class="danger" id="ddel">Delete lead</button></span></div>';
+  }
+  h+='</div>';
+  $("panel").innerHTML=h;
+  $("dclose").onclick=closePanel;
+  $("dsave").onclick=function(){
+    var ns=$("dstat").value,nc=$("dnote").value.trim(),btn=this;
+    if(ns===lead.status&&!nc)return;
+    btn.disabled=true;
+    var p = ns!==lead.status ? api("status",{id:lead.id,status:ns,comment:nc}) : api("comment",{id:lead.id,comment:nc});
+    p.then(function(){load();openDrawer(lead.id)}).catch(function(e){var el=$("derr");el.textContent=e.message;el.classList.remove("hidden");btn.disabled=false});
+  };
+  if(role==="aaa"){
+    $("dedit").onclick=function(){closePanel();openForm(lead)};
+    $("ddel").onclick=function(){
+      $("ddelzone").innerHTML='<span class="confirm">Delete permanently?<b id="dyes">Yes, delete</b><u id="dno">Cancel</u></span>';
+      $("dyes").onclick=function(){api("delete",{id:lead.id}).then(function(){closePanel();load();flash("Lead deleted.")}).catch(function(e){flash(e.message,true)})};
+      $("dno").onclick=function(){openDrawer(lead.id)};
+    };
+  }
+}
+
+// ---------------- add / edit form
+function openForm(lead){
+  var isEdit=!!lead; var v=function(f){return lead?esc(lead[f]||""):""}
+  $("ovl").classList.remove("hidden");
+  var h='<div class="modal"><h2>'+(isEdit?"Edit lead":"Add referral lead")+'</h2><div class="grid2">';
+  h+='<input class="full" id="f_name" placeholder="Full name *" value="'+v("name")+'">';
+  h+='<input id="f_phone" placeholder="Phone / WhatsApp" value="'+v("phone")+'">';
+  h+='<input id="f_email" placeholder="Email" value="'+v("email")+'">';
+  h+='<input id="f_nationality" placeholder="Nationality" value="'+v("nationality")+'">';
+  h+='<input id="f_referred_by" placeholder="Referred by (AAA consultant)" value="'+v("referred_by")+'">';
+  h+='<select id="f_interest"><option value="">Interest...</option>'+INTERESTS.map(function(i){return '<option'+((lead&&lead.interest===i)||(!lead&&i==="Buy")?" selected":"")+'>'+i+'</option>'}).join("")+'</select>';
+  h+='<select id="f_property_type"><option value="">Property type...</option>'+PTYPES.map(function(p){return '<option'+((lead&&lead.property_type===p)||(!lead&&p==="Apartment")?" selected":"")+'>'+p+'</option>'}).join("")+'</select>';
+  h+='<input id="f_budget" placeholder="Budget (e.g. AED 1.5M - 2M)" value="'+v("budget")+'">';
+  h+='<input id="f_area" placeholder="Preferred area (e.g. Business Bay)" value="'+v("area")+'">';
+  h+='<textarea class="full" id="f_notes" rows="3" placeholder="Notes for the partner (timeline, financing, context...)">'+v("notes")+'</textarea>';
+  h+='</div><div id="ferr" class="err2 hidden"></div><div class="mrow"><button class="btn-cancel" id="fcancel">Cancel</button><button class="btn-save" id="fsave">'+(isEdit?"Save changes":"Save lead")+'</button></div></div>';
+  $("panel").innerHTML=h;
+  $("fcancel").onclick=closePanel;
+  $("fsave").onclick=function(){
+    var form={};FIELDS.forEach(function(f){var el=$("f_"+f);form[f]=el?el.value:""});
+    if(!form.name.trim()){var el=$("ferr");el.textContent="The lead needs at least a name.";el.classList.remove("hidden");return}
+    var btn=this;btn.disabled=true;
+    var p=isEdit?api("update",{id:lead.id,lead:form}):api("create",{lead:form});
+    p.then(function(){closePanel();load();flash(isEdit?"Lead updated.":"Lead added to the ledger.")})
+     .catch(function(e){var el=$("ferr");el.textContent=e.message;el.classList.remove("hidden");btn.disabled=false});
+  };
+}
+
+// ---------------- CSV import / export
+function parseCsv(t){var rows=[],row=[],cell="",inQ=false;
+  for(var i=0;i<t.length;i++){var ch=t[i];
+    if(inQ){if(ch==='"'){if(t[i+1]==='"'){cell+='"';i++}else inQ=false}else cell+=ch}
+    else if(ch==='"')inQ=true;
+    else if(ch===","){row.push(cell);cell=""}
+    else if(ch==="\n"||ch==="\r"){if(ch==="\r"&&t[i+1]==="\n")i++;row.push(cell);cell="";if(row.some(function(c){return c.trim()!==""}))rows.push(row);row=[]}
+    else cell+=ch}
+  row.push(cell);if(row.some(function(c){return c.trim()!==""}))rows.push(row);return rows}
+var HMAP=[[/^(name|fullname|clientname|client|leadname|lead)$/,"name"],[/^(phone|phonenumber|mobile|mobilenumber|tel|telephone|whatsapp|contact|contactnumber)$/,"phone"],[/^(email|emailaddress|mail)$/,"email"],[/^(nationality|country)$/,"nationality"],[/^(interest|interestedin|lookingfor|intent|purpose)$/,"interest"],[/^(propertytype|property|unittype|unit|type)$/,"property_type"],[/^(budget|budgetrange|price|pricerange)$/,"budget"],[/^(area|location|community|preferredarea|zone)$/,"area"],[/^(notes|note|comments|comment|remarks|details)$/,"notes"],[/^(referredby|referrer|source|agent|consultant)$/,"referred_by"]];
+function mapCsv(rows){if(rows.length<2)return{leads:[],rec:[]};
+  var heads=rows[0].map(function(h){return h.toLowerCase().replace(/[^a-z]/g,"")});
+  var cols=heads.map(function(h){for(var i=0;i<HMAP.length;i++)if(HMAP[i][0].test(h))return HMAP[i][1];return null});
+  var rec=[];cols.forEach(function(c){if(c&&rec.indexOf(c)<0)rec.push(c)});
+  var out=[];rows.slice(1).forEach(function(r){var lead={};FIELDS.forEach(function(f){lead[f]=""});
+    cols.forEach(function(f,i){if(f&&r[i]!==undefined)lead[f]=r[i].trim()});
+    if(lead.name)out.push(lead)});
+  return{leads:out,rec:rec}}
+function openImport(){
+  $("ovl").classList.remove("hidden");
+  var h='<div class="modal"><h2>Import leads from CSV</h2><p style="color:var(--slate);font-size:14px;margin-top:8px;line-height:1.6">Upload a .csv file or paste rows below. The first row must be headers - columns like Name, Phone, Email, Interest, Budget, Area are recognized automatically. <span class="tpl" id="itpl">Download template</span></p>';
+  h+='<input type="file" id="ifile" accept=".csv,text/csv" style="margin-top:12px;border:none;padding:0">';
+  h+='<textarea id="itext" rows="6" class="mono" style="margin-top:10px" placeholder="Or paste CSV here...&#10;Name,Phone,Interest&#10;Jane Smith,+9715...,Buy"></textarea>';
+  h+='<div id="iprev" class="preview hidden"></div><div id="ierr" class="err2 hidden"></div>';
+  h+='<div class="mrow"><button class="btn-cancel" id="icancel">Cancel</button><button class="btn-save" id="igo" disabled>Import</button></div></div>';
+  $("panel").innerHTML=h;
+  var parsed=null;
+  function reparse(){var t=$("itext").value;if(!t.trim()){parsed=null;$("iprev").classList.add("hidden");$("igo").disabled=true;return}
+    parsed=mapCsv(parseCsv(t));var pv=$("iprev");pv.classList.remove("hidden");
+    if(parsed.leads.length){pv.innerHTML='<b style="color:var(--gold-deep)">'+parsed.leads.length+' lead'+(parsed.leads.length===1?"":"s")+' ready to import.</b> <span style="color:var(--slate)">Recognized columns: '+esc(parsed.rec.join(", ")||"none")+'.</span>';$("igo").disabled=false}
+    else{pv.innerHTML='<span style="color:var(--red)">No importable rows found. Check that there is a header row and a Name column.</span>';$("igo").disabled=true}}
+  $("itext").oninput=reparse;
+  $("ifile").onchange=function(){var f=this.files[0];if(!f)return;var r=new FileReader();r.onload=function(){$("itext").value=String(r.result||"");reparse()};r.readAsText(f)};
+  $("itpl").onclick=function(){dl("aaa-lead-template.csv","Name,Phone,Email,Nationality,Interest,Property type,Budget,Area,Notes,Referred by\nJane Smith,+971501234567,jane@example.com,British,Buy,Apartment,AED 1.5M - 2M,Dubai Marina,Ready to view this month,Ahmed\n")};
+  $("icancel").onclick=closePanel;
+  $("igo").onclick=function(){if(!parsed||!parsed.leads.length)return;var btn=this;btn.disabled=true;
+    api("import",{leads:parsed.leads}).then(function(d){closePanel();load();flash("Imported "+d.imported+" lead"+(d.imported===1?"":"s")+(d.skipped?" ("+d.skipped+" skipped - missing name)":"")+".")})
+    .catch(function(e){var el=$("ierr");el.textContent=e.message;el.classList.remove("hidden");btn.disabled=false})};
+}
+function csvEsc(v){v=String(v==null?"":v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}
+function exportCsv(){
+  var head=["Name","Phone","Email","Nationality","Interest","Property type","Budget","Area","Notes","Referred by","Status","Created","Last update"];
+  var lines=[head.join(",")].concat(filtered().map(function(l){return [l.name,l.phone,l.email,l.nationality,l.interest,l.property_type,l.budget,l.area,l.notes,l.referred_by,l.status,l.created_at,l.updated_at].map(csvEsc).join(",")}));
+  dl("aaa-leads-"+new Date().toISOString().slice(0,10)+".csv",lines.join("\n"));
+}
+function dl(name,content){var b=new Blob([content],{type:"text/csv"});var a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=name;a.click();URL.revokeObjectURL(a.href)}
+</script>
+</body>
+</html>
