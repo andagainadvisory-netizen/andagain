@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>And Again Advisory — via Lidya</title>
+<style>
+  :root{--navy:#06037A;--navy-deep:#04024E;--gold:#D2AA24;--gold-bright:#FFD663;--paper:#FAF8F2;--ink:#16142E;--slate:#6B7280}
+  *{margin:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--navy-deep);color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center}
+  .card{max-width:420px}
+  .mark{font-size:13px;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:18px}
+  h1{font-size:26px;font-weight:600;line-height:1.3;margin-bottom:10px}
+  p{color:#B9B7E0;font-size:15px;line-height:1.6;margin-bottom:26px}
+  .btn{display:inline-block;background:var(--gold);color:var(--navy-deep);font-weight:700;font-size:16px;text-decoration:none;padding:15px 30px;border-radius:10px}
+  .btn:hover{background:var(--gold-bright)}
+  .alt{display:block;margin-top:18px;color:#8B88CE;font-size:13px}
+  .alt a{color:#B9B7E0}
+  .code{margin-top:26px;font-size:12px;color:#8B88CE}
+  .code b{color:var(--gold);letter-spacing:.12em}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="mark">And Again Advisory</div>
+  <h1>You were referred by Lidya</h1>
+  <p>Connecting you to And Again Advisory on WhatsApp for your free consultation&hellip;</p>
+  <a class="btn" id="go" href="https://wa.me/971559330941?text=Hello%20And%20Again%20Advisory%21%20I%20was%20referred%20by%20Lidya%20%28code%3A%20LIDYA%29.%20I%27d%20like%20to%20book%20my%20free%20consultation.">Open WhatsApp &rarr;</a>
+  <span class="alt">Prefer the website? <a href="/?ref=LIDYA">Visit andagain.ae</a></span>
+  <div class="code">Your referral code <b>LIDYA</b> is attached automatically.</div>
+</div>
+<script>
+(function(){
+  try{ localStorage.setItem('aaa_ref', JSON.stringify({c:'LIDYA', t:Date.now()})); }catch(e){}
+  setTimeout(function(){ location.href = document.getElementById('go').href; }, 1800);
+})();
+</script>
+</body>
+</html>

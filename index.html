@@ -824,14 +824,14 @@ footer{background:var(--navy-deep);color:var(--muted);border-top:1px solid rgba(
     e.preventDefault(); var f=e.target;
     var text="Hello And Again Advisory, I'd like a cost estimate.\n"+
       'Jurisdiction: '+state.jur+'\nActivity: '+state.act+'\nVisas: '+(state.visas>=6?'6+':state.visas)+'\nOffice: '+state.office+
-      '\nName: '+val(f,'name')+'\nEmail: '+val(f,'email')+'\nPhone: '+val(f,'phone')+'\nAbout: '+val(f,'notes');
+      '\nName: '+val(f,'name')+'\nEmail: '+val(f,'email')+'\nPhone: '+val(f,'phone')+'\nAbout: '+val(f,'notes')+AAA_refLine();
     window.open(WA+encodeURIComponent(text),'_blank'); closeModals();
   });
   $('#f-booking').addEventListener('submit',function(e){
     e.preventDefault(); var f=e.target; var d=DAYS[state.day];
     var text="Hello And Again Advisory, I'd like to book a free consultation.\n"+
       'Preferred slot: '+d.dow+' '+d.date+' at '+state.time+'\nTime zone: '+(val(f,'tz')||'Dubai (GMT+4)')+
-      '\nName: '+val(f,'name')+'\nEmail: '+val(f,'email')+'\nPhone: '+val(f,'phone')+'\nAbout: '+val(f,'notes');
+      '\nName: '+val(f,'name')+'\nEmail: '+val(f,'email')+'\nPhone: '+val(f,'phone')+'\nAbout: '+val(f,'notes')+AAA_refLine();
     window.open(WA+encodeURIComponent(text),'_blank'); closeModals();
   });
 
@@ -858,6 +858,33 @@ footer{background:var(--navy-deep);color:var(--muted);border-top:1px solid rgba(
       io.observe(el);
     });
   }
+})();
+</script>
+<script>
+/* ----- affiliate referral capture (?ref=CODE) ----- */
+(function(){
+  var KEY='aaa_ref', DAYS=90, code=null;
+  function clean(v){ return (/^[A-Za-z0-9_-]{2,24}$/.test(v||''))?v.toUpperCase():null; }
+  try{
+    var fromUrl=clean(new URLSearchParams(location.search).get('ref'));
+    if(fromUrl){ code=fromUrl; localStorage.setItem(KEY,JSON.stringify({c:code,t:Date.now()})); }
+    else{
+      var s=JSON.parse(localStorage.getItem(KEY)||'null');
+      if(s&&s.c&&(Date.now()-s.t)<DAYS*864e5) code=clean(s.c);
+    }
+  }catch(e){}
+  window.AAA_REF=code;
+  window.AAA_refLine=function(){ return code?'\nReferral code: '+code:''; };
+  if(!code) return;
+  /* stamp the code into every WhatsApp link on the page */
+  try{
+    var tag=encodeURIComponent('\n\nReferral code: '+code);
+    document.querySelectorAll('a[href*="wa.me"]').forEach(function(a){
+      var h=a.getAttribute('href');
+      if(h.indexOf('text=')>-1){ a.setAttribute('href',h+tag); }
+      else{ a.setAttribute('href',h+(h.indexOf('?')>-1?'&':'?')+'text='+encodeURIComponent('Hello And Again Advisory.')+tag); }
+    });
+  }catch(e){}
 })();
 </script>
 </body>
