@@ -118,23 +118,12 @@ footer a{color:var(--gold-bright);text-decoration:none}
     </div>
 
     <div class="card c2">
-      <span class="tagchip">Free · 30 minutes</span>
+      <span class="tagchip">Free &middot; 30 minutes</span>
       <h3>Book a free consultation</h3>
-      <p>A 30-minute call with an advisor — your options, real costs, and a written estimate afterwards. No charge, no obligation.</p>
-      <form id="bookform" novalidate>
-        <label for="bf-name">Full name <span>*</span></label>
-        <input id="bf-name" name="name" type="text" required autocomplete="name" placeholder="Your full name">
-        <label for="bf-email">Email <span>*</span></label>
-        <input id="bf-email" name="email" type="email" required autocomplete="email" placeholder="you@example.com">
-        <label for="bf-phone">Phone / WhatsApp <span>*</span></label>
-        <input id="bf-phone" name="phone" type="tel" required autocomplete="tel" minlength="7" placeholder="+971 5x xxx xxxx">
-        <label for="bf-topic">What would you like to discuss? <span>*</span></label>
-        <textarea id="bf-topic" name="topic" required placeholder="e.g. Opening a free zone company with 1 visa, moving my export business to Dubai…"></textarea>
-        <div class="freebadge">&#10003;&nbsp; The consultation is completely free — 30 minutes with an advisor.</div>
-        <button class="btn btn-navy" type="submit">Request my free consultation &rarr;</button>
-        <div class="formerr" id="bookerr">Please fill in every field (a valid email and phone number are required).</div>
-      </form>
-      <p class="fineprint">Sends your request to our team on WhatsApp — we reply with available times.</p>
+      <p>Pick a time that suits you — a 30-minute call with an advisor. Your options, real costs, and a written estimate afterwards. No charge, no obligation.</p>
+      <div class="freebadge">&#10003;&nbsp; The consultation is completely free — 30 minutes with an advisor.</div>
+      <div id="cal-inline" style="width:100%;min-height:520px;overflow:auto"></div>
+      <p class="fineprint">Calendar not loading? <a href="https://cal.com/and-again-advisory/free-30-minute-consultation?referral=LIDYA" style="color:var(--navy)">Book directly here</a>. Your referral code LIDYA is attached automatically.</p>
     </div>
   </div>
 </div>
@@ -173,21 +162,15 @@ footer a{color:var(--gold-bright);text-decoration:none}
     }
   }).catch(function(){});
 
-  /* booking form -> WhatsApp with details + code */
-  var form=document.getElementById('bookform'), err=document.getElementById('bookerr');
-  form.addEventListener('submit',function(e){
-    e.preventDefault();
-    if(!form.checkValidity()){ err.style.display='block'; form.reportValidity(); return; }
-    err.style.display='none';
-    function v(n){ return form.elements[n].value.trim(); }
-    var text='Hello And Again Advisory, I would like to book my FREE 30-minute consultation.\n'
-      +'Name: '+v('name')+'\n'
-      +'Email: '+v('email')+'\n'
-      +'Phone: '+v('phone')+'\n'
-      +'I want to discuss: '+v('topic')+'\n'
-      +'Referral code: '+CODE;
-    window.open(WA+encodeURIComponent(text),'_blank');
+  /* Cal.com inline booking embed, referral code prefilled */
+  (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+  Cal("init", "free-30-minute-consultation", {origin:"https://app.cal.com"});
+  Cal.ns["free-30-minute-consultation"]("inline", {
+    elementOrSelector: "#cal-inline",
+    config: {layout: "month_view", theme: "light", referral: CODE},
+    calLink: "and-again-advisory/free-30-minute-consultation"
   });
+  Cal.ns["free-30-minute-consultation"]("ui", {styles:{branding:{brandColor:"#06037A"}}, hideEventTypeDetails: false});
 })();
 </script>
 </body>
