@@ -1,3 +1,5 @@
 # Cloudflare Pages / Netlify fallback. Put at the deploy ROOT.
 /pathway      /pathway/index.html          200
 /pathway-am   /pathway/index.html?lang=am  301
+# Standing Teams meeting room for all client calls
+/meet         https://teams.microsoft.com/l/meetup-join/19%3ameeting_MzM5YjYzYjAtYTQyYi00NzMyLTk0MzgtNzQ5OWRlY2EwMGNi%40thread.v2/0?context=%7b%22Tid%22%3a%224dcbb63d-e907-4811-bd2d-2eed33887781%22%2c%22Oid%22%3a%220b691403-29dd-474d-b486-e575c3be5a4d%22%7d  302
