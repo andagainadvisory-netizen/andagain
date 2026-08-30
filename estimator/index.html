@@ -965,6 +965,13 @@ a.btn{text-decoration:none}
   .est-unlocked { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 
+.est-print-hint {
+  font-size: 0.82rem; color: var(--on-dark-muted); margin-top: 12px;
+  line-height: 1.6; max-width: 60ch;
+}
+.est-print-hint b { color: #fff; }
+@media print { .est-print-hint { display: none !important; } }
+
 </style>
 </head>
 <body class="est-page" id="top">
@@ -2182,6 +2189,14 @@ window.AAA_PRICING = {
   var emailState = 'idle';  // idle | sent | failed  (the copy from info@)
   var showErrors = false;
 
+  // WhatsApp, Instagram, Facebook and similar in-app browsers ignore
+  // window.print() without any error. Detect them so the print button can
+  // say what to do instead of silently doing nothing.
+  function inAppBrowser() {
+    var ua = navigator.userAgent || '';
+    return /WhatsApp|Instagram|FBAN|FBAV|FB_IAB|Line\/|TikTok|Snapchat|; wv\)/i.test(ua);
+  }
+
   function firstName() {
     var n = (spec.name || '').trim();
     return n ? n.split(/\s+/)[0] : '';
@@ -2590,7 +2605,12 @@ window.AAA_PRICING = {
           '<a class="btn btn-gold" id="est-whatsapp" href="#" target="_blank" rel="noopener">Send this brief on WhatsApp</a>' +
           '<a class="btn btn-ghost est-btn-onnavy" id="est-email" href="#">Email it instead</a>' +
           '<button class="btn btn-ghost est-btn-onnavy" id="est-print" type="button">Print or save as PDF</button>' +
-        '</div></div>';
+        '</div>' +
+        '<p class="est-print-hint" id="est-print-hint" hidden>' +
+        (inAppBrowser()
+          ? 'You are inside an app\u2019s built-in browser, which cannot print. Tap the menu (\u22ee or share icon) and choose <b>Open in browser</b>, then press Print or save as PDF there.'
+          : 'If no print window opened, use your browser\u2019s own menu: <b>File \u2192 Print</b>, or press <b>Ctrl/Cmd&nbsp;+&nbsp;P</b>, and choose \u201cSave as PDF\u201d.') +
+        '</p></div>';
     }
 
     var bad = showErrors;
@@ -2924,7 +2944,11 @@ window.AAA_PRICING = {
     if (unlockBtn) unlockBtn.addEventListener('click', unlock);
 
     var printBtn = document.getElementById('est-print');
-    if (printBtn) printBtn.addEventListener('click', function () { window.print(); });
+    if (printBtn) printBtn.addEventListener('click', function () {
+      var hint = document.getElementById('est-print-hint');
+      try { window.print(); } catch (e) { /* fall through to the hint */ }
+      if (hint) hint.hidden = false;
+    });
 
     var restart = document.getElementById('est-restart');
     if (restart) restart.addEventListener('click', function () { location.reload(); });
