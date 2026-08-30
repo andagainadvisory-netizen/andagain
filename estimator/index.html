@@ -2425,8 +2425,42 @@ window.AAA_PRICING = {
       });
     });
 
+    // Printing. A closed <details> is not rendered by the browser at all, so
+    // CSS alone cannot reveal the itemisation on the printed page — every
+    // breakdown silently vanished from the PDF. Open them for the duration of
+    // the print, then put them back exactly as the reader had them.
     var printBtn = document.getElementById('est-print');
     if (printBtn) printBtn.addEventListener('click', function () { window.print(); });
+
+    var detailState = null;
+    function expandForPrint() {
+      var nodes = document.querySelectorAll('.est-detail');
+      if (!nodes.length) return;
+      detailState = [];
+      Array.prototype.forEach.call(nodes, function (d, i) {
+        detailState[i] = d.open;
+        d.open = true;
+      });
+    }
+    function restoreAfterPrint() {
+      if (!detailState) return;
+      Array.prototype.forEach.call(document.querySelectorAll('.est-detail'), function (d, i) {
+        d.open = detailState[i];
+      });
+      detailState = null;
+    }
+
+    // Covers the button, Ctrl/Cmd+P and File > Print alike.
+    window.addEventListener('beforeprint', expandForPrint);
+    window.addEventListener('afterprint', restoreAfterPrint);
+
+    // Safari fires no beforeprint/afterprint; it toggles the print media query.
+    if (window.matchMedia) {
+      var mq = window.matchMedia('print');
+      var onMq = function (e) { (e.matches ? expandForPrint : restoreAfterPrint)(); };
+      if (mq.addEventListener) mq.addEventListener('change', onMq);
+      else if (mq.addListener) mq.addListener(onMq);
+    }
   }
 
   // Keep the visa split coherent: shareholder visas can never exceed
