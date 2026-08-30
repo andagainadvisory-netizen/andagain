@@ -354,7 +354,7 @@ footer{background:var(--navy-deep);color:var(--muted);border-top:1px solid rgba(
 /* --muted on the live site is a light periwinkle tuned for the dark footer.
    Inside the estimator it sits on white, so darken it locally. The footer,
    which is outside these containers, keeps the live value. */
-.est-hero,.est-shell{ --muted:#5A5878; }
+.est-hero,.est-shell,.est-wizard{ --muted:#5A5878; }
 
 .container{max-width:1240px;margin:0 auto;padding:0 32px}
 body{font-family:var(--font);background:var(--paper);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
@@ -371,7 +371,9 @@ a.btn{text-decoration:none}
 .btn-lg{padding:15px 30px;font-size:15px}
 .est-opt,.est-step,.est-step button,.est-select,.est-badge,.est-chip,.est-kpi,.est-zone,
 .est-panel,.est-mainland,.est-handoff,.est-3y,.est-flag,.est-grand,.est-spec,.est-spec li,
-.est-foot,.est-results-head,.est-block-l,.est-horizon,.est-horizon button{border-radius:0}
+.est-foot,.est-results-head,.est-block-l,.est-horizon,.est-horizon button,
+.est-stepwrap,.est-rail,.est-rail-i,.est-rail-n,.est-emirate,.est-confirm,.est-gate,
+.est-unlocked,.est-issued,.est-input,.est-itemised{border-radius:0}
 .est-switch-track,.est-switch-track::after{border-radius:999px}
 .est-split-bar,.est-split-bar span{border-radius:0}
 .dot{border-radius:50%}
@@ -784,9 +786,196 @@ a.btn{text-decoration:none}
   a[href]::after { content: ""; }
 }
 
+/* ==================================================================
+   SEQUENCED FLOW — rail, steps, emirate choice, the gate
+   ================================================================== */
+
+.est-hero-slim { padding: 92px 0 116px; }
+
+.est-wizard {
+  display: grid;
+  grid-template-columns: 236px minmax(0, 1fr);
+  gap: 32px;
+  align-items: start;
+  margin-top: -72px;
+  padding-bottom: 90px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ---- progress rail ---- */
+.est-rail {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 18px 48px rgba(6, 3, 122, 0.11);
+  padding: 14px 12px;
+  position: sticky; top: 92px;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.est-rail-i {
+  display: flex; align-items: center; gap: 11px;
+  padding: 10px 11px; border: 0; border-radius: 12px;
+  background: transparent; cursor: pointer; text-align: left;
+  font: 600 0.85rem var(--font); color: var(--muted);
+  transition: background 0.14s ease, color 0.14s ease;
+}
+.est-rail-i:disabled { cursor: default; opacity: 0.45; }
+.est-rail-i:not(:disabled):hover { background: var(--bg-tint); }
+.est-rail-n {
+  flex: 0 0 26px; height: 26px; border-radius: 8px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--bg-tint); color: var(--muted);
+  font-size: 0.74rem; font-weight: 800;
+}
+.est-rail-i.on { background: var(--navy); color: #fff; }
+.est-rail-i.on .est-rail-n { background: var(--gold); color: var(--navy); }
+.est-rail-i.done { color: var(--navy); }
+.est-rail-i.done .est-rail-n { background: #e8f4ec; color: #256b41; }
+
+/* ---- stage ---- */
+.est-stage { min-width: 0; }
+.est-stepwrap {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 6px 20px rgba(6, 3, 122, 0.05);
+  padding: 30px 32px;
+}
+.est-stephead { border-bottom: 1px solid var(--line); padding-bottom: 18px; margin-bottom: 24px; }
+.est-stepno {
+  font-size: 0.7rem; font-weight: 800; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--gold-deep); margin-bottom: 8px;
+}
+.est-stephead h2 { font-size: clamp(1.4rem, 3vw, 1.95rem); }
+.est-stepsub { font-size: 0.94rem; color: var(--muted); margin-top: 9px; max-width: 62ch; line-height: 1.6; }
+.est-stepbody-wide { margin: 0 -8px; }
+
+.est-nav { display: flex; justify-content: space-between; gap: 12px; margin-top: 20px; }
+
+.est-foot-slim { margin-top: 22px; }
+
+/* ---- text inputs ---- */
+.est-input {
+  width: 100%; max-width: 460px; padding: 13px 16px;
+  border: 1.5px solid var(--line); border-radius: 13px;
+  font: 500 1rem var(--font); color: var(--ink); background: #fff;
+}
+.est-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(6, 3, 122, 0.09); }
+.est-input.bad { border-color: #c0392b; background: #fdf6f5; }
+.est-err { color: #c0392b; font-size: 0.85rem; font-weight: 600; margin-top: 10px; }
+
+/* ---- emirate choice ---- */
+.est-emirates { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.est-emirate {
+  display: flex; flex-direction: column; gap: 6px;
+  padding: 18px 19px; border-radius: 16px; cursor: pointer;
+  border: 1.5px solid var(--line); background: #fff; text-align: left;
+  font: inherit; transition: all 0.15s ease;
+}
+.est-emirate:hover { border-color: var(--navy); transform: translateY(-1px); box-shadow: var(--shadow); }
+.est-emirate.on { border-color: var(--navy); background: var(--navy); box-shadow: 0 10px 26px rgba(6, 3, 122, 0.24); }
+.est-emirate-wide { grid-column: 1 / -1; }
+.est-em-name { font-size: 1.05rem; font-weight: 800; color: var(--navy); letter-spacing: -0.01em; }
+.est-em-blurb { font-size: 0.84rem; color: var(--muted); line-height: 1.55; }
+.est-em-zones {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--gold-deep); margin-top: 3px;
+}
+.est-emirate.on .est-em-name { color: #fff; }
+.est-emirate.on .est-em-blurb { color: var(--on-dark); }
+.est-emirate.on .est-em-zones { color: var(--gold-bright); }
+
+.est-subchoice { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); }
+.est-confirm { background: var(--bg-tint); border-radius: 14px; padding: 16px 18px; }
+.est-confirm h4 { font-size: 1rem; color: var(--navy); margin-bottom: 5px; }
+.est-confirm p { font-size: 0.87rem; color: var(--muted); line-height: 1.6; }
+
+/* ---- issued header ---- */
+.est-issued {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+  background: var(--bg-tint); border: 1px solid var(--line);
+  border-radius: 16px; padding: 16px 20px; margin-bottom: 18px;
+}
+.est-issued-k {
+  font-size: 0.66rem; font-weight: 800; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 3px;
+}
+.est-issued-v { font-size: 0.92rem; font-weight: 700; color: var(--navy); }
+
+/* ---- the gate ---- */
+.est-gate {
+  background: linear-gradient(150deg, var(--navy), var(--navy-soft));
+  color: #fff; border-radius: var(--radius); padding: 30px 32px; margin: 20px 0 14px;
+}
+.est-gate-eyebrow {
+  font-size: 0.7rem; font-weight: 800; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--gold-bright); margin-bottom: 9px;
+}
+.est-gate h3 { color: #fff; font-size: 1.42rem; }
+.est-gate-sub { color: var(--on-dark); font-size: 0.92rem; margin-top: 10px; max-width: 62ch; line-height: 1.65; }
+.est-gate-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 22px; }
+.est-gf { display: flex; flex-direction: column; gap: 6px; }
+.est-gf span { font-size: 0.78rem; font-weight: 700; color: var(--on-dark-muted); }
+.est-gf .est-input { max-width: none; }
+.est-gate-btn { margin-top: 18px; }
+.est-gate-consent { font-size: 0.78rem; color: var(--on-dark-muted); margin-top: 14px; line-height: 1.6; }
+.est-gate .est-err { color: var(--gold-bright); }
+
+.est-unlocked {
+  background: linear-gradient(150deg, var(--navy), var(--navy-soft));
+  color: #fff; border-radius: var(--radius); padding: 26px 30px; margin: 20px 0 14px;
+}
+.est-unlocked-h {
+  font-size: 0.7rem; font-weight: 800; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--gold-bright); margin-bottom: 8px;
+}
+.est-unlocked p { color: var(--on-dark); font-size: 0.93rem; line-height: 1.6; }
+.est-unlocked b { color: #fff; }
+.est-btn-onnavy { border-color: rgba(255,255,255,.3) !important; color: #fff !important; }
+
+.est-itemised { margin-top: 18px; padding-top: 4px; border-top: 1px solid var(--line); }
+.est-restart-wrap { text-align: center; margin-top: 20px; }
+
+/* ---- responsive ---- */
+@media (max-width: 1040px) {
+  .est-wizard { grid-template-columns: 1fr; margin-top: -56px; }
+  .est-rail {
+    position: static; flex-direction: row; overflow-x: auto;
+    padding: 10px; gap: 6px;
+  }
+  .est-rail-i { flex: 0 0 auto; }
+  .est-rail-l { display: none; }
+  .est-rail-i.on .est-rail-l { display: inline; }
+}
+@media (max-width: 680px) {
+  .est-stepwrap { padding: 22px 18px; }
+  .est-emirates { grid-template-columns: 1fr; }
+  .est-gate, .est-unlocked { padding: 22px 18px; }
+  .est-gate-grid { grid-template-columns: 1fr; }
+  .est-issued { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ---- print ---- */
+@media print {
+  .est-rail, .est-nav, .est-gate, .est-restart-wrap, .est-stepno { display: none !important; }
+  .est-wizard { display: block; margin-top: 0; }
+  .est-stepwrap { border: 0; box-shadow: none; padding: 0; }
+  .est-itemised { border-top: 0; }
+  .est-unlocked { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
 </style>
 </head>
 <body class="est-page" id="top">
+<form name="estimator-lead" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input type="text" name="bot-field">
+  <input type="text" name="name"><input type="email" name="email"><input type="tel" name="phone">
+  <input type="text" name="reference"><input type="text" name="jurisdiction">
+  <input type="text" name="business"><input type="text" name="people">
+  <input type="text" name="situation"><input type="text" name="figures">
+  <input type="text" name="specification"><input type="text" name="consent">
+</form>
 <header>
   <div class="hdr">
     <a class="brand" href="/">
@@ -800,7 +989,7 @@ a.btn{text-decoration:none}
       <a href="/#insights">Insights</a>
       <a href='/news'>UAE Business News</a>
       <a class='btn btn-gold' href='/become-a-partner'>Become a Partner</a>
-      <a class="btn btn-navy" href="#est-handoff">Get the Formal Estimate</a>
+      <a class="btn btn-navy" href="#top">Start the Estimate</a>
       <button class="menu" id="menubtn" aria-label="Menu" aria-expanded="false">&#9776;</button>
     </nav>
   </div>
@@ -811,7 +1000,7 @@ a.btn{text-decoration:none}
     <a href="/#insights">Insights</a>
     <a href='/news'>UAE Business News</a>
     <div class="mb">
-      <a class="btn btn-navy" href="#est-handoff">Get the Formal Estimate</a>
+      <a class="btn btn-navy" href="#top">Start the Estimate</a>
       <a class="btn btn-navy" href="/#top" style="background:transparent;color:var(--navy);border:1px solid var(--navy)">Book a Consultation</a>
       <a class='btn btn-gold' href='/become-a-partner' style='flex:1 1 100%;text-align:center'>Become a Partner</a>
       <a class='btn' href='/partner-referrals' style='flex:1 1 100%;text-align:center;background:transparent;color:var(--navy);border:1px solid var(--navy)'>Register a Referral</a>
@@ -821,208 +1010,47 @@ a.btn{text-decoration:none}
 <main>
 
 
-  <!-- ============ HERO ============ -->
-  <section class="est-hero">
+  <section class="est-hero est-hero-slim">
     <div class="container">
       <p class="eyebrow">Cost estimator</p>
-      <h1>What your UAE company actually costs.</h1>
-      <p class="est-hero-sub">
-        Tell us what you are building. We price it live across all five of our partner free
-        zones — every government fee itemised at cost, our fee stated separately, and the honest
-        warnings most calculators leave out.
+      <h1 id="est-hero-h1">What your UAE company actually costs.</h1>
+      <p class="est-hero-sub" id="est-hero-sub">
+        Six short steps, the way we build a real estimate: who it is for, where you want to be,
+        what the business does, who needs a visa. Then the numbers — every government fee
+        itemised at cost, our fee stated separately.
       </p>
       <div class="est-hero-meta">
         <span class="est-chip">Partner rates as at <b data-asof>—</b></span>
         <span class="est-chip">Authority fees at cost, <b>no markup</b></span>
-        <span class="est-chip">Meydan · IFZA · SPC · RAKEZ · Ajman</span>
+        <span class="est-chip">Takes about 90 seconds</span>
       </div>
     </div>
   </section>
 
   <div class="container">
-    <div class="est-shell">
+    <div class="est-wizard">
 
-      <!-- ============ CONFIGURATOR ============ -->
-      <form class="est-config" id="est-config" aria-label="Your specification">
-        <h2>Your specification</h2>
-        <p class="est-config-intro">Every answer re-prices all five zones immediately.</p>
+      <!-- ---------------- progress rail ---------------- -->
+      <nav class="est-rail" id="est-rail" aria-label="Progress"></nav>
 
-        <!-- ---- the business ---- -->
-        <div class="est-group">
-          <p class="est-group-h">01 · The business</p>
+      <!-- ---------------- the steps ---------------- -->
+      <div class="est-stage">
+        <div class="est-stepwrap" id="est-stepwrap"></div>
 
-          <div class="est-field">
-            <span class="est-label">What will the company do?</span>
-            <div class="est-opts" data-field="direction" role="group">
-              <button type="button" class="est-opt on" data-value="services" aria-pressed="true">Services or consulting</button>
-              <button type="button" class="est-opt" data-value="trading" aria-pressed="false">Trading in goods</button>
-              <button type="button" class="est-opt" data-value="ecommerce" aria-pressed="false">E-commerce</button>
-              <button type="button" class="est-opt" data-value="media" aria-pressed="false">Media or creative</button>
-              <button type="button" class="est-opt" data-value="industrial" aria-pressed="false">Industrial</button>
-              <button type="button" class="est-opt" data-value="generalTrading" aria-pressed="false">General Trading</button>
-            </div>
-          </div>
-
-          <div class="est-field">
-            <span class="est-label">Will you sell directly to customers inside the UAE?</span>
-            <div class="est-opts" data-field="mainlandSales" role="group">
-              <button type="button" class="est-opt on" data-value="no" aria-pressed="true">No, mostly international</button>
-              <button type="button" class="est-opt" data-value="some" aria-pressed="false">Some of it</button>
-              <button type="button" class="est-opt" data-value="core" aria-pressed="false">Yes, that is the core</button>
-            </div>
-            <p class="est-hint">A free zone company cannot sell directly into the mainland without a mainland licence or a distributor. It matters more than price.</p>
-          </div>
-
-          <div class="est-field">
-            <span class="est-label">What space do you need?</span>
-            <div class="est-opts" data-field="premises" role="group">
-              <button type="button" class="est-opt on" data-value="flexi" aria-pressed="true">Flexi desk or virtual office</button>
-              <button type="button" class="est-opt" data-value="warehouse" aria-pressed="false">Warehouse, land or industrial</button>
-            </div>
-          </div>
-
-          <div class="est-field">
-            <span class="est-label">How many licensed activities?</span>
-            <div class="est-step" data-step-field="activities" data-min="1" data-max="12">
-              <button type="button" data-delta="-1" aria-label="Fewer activities">−</button>
-              <span class="est-step-v">1</span>
-              <button type="button" data-delta="1" aria-label="More activities">+</button>
-            </div>
-          </div>
+        <div class="est-nav">
+          <button type="button" class="btn btn-ghost" id="est-back">Back</button>
+          <button type="button" class="btn btn-primary" id="est-next">Continue</button>
         </div>
 
-        <!-- ---- the people ---- -->
-        <div class="est-group">
-          <p class="est-group-h">02 · The people</p>
-
-          <div class="est-field">
-            <span class="est-label">Shareholders</span>
-            <div class="est-step" data-step-field="shareholders" data-min="1" data-max="12">
-              <button type="button" data-delta="-1" aria-label="Fewer shareholders">−</button>
-              <span class="est-step-v">1</span>
-              <button type="button" data-delta="1" aria-label="More shareholders">+</button>
-            </div>
-          </div>
-
-          <div class="est-field">
-            <span class="est-label">Investor visas, for shareholders</span>
-            <div class="est-step" data-step-field="shareholderVisas" data-min="0" data-max="10">
-              <button type="button" data-delta="-1" aria-label="Fewer investor visas">−</button>
-              <span class="est-step-v">1</span>
-              <button type="button" data-delta="1" aria-label="More investor visas">+</button>
-            </div>
-          </div>
-
-          <div class="est-field">
-            <span class="est-label">Employment visas, for staff</span>
-            <div class="est-step" data-step-field="employeeVisas" data-min="0" data-max="10">
-              <button type="button" data-delta="-1" aria-label="Fewer employment visas">−</button>
-              <span class="est-step-v">0</span>
-              <button type="button" data-delta="1" aria-label="More employment visas">+</button>
-            </div>
-          </div>
-
-          <div class="est-field">
-            <label class="est-switch">
-              <input type="checkbox" data-toggle="spouse">
-              <span class="est-switch-track"></span>
-              <span class="est-switch-l">Sponsoring a spouse</span>
-            </label>
-          </div>
-
-          <div class="est-field">
-            <span class="est-label">Children to sponsor</span>
-            <div class="est-step" data-step-field="children" data-min="0" data-max="8">
-              <button type="button" data-delta="-1" aria-label="Fewer children">−</button>
-              <span class="est-step-v">0</span>
-              <button type="button" data-delta="1" aria-label="More children">+</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- ---- your situation ---- -->
-        <div class="est-group">
-          <p class="est-group-h">03 · Your situation</p>
-
-          <div class="est-field">
-            <span class="est-label">Where are you now?</span>
-            <div class="est-opts" data-field="inUAE" role="group">
-              <button type="button" class="est-opt on" data-value="false" aria-pressed="true">Outside the UAE</button>
-              <button type="button" class="est-opt" data-value="true" aria-pressed="false">Already in the UAE</button>
-            </div>
-            <p class="est-hint">Entering on a permit issued at home avoids the change-of-status charge. We price it either way.</p>
-          </div>
-
-          <div class="est-field">
-            <label class="est-label" for="est-nationality">Passport held</label>
-            <select class="est-select" id="est-nationality"></select>
-            <p class="est-hint">Some nationalities need extra documents. We would rather you knew on day one.</p>
-          </div>
-
-          <div class="est-field">
-            <label class="est-switch">
-              <input type="checkbox" data-toggle="urgent">
-              <span class="est-switch-track"></span>
-              <span class="est-switch-l">I need the licence fast</span>
-            </label>
-          </div>
-        </div>
-      </form>
-
-      <!-- ============ RESULTS ============ -->
-      <div class="est-results-wrap">
-
-        <div class="est-results-head">
-          <div>
-            <h2><span id="est-count">5</span> routes priced for this brief</h2>
-            <p>Ranked cheapest first. Every figure is a partner rate, not a website price.</p>
-          </div>
-          <div class="est-horizon" role="group" aria-label="Time horizon">
-            <button type="button" data-horizon="1" class="on" aria-pressed="true">Year one</button>
-            <button type="button" data-horizon="3" aria-pressed="false">Three years</button>
-          </div>
-        </div>
-
-        <div id="est-kpis"></div>
-        <div id="est-results"></div>
-
-        <!-- ============ HANDOFF ============ -->
-        <section class="est-handoff" id="est-handoff">
-          <h2>Turn this into a formal estimate.</h2>
-          <p>
-            What you have is an accurate live calculation. What we issue is a signed three-page
-            estimate against your named activity, checked on the authority's own register, with the
-            approval sequence, the document list for your passport and a fixed validity.
-          </p>
-
-          <div class="est-spec">
-            <p class="est-spec-h">The brief we would work from</p>
-            <ul id="est-spec-list"></ul>
-          </div>
-
-          <div class="est-handoff-actions">
-            <a class="btn btn-gold btn-lg" id="est-whatsapp" href="#" target="_blank" rel="noopener">Send this brief on WhatsApp</a>
-            <a class="btn btn-ghost btn-lg" id="est-email" href="#" style="border-color:rgba(255,255,255,.3);color:#fff">Email it instead</a>
-            <button class="btn btn-ghost btn-lg" id="est-print" type="button" style="border-color:rgba(255,255,255,.3);color:#fff">Print or save as PDF</button>
-          </div>
-
-          <p class="est-handoff-foot">
-            Your specification travels with the message, so nobody asks you the same questions again.
-            The Pathway Session — the written jurisdiction verdict, full cost split, visa numbers and
-            banking readiness — is AED 500 and is credited in full against your setup fee.
-          </p>
-        </section>
-
-        <p class="est-foot">
-          <strong>How to read this.</strong> Section A is paid directly to the named authority and to
-          immigration; we neither collect it nor mark it up. Section B is our fee, and no VAT is
-          charged on it. Payment terms are 60 per cent on engagement and 40 per cent on licence
-          issuance. Figures are partner rates as at <span data-asof>—</span>, held for 30 days, and
-          confirmed on the authority payment voucher before anything is filed. This estimator is a
-          calculation, not an offer, and it does not guarantee approval, a date or a tax outcome.
+        <p class="est-foot est-foot-slim">
+          Section A is paid directly to the named authority and to immigration; we neither collect
+          it nor mark it up. Section B is our fee, and no VAT is charged on it. Figures are partner
+          rates as at <span data-asof>—</span>, held for 30 days, and confirmed on the authority
+          payment voucher before anything is filed. This is a calculation, not an offer, and it
+          does not guarantee approval, a date or a tax outcome.
         </p>
-
       </div>
+
     </div>
   </div>
 
@@ -1175,6 +1203,45 @@ window.AAA_PRICING = {
       'Dependent figures are Dubai GDRFA rates. Where the sponsor visa is issued outside ' +
       'Dubai the immigration authority differs and these are indicative until confirmed.'
   },
+
+  /* ------------------------------------------------------------------
+     EMIRATES — how a client actually thinks about the choice. They pick a
+     place before they pick a zone, so the estimator asks in that order.
+     ------------------------------------------------------------------ */
+  emirates: [
+    {
+      id: 'dubai',
+      name: 'Dubai',
+      zones: ['meydan', 'ifza'],
+      mainland: true,
+      blurb: 'The address clients and banks read fastest. Two partner free zones at different price points, plus the mainland route.',
+      note: 'Meydan for the strongest banking reputation, IFZA for a Dubai address at roughly 5,000 less with the renewal price locked.'
+    },
+    {
+      id: 'sharjah',
+      name: 'Sharjah',
+      zones: ['spc'],
+      mainland: false,
+      blurb: 'Cheapest itemised route, with genuine sector credibility in publishing, media and creative work.',
+      note: 'Up to 5 activities and up to 100 shareholders on one licence.'
+    },
+    {
+      id: 'rasalkhaimah',
+      name: 'Ras Al Khaimah',
+      zones: ['rakez'],
+      mainland: false,
+      blurb: 'Where the industrial capacity is. Land, warehousing and the deepest multi-year discount of the five.',
+      note: 'All-inclusive packages — nothing itemised, nothing to add but amendments.'
+    },
+    {
+      id: 'ajman',
+      name: 'Ajman',
+      zones: ['ajman'],
+      mainland: false,
+      blurb: 'The lowest entry cost, a licence in an hour, and a VAT Designated Zone with Ajman Port inside it.',
+      note: 'Renews at the same price every year — worth weighing over three years.'
+    }
+  ],
 
   /* ------------------------------------------------------------------
      THE FIVE PARTNER FREE ZONES
@@ -2096,35 +2163,278 @@ window.AAA_PRICING = {
   }
 
   /* =====================================================================
-     RENDER
+     THE SEQUENCE
+     A client picks a place before a zone, and gives their name before
+     anything is prepared for them. The steps follow the order we actually
+     build an estimate in, not the order the data happens to sit in.
      ===================================================================== */
 
-  function renderKpis(results, s) {
+  spec.name = '';
+  spec.email = '';
+  spec.phone = '';
+  spec.emirate = null;      // 'dubai' | 'sharjah' | 'rasalkhaimah' | 'ajman' | 'all'
+  spec.zoneChoice = null;   // zone id | 'compare' | 'mainland'
+  spec.unlocked = false;
+  spec.reference = null;
+
+  var stepIndex = 0;
+  var leadState = 'idle';   // idle | sending | sent | failed
+  var showErrors = false;
+
+  function firstName() {
+    var n = (spec.name || '').trim();
+    return n ? n.split(/\s+/)[0] : '';
+  }
+  function emirateById(id) {
+    for (var i = 0; i < P.emirates.length; i++) if (P.emirates[i].id === id) return P.emirates[i];
+    return null;
+  }
+  function zoneById(id) {
+    for (var i = 0; i < P.zones.length; i++) if (P.zones[i].id === id) return P.zones[i];
+    return null;
+  }
+
+  // Which zones the current choice asks us to price.
+  function chosenZones() {
+    if (spec.emirate === 'all' || spec.zoneChoice === 'compare-all') return P.zones.slice();
+    if (spec.zoneChoice === 'mainland') return [];
+    if (spec.zoneChoice === 'compare') {
+      var e = emirateById(spec.emirate);
+      return e ? e.zones.map(zoneById) : [];
+    }
+    var z = zoneById(spec.zoneChoice);
+    return z ? [z] : [];
+  }
+  function mainlandChosen() {
+    return spec.zoneChoice === 'mainland' || spec.emirate === 'all';
+  }
+
+  function reference() {
+    if (spec.reference) return spec.reference;
+    var d = new Date();
+    var p = function (n) { return (n < 10 ? '0' : '') + n; };
+    var stamp = String(d.getFullYear()).slice(2) + p(d.getMonth() + 1) + p(d.getDate());
+    var rand = Math.floor(1000 + Math.random() * 9000);
+    spec.reference = 'AAA · WEB-' + stamp + '-' + rand;
+    return spec.reference;
+  }
+
+  /* ================= small render helpers ================= */
+  function opts(field, list) {
+    return '<div class="est-opts" data-field="' + field + '" role="group">' +
+      list.map(function (o) {
+        var on = String(spec[field]) === String(o.v);
+        return '<button type="button" class="est-opt' + (on ? ' on' : '') +
+          '" data-value="' + esc(o.v) + '" aria-pressed="' + on + '">' + esc(o.l) + '</button>';
+      }).join('') + '</div>';
+  }
+  function stepper(field, min, max, label) {
+    return '<div class="est-field"><span class="est-label">' + esc(label) + '</span>' +
+      '<div class="est-step" data-step-field="' + field + '" data-min="' + min + '" data-max="' + max + '">' +
+      '<button type="button" data-delta="-1" aria-label="Fewer">&minus;</button>' +
+      '<span class="est-step-v">' + spec[field] + '</span>' +
+      '<button type="button" data-delta="1" aria-label="More">+</button></div></div>';
+  }
+  function field(label, inner, hint) {
+    return '<div class="est-field"><span class="est-label">' + esc(label) + '</span>' + inner +
+      (hint ? '<p class="est-hint">' + esc(hint) + '</p>' : '') + '</div>';
+  }
+
+  /* =====================================================================
+     STEPS
+     ===================================================================== */
+
+  var STEPS = [
+
+    /* -------- 01 who it is for -------- */
+    {
+      id: 'you',
+      rail: 'Your details',
+      title: 'Who is this estimate for?',
+      sub: 'Every estimate we issue is addressed to someone. Yours will be too.',
+      render: function () {
+        var bad = showErrors && !this.ok();
+        return field('Your name',
+          '<input class="est-input' + (bad ? ' bad' : '') + '" id="f-name" type="text" ' +
+          'autocomplete="name" placeholder="e.g. Selam Bekele" value="' + esc(spec.name) + '">',
+          'First name is enough. We put it on the estimate so you can keep it, forward it, or bring it to a call.') +
+          (bad ? '<p class="est-err">Please tell us who this is for.</p>' : '');
+      },
+      ok: function () { return (spec.name || '').trim().length >= 2; }
+    },
+
+    /* -------- 02 where -------- */
+    {
+      id: 'where',
+      rail: 'Where',
+      title: function () {
+        var n = firstName();
+        return n ? 'Where do you want to be, ' + n + '?' : 'Where do you want to be?';
+      },
+      sub: 'Pick the emirate first. We will show you what it holds.',
+      render: function () {
+        var html = '<div class="est-emirates">' + P.emirates.map(function (e) {
+          var on = spec.emirate === e.id;
+          return '<button type="button" class="est-emirate' + (on ? ' on' : '') +
+            '" data-emirate="' + e.id + '" aria-pressed="' + on + '">' +
+            '<span class="est-em-name">' + esc(e.name) + '</span>' +
+            '<span class="est-em-blurb">' + esc(e.blurb) + '</span>' +
+            '<span class="est-em-zones">' + e.zones.map(function (z) {
+              return esc(zoneById(z).short);
+            }).join(' · ') + (e.mainland ? ' · Mainland' : '') + '</span></button>';
+        }).join('') +
+        '<button type="button" class="est-emirate est-emirate-wide' + (spec.emirate === 'all' ? ' on' : '') +
+        '" data-emirate="all" aria-pressed="' + (spec.emirate === 'all') + '">' +
+        '<span class="est-em-name">Not sure yet — compare all four emirates</span>' +
+        '<span class="est-em-blurb">We price every partner zone side by side and you choose from the numbers.</span>' +
+        '</button></div>';
+
+        // Second choice, only where the emirate holds more than one route.
+        var e = emirateById(spec.emirate);
+        if (e && (e.zones.length > 1 || e.mainland)) {
+          var list = e.zones.map(function (id) {
+            var z = zoneById(id);
+            return { v: id, l: z.short + ' — ' + z.emirate + (z.subLocation ? ', ' + z.subLocation : '') };
+          });
+          if (e.zones.length > 1) list.push({ v: 'compare', l: 'Compare both, side by side' });
+          if (e.mainland) list.push({ v: 'mainland', l: e.name + ' Mainland' });
+          html += '<div class="est-subchoice"><p class="est-group-h">Which route in ' + esc(e.name) + '?</p>' +
+            opts('zoneChoice', list) + '</div>';
+        } else if (e) {
+          var z = zoneById(e.zones[0]);
+          html += '<div class="est-subchoice"><div class="est-confirm">' +
+            '<h4>' + esc(z.name) + '</h4><p>' + esc(z.positioning) + '</p>' +
+            '<p class="est-hint">' + esc(e.note) + '</p></div></div>';
+        }
+        if (showErrors && !this.ok()) html += '<p class="est-err">Choose an emirate to continue.</p>';
+        return html;
+      },
+      ok: function () {
+        if (spec.emirate === 'all') return true;
+        var e = emirateById(spec.emirate);
+        if (!e) return false;
+        if (e.zones.length > 1 || e.mainland) return !!spec.zoneChoice;
+        return true;
+      }
+    },
+
+    /* -------- 03 the business -------- */
+    {
+      id: 'business',
+      rail: 'The business',
+      title: 'What will the company do?',
+      sub: 'The activity drives the licence, the approvals and sometimes the zone itself.',
+      render: function () {
+        return field('Business direction', opts('direction', [
+            { v: 'services', l: 'Services or consulting' },
+            { v: 'trading', l: 'Trading in goods' },
+            { v: 'ecommerce', l: 'E-commerce' },
+            { v: 'media', l: 'Media or creative' },
+            { v: 'industrial', l: 'Industrial' },
+            { v: 'generalTrading', l: 'General Trading' }
+          ])) +
+          field('Will you sell directly to customers inside the UAE?', opts('mainlandSales', [
+            { v: 'no', l: 'No, mostly international' },
+            { v: 'some', l: 'Some of it' },
+            { v: 'core', l: 'Yes, that is the core' }
+          ]), 'A free zone company cannot sell directly into the mainland without a mainland licence or a distributor. It matters more than price.') +
+          field('What space do you need?', opts('premises', [
+            { v: 'flexi', l: 'Flexi desk or virtual office' },
+            { v: 'warehouse', l: 'Warehouse, land or industrial' }
+          ])) +
+          stepper('activities', 1, 12, 'How many licensed activities?');
+      },
+      ok: function () { return true; }
+    },
+
+    /* -------- 04 the people -------- */
+    {
+      id: 'people',
+      rail: 'The people',
+      title: 'Who needs a visa?',
+      sub: 'Visa count is the single biggest driver of what you will pay in year one.',
+      render: function () {
+        return stepper('shareholders', 1, 12, 'Shareholders') +
+          stepper('shareholderVisas', 0, 10, 'Investor visas, for shareholders') +
+          stepper('employeeVisas', 0, 10, 'Employment visas, for staff') +
+          '<div class="est-field"><label class="est-switch"><input type="checkbox" data-toggle="spouse"' +
+          (spec.spouse ? ' checked' : '') + '><span class="est-switch-track"></span>' +
+          '<span class="est-switch-l">Sponsoring a spouse</span></label></div>' +
+          stepper('children', 0, 8, 'Children to sponsor');
+      },
+      ok: function () { return true; }
+    },
+
+    /* -------- 05 your situation -------- */
+    {
+      id: 'situation',
+      rail: 'Your situation',
+      title: 'A few things about you',
+      sub: 'These change the paperwork, and sometimes the price.',
+      render: function () {
+        var natOpts = P.nationality.options.map(function (o) {
+          return '<option value="' + o.code + '"' + (o.code === spec.nationality ? ' selected' : '') +
+            '>' + esc(o.label) + '</option>';
+        }).join('');
+        return field('Where are you now?', opts('inUAE', [
+            { v: 'false', l: 'Outside the UAE' },
+            { v: 'true', l: 'Already in the UAE' }
+          ]), 'Entering on a permit issued at home avoids the change-of-status charge. We price it either way.') +
+          field('Passport held', '<select class="est-select" id="f-nat">' + natOpts + '</select>',
+            'Some nationalities need extra documents. We would rather you knew on day one.') +
+          '<div class="est-field"><label class="est-switch"><input type="checkbox" data-toggle="urgent"' +
+          (spec.urgent ? ' checked' : '') + '><span class="est-switch-track"></span>' +
+          '<span class="est-switch-l">I need the licence fast</span></label></div>';
+      },
+      ok: function () { return true; }
+    },
+
+    /* -------- 06 the estimate -------- */
+    {
+      id: 'estimate',
+      rail: 'Your estimate',
+      title: function () {
+        var n = firstName();
+        return n ? n + ', here is what it costs' : 'Here is what it costs';
+      },
+      sub: null,
+      render: function () { return renderEstimate(); },
+      ok: function () { return true; }
+    }
+  ];
+
+  function stepTitle(st) { return typeof st.title === 'function' ? st.title() : st.title; }
+
+  /* =====================================================================
+     THE ESTIMATE
+     Totals are free. The itemisation, and the copy you can keep, sit
+     behind the contact step.
+     ===================================================================== */
+
+  function renderKpis(results) {
     var priced = results.filter(function (r) { return r.eligible && !r.quoteOnRequest; });
-    if (!priced.length) return '';
+    if (priced.length < 2) return '';
     var totals = priced.map(function (r) { return r.total; });
     var lo = Math.min.apply(null, totals), hi = Math.max.apply(null, totals);
-    var loZone = priced.find(function (r) { return r.total === lo; });
-    var hiZone = priced.find(function (r) { return r.total === hi; });
-    var visaCosts = priced.map(function (r) { return r.nextVisa; }).filter(function (n) { return n !== null; });
-    var cheapestVisa = visaCosts.length ? Math.min.apply(null, visaCosts) : null;
-
+    var loZ = priced.filter(function (r) { return r.total === lo; })[0];
+    var hiZ = priced.filter(function (r) { return r.total === hi; })[0];
+    var vc = priced.map(function (r) { return r.nextVisa; }).filter(function (n) { return n !== null; });
     var tiles = [
-      { k: 'Lowest year one', v: money(lo), s: loZone.zone.name },
-      { k: 'Highest year one', v: money(hi), s: hiZone.zone.name },
+      { k: 'Lowest year one', v: money(lo), s: loZ.zone.name },
+      { k: 'Highest year one', v: money(hi), s: hiZ.zone.name },
       { k: 'The spread', v: money(hi - lo), s: 'What the address costs you' },
-      { k: 'One more visa, from', v: cheapestVisa === null ? '—' : money(cheapestVisa), s: 'Cheapest of the options open to you' }
+      { k: 'One more visa, from', v: vc.length ? money(Math.min.apply(null, vc)) : '—', s: 'Cheapest option open to you' }
     ];
     return '<div class="est-kpis">' + tiles.map(function (t) {
       return '<div class="est-kpi"><span class="est-kpi-k">' + esc(t.k) + '</span>' +
-             '<span class="est-kpi-v">' + esc(t.v) + '</span>' +
-             '<span class="est-kpi-s">' + esc(t.s) + '</span></div>';
+        '<span class="est-kpi-v">' + esc(t.v) + '</span>' +
+        '<span class="est-kpi-s">' + esc(t.s) + '</span></div>';
     }).join('') + '</div>';
   }
 
   function renderRows(rows) {
     return rows.map(function (r) {
-      var qty = (r.qty > 1) ? '<span class="est-qty">' + r.qty + ' × ' + money(r.unit) + '</span>' : '';
+      var qty = (r.qty > 1) ? '<span class="est-qty">' + r.qty + ' &times; ' + money(r.unit) + '</span>' : '';
       return '<tr><td class="est-l"><span class="est-l-main">' + esc(r.label) + '</span>' +
         (r.detail ? '<span class="est-l-sub">' + esc(r.detail) + '</span>' : '') + '</td>' +
         '<td class="est-q">' + qty + '</td>' +
@@ -2139,10 +2449,9 @@ window.AAA_PRICING = {
     }).join('') + '</ul>';
   }
 
-  function renderZoneCard(r, rank, s, cheapest) {
+  function renderZoneCard(r, cheapest) {
     var z = r.zone;
-    var head = '<div class="est-z-head">' +
-      '<div class="est-z-id"><h3>' + esc(z.name) + '</h3>' +
+    var head = '<div class="est-z-head"><div class="est-z-id"><h3>' + esc(z.name) + '</h3>' +
       '<p class="est-z-where">' + esc(z.emirate) + (z.subLocation ? ' · ' + esc(z.subLocation) : '') + '</p></div>';
 
     if (!r.eligible) {
@@ -2150,7 +2459,6 @@ window.AAA_PRICING = {
         '<span class="est-badge est-badge-out">Not available for this brief</span></div>' +
         '<p class="est-out-reason">' + esc(r.reason) + '</p></article>';
     }
-
     if (r.quoteOnRequest) {
       return '<article class="est-zone est-zone-soft">' + head +
         '<span class="est-badge est-badge-soft">Built with the authority</span></div>' +
@@ -2158,340 +2466,491 @@ window.AAA_PRICING = {
     }
 
     var badges = [];
-    if (r.total === cheapest) badges.push('<span class="est-badge est-badge-best">Lowest year one</span>');
+    if (cheapest !== null && r.total === cheapest) badges.push('<span class="est-badge est-badge-best">Lowest year one</span>');
     if (z.emirate === 'Dubai') badges.push('<span class="est-badge">Dubai address</span>');
     if (z.limits.designatedZone === true) badges.push('<span class="est-badge est-badge-dz">VAT Designated Zone</span>');
     if (z.renewal.flat) badges.push('<span class="est-badge est-badge-warn">Renews flat</span>');
 
     var aPct = Math.round((r.sectionATotal / r.total) * 100);
 
-    var threeYearBlock = '';
-    if (s.horizon === 3) {
-      threeYearBlock = r.threeYear.available
+    var itemised =
+      '<div class="est-sec"><p class="est-sec-h">Section A · Authority cost' +
+      '<span>Paid directly to ' + esc(z.name) + ' and to immigration. Shown at cost, no markup.</span></p>' +
+      '<table class="est-table"><tbody>' + renderRows(r.sectionA) +
+      '<tr class="est-tot"><td colspan="2">Total, Section A</td><td class="est-a">' + money(r.sectionATotal) + '</td></tr>' +
+      '</tbody></table></div>' +
+      '<div class="est-sec"><p class="est-sec-h">Section B · And Again Advisory' +
+      '<span>Our fee. ' + esc(P.aaaFee.vatNote) + '</span></p>' +
+      '<table class="est-table"><tbody>' + renderRows(r.sectionB) +
+      '<tr class="est-tot"><td colspan="2">Total, Section B</td><td class="est-a">' + money(r.sectionBTotal) + '</td></tr>' +
+      '</tbody></table></div>' +
+      '<p class="est-grand">Year one total &nbsp;<b>' + money(r.sectionATotal) + '</b> + <b>' +
+      money(r.sectionBTotal) + '</b> = <b class="est-grand-v">AED ' + money(r.total) + '</b></p>' +
+      (r.threeYear.available
         ? '<div class="est-3y est-3y-on"><span class="est-3y-k">Authority cost over three years</span>' +
           '<span class="est-3y-v">' + money(r.threeYear.amount) + '</span>' +
-          '<p class="est-3y-note">' + esc(r.threeYear.note) + '</p>' +
-          '<p class="est-3y-foot">Our fee is a one-time setup fee and is not repeated. Year two and ' +
-          'year three renewal handling is quoted separately.</p></div>'
+          '<p class="est-3y-note">' + esc(r.threeYear.note) + '</p></div>'
         : '<div class="est-3y est-3y-off"><span class="est-3y-k">Authority cost over three years</span>' +
           '<span class="est-3y-v est-3y-none">Not published</span>' +
-          '<p class="est-3y-note">' + esc(r.threeYear.note) + '</p></div>';
-    }
+          '<p class="est-3y-note">' + esc(r.threeYear.note) + '</p></div>') +
+      '<p class="est-src">Rate source: ' + esc(z.source) + '</p>';
 
-    return '<article class="est-zone" data-zone="' + z.id + '">' + head +
+    return '<article class="est-zone">' + head +
       '<div class="est-z-total"><span class="est-z-total-v">' + money(r.total) + '</span>' +
       '<span class="est-z-total-k">AED, year one, all in</span></div></div>' +
-
       '<div class="est-badges">' + badges.join('') + '</div>' +
       '<p class="est-z-pos">' + esc(z.positioning) + '</p>' +
-
-      '<div class="est-split">' +
-        '<div class="est-split-bar"><span class="est-split-a" style="width:' + aPct + '%"></span>' +
+      '<div class="est-split"><div class="est-split-bar">' +
+        '<span class="est-split-a" style="width:' + aPct + '%"></span>' +
         '<span class="est-split-b" style="width:' + (100 - aPct) + '%"></span></div>' +
         '<div class="est-split-legend">' +
           '<span><i class="dot dot-a"></i>A · Authority, at cost <b>' + money(r.sectionATotal) + '</b></span>' +
           '<span><i class="dot dot-b"></i>B · Our fee <b>' + money(r.sectionBTotal) + '</b></span>' +
-        '</div>' +
-      '</div>' +
-
+        '</div></div>' +
       '<dl class="est-facts">' +
         '<div><dt>Issuance</dt><dd>' + esc(z.issuance) + '</dd></div>' +
         '<div><dt>Priced on</dt><dd>' + esc(r.package) + '</dd></div>' +
         '<div><dt>One more visa</dt><dd>' + (r.nextVisa === null ? 'At capacity here' : money(r.nextVisa)) + '</dd></div>' +
       '</dl>' +
-
-      threeYearBlock +
-
-      '<details class="est-detail"><summary>See every line, itemised</summary>' +
-        '<div class="est-sec"><p class="est-sec-h">Section A · Authority cost' +
-        '<span>Paid directly to ' + esc(z.name) + ' and to immigration. Shown at cost, no markup.</span></p>' +
-        '<table class="est-table"><tbody>' + renderRows(r.sectionA) +
-        '<tr class="est-tot"><td colspan="2">Total, Section A</td><td class="est-a">' + money(r.sectionATotal) + '</td></tr>' +
-        '</tbody></table></div>' +
-
-        '<div class="est-sec"><p class="est-sec-h">Section B · And Again Advisory' +
-        '<span>Our fee. ' + esc(P.aaaFee.vatNote) + '</span></p>' +
-        '<table class="est-table"><tbody>' + renderRows(r.sectionB) +
-        '<tr class="est-tot"><td colspan="2">Total, Section B</td><td class="est-a">' + money(r.sectionBTotal) + '</td></tr>' +
-        '</tbody></table></div>' +
-
-        '<p class="est-grand">Year one total &nbsp;<b>' + money(r.sectionATotal) + '</b> + <b>' +
-        money(r.sectionBTotal) + '</b> = <b class="est-grand-v">AED ' + money(r.total) + '</b></p>' +
-        '<p class="est-src">Rate source: ' + esc(z.source) + '</p>' +
-      '</details>' +
-
+      (spec.unlocked ? '<div class="est-itemised">' + itemised + '</div>' : '') +
       renderFlags(r.flags) +
     '</article>';
   }
 
-  function renderMainland(s) {
+  function renderMainland() {
     var m = P.mainland;
-    var lead = s.mainlandSales === 'core';
-    return '<article class="est-mainland' + (lead ? ' est-mainland-lead' : '') + '">' +
+    return '<article class="est-mainland">' +
       '<div class="est-z-head"><div class="est-z-id"><h3>' + esc(m.name) + '</h3>' +
       '<p class="est-z-where">' + esc(m.authority) + '</p></div>' +
       '<div class="est-z-total"><span class="est-z-total-v">' + money(m.aaaFee) + '</span>' +
       '<span class="est-z-total-k">AED, our fee — flat, any structure</span></div></div>' +
-      (lead ? '<span class="est-badge est-badge-best">Selling into the UAE market points here</span>' : '') +
       '<p class="est-z-pos">' + esc(m.why) + '</p>' +
       '<div class="est-blocks">' + m.blocks.map(function (b) {
         return '<div class="est-block"><span class="est-block-l">' + b.letter + '</span>' +
           '<div><h4>' + esc(b.title) + '</h4><p>' + esc(b.detail) + '</p></div></div>';
       }).join('') + '</div>' +
-      '<details class="est-detail"><summary>What we pin before a mainland number is real</summary>' +
-      '<ul class="est-pin">' + m.toPin.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul>' +
-      '<p class="est-sec-h" style="margin-top:18px">Lines verified on a government source</p>' +
-      '<table class="est-table"><tbody>' + m.verified.map(function (v) {
-        return '<tr><td class="est-l"><span class="est-l-main">' + esc(v.label) + '</span></td>' +
-               '<td class="est-q"></td><td class="est-a">' + esc(v.amount) + '</td></tr>';
-      }).join('') + '</tbody></table>' +
-      '<p class="est-src">' + esc(m.memo) + '</p></details>' +
+      (spec.unlocked
+        ? '<div class="est-itemised"><p class="est-sec-h" style="margin-top:18px">What we pin before a mainland number is real</p>' +
+          '<ul class="est-pin">' + m.toPin.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul>' +
+          '<p class="est-src">' + esc(m.memo) + '</p></div>'
+        : '') +
     '</article>';
   }
 
-  function renderRequirements(s) {
+  function renderRequirements() {
     var out = '';
-    var reqs = P.nationality.requirements[s.nationality];
-    var natLabel = (P.nationality.options.find(function (o) { return o.code === s.nationality; }) || {}).label || '';
+    var reqs = P.nationality.requirements[spec.nationality];
+    var natLabel = '';
+    P.nationality.options.forEach(function (o) { if (o.code === spec.nationality) natLabel = o.label; });
 
     if (reqs && reqs.length) {
       out += '<div class="est-panel est-panel-warn"><h3>Because you hold an ' + esc(natLabel) +
-        ' passport, immigration will ask for more</h3>' +
-        '<ul>' + reqs.map(function (r) { return '<li>' + esc(r) + '</li>'; }).join('') + '</ul>' +
-        '<p class="est-panel-foot">' + esc(P.nationality.genericNote) +
-        ' We raise this on day one rather than at document stage.</p></div>';
+        ' passport, immigration will ask for more</h3><ul>' +
+        reqs.map(function (r) { return '<li>' + esc(r) + '</li>'; }).join('') + '</ul>' +
+        '<p class="est-panel-foot">' + esc(P.nationality.genericNote) + '</p></div>';
     }
-
-    if (dependentCount(s) > 0) {
-      out += '<div class="est-panel"><h3>Sponsoring your family</h3>' +
-        '<p>' + esc(P.dependents.incomeTest) + '</p>' +
-        '<p class="est-panel-foot">' + esc(P.dependents.note) + '</p></div>';
+    if (dependentCount(spec) > 0) {
+      out += '<div class="est-panel"><h3>Sponsoring your family</h3><p>' + esc(P.dependents.incomeTest) +
+        '</p><p class="est-panel-foot">' + esc(P.dependents.note) + '</p></div>';
     }
-
-    if (s.mainlandSales !== 'no') {
-      out += '<div class="est-panel est-panel-warn"><h3>You said you will sell into the UAE market</h3>' +
-        '<p>A free zone company trades inside its zone and internationally without restriction, but it ' +
-        'cannot sell directly to mainland customers without a mainland licence or a licensed ' +
-        'distributor. ' + (s.mainlandSales === 'core'
-          ? 'Since that is the core of your plan, the mainland route below is the honest answer, not a free zone.'
-          : 'For a part of your revenue, a distributor arrangement or a mainland branch alongside the free zone company is usually the cleaner structure. We would work that through with you.') +
+    if (spec.mainlandSales !== 'no') {
+      out += '<div class="est-panel est-panel-warn"><h3>You said you will sell into the UAE market</h3><p>' +
+        'A free zone company trades inside its zone and internationally without restriction, but it ' +
+        'cannot sell directly to mainland customers without a mainland licence or a licensed distributor. ' +
+        (spec.mainlandSales === 'core'
+          ? 'Since that is the core of your plan, the mainland route is the honest answer, not a free zone.'
+          : 'For part of your revenue, a distributor arrangement or a mainland branch alongside the free zone company is usually cleaner.') +
         '</p></div>';
     }
-
     out += '<div class="est-panel"><h3>True of every route</h3><ul class="est-universal">' +
       P.universal.map(function (u) {
         return '<li class="est-u est-u-' + u.tone + '"><b>' + esc(u.title) + '</b><span>' + esc(u.text) + '</span></li>';
       }).join('') + '</ul></div>';
-
     return out;
   }
 
-  /* ================= specification summary + handoff ================= */
-  function specSummary(s) {
-    var dirLabels = {
-      services: 'Services or consulting', trading: 'Trading in physical goods',
-      ecommerce: 'E-commerce', media: 'Media, creative or publishing',
-      industrial: 'Industrial or manufacturing', generalTrading: 'General Trading'
-    };
-    var v = totalVisas(s);
-    var parts = [
-      dirLabels[s.direction],
-      plural(s.shareholders, 'shareholder', 'shareholders'),
-      plural(v, 'residence visa', 'residence visas') +
-        (v > 0 ? ' (' + s.shareholderVisas + ' investor, ' + s.employeeVisas + ' employment)' : ''),
-      plural(s.activities, 'activity', 'activities'),
-      s.premises === 'warehouse' ? 'Warehouse, land or industrial space' : 'Flexi desk or virtual office',
-      s.inUAE ? 'Applicant already in the UAE' : 'Applicant entering on a permit issued at home'
-    ];
-    if (dependentCount(s) > 0) {
-      parts.push((s.spouse ? 'Spouse' : '') + (s.spouse && s.children ? ' and ' : '') +
-        (s.children ? plural(s.children, 'child', 'children') : ''));
+  /* ---------------- the gate ---------------- */
+  function renderGate() {
+    if (spec.unlocked) {
+      return '<div class="est-unlocked">' +
+        '<p class="est-unlocked-h">Estimate issued to ' + esc(spec.name) + '</p>' +
+        '<p>Reference <b>' + esc(reference()) + '</b> · valid 30 days · ' +
+        (leadState === 'sent'
+          ? 'a copy is on its way to our desk, and we will follow up on ' + esc(spec.email) + '.'
+          : 'send it to us with either button below and we will pick it up.') +
+        '</p>' +
+        '<div class="est-handoff-actions">' +
+          '<a class="btn btn-gold" id="est-whatsapp" href="#" target="_blank" rel="noopener">Send this brief on WhatsApp</a>' +
+          '<a class="btn btn-ghost est-btn-onnavy" id="est-email" href="#">Email it instead</a>' +
+          '<button class="btn btn-ghost est-btn-onnavy" id="est-print" type="button">Print or save as PDF</button>' +
+        '</div></div>';
     }
-    if (s.mainlandSales !== 'no') parts.push(s.mainlandSales === 'core' ? 'Selling mainly into the UAE market' : 'Some UAE mainland sales');
-    if (s.urgent) parts.push('Needs the licence fast');
-    var nat = (P.nationality.options.find(function (o) { return o.code === s.nationality; }) || {}).label;
-    if (nat) parts.push(nat + ' passport');
+
+    var bad = showErrors;
+    return '<div class="est-gate" id="est-gate">' +
+      '<p class="est-gate-eyebrow">One step left</p>' +
+      '<h3>' + (firstName() ? esc(firstName()) + ', where should we send it?' : 'Where should we send it?') + '</h3>' +
+      '<p class="est-gate-sub">The totals above are yours to keep. Add your email and phone and we will ' +
+      'unlock the full itemisation — every authority line, our fee broken out, the three-year view and ' +
+      'a copy you can print. We will also send it over so you have it in writing.</p>' +
+
+      '<div class="est-gate-grid">' +
+        '<label class="est-gf"><span>Name</span>' +
+          '<input class="est-input" id="g-name" type="text" autocomplete="name" value="' + esc(spec.name) + '"></label>' +
+        '<label class="est-gf"><span>Email</span>' +
+          '<input class="est-input' + (bad && !validEmail() ? ' bad' : '') + '" id="g-email" type="email" ' +
+          'autocomplete="email" placeholder="you@company.com" value="' + esc(spec.email) + '"></label>' +
+        '<label class="est-gf"><span>Phone or WhatsApp</span>' +
+          '<input class="est-input' + (bad && !validPhone() ? ' bad' : '') + '" id="g-phone" type="tel" ' +
+          'autocomplete="tel" placeholder="+971 …" value="' + esc(spec.phone) + '"></label>' +
+      '</div>' +
+      (bad && !gateOk() ? '<p class="est-err">' + esc(gateError()) + '</p>' : '') +
+      '<button type="button" class="btn btn-gold btn-lg est-gate-btn" id="est-unlock"' +
+        (leadState === 'sending' ? ' disabled' : '') + '>' +
+        (leadState === 'sending' ? 'Preparing…' : 'Unlock the full itemisation') + '</button>' +
+      '<p class="est-gate-consent">By continuing you agree we may contact you about this estimate. ' +
+      'We do not share your details, and there is no mailing list.</p>' +
+    '</div>';
+  }
+
+  function validEmail() { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test((spec.email || '').trim()); }
+  function validPhone() { return ((spec.phone || '').replace(/[^\d]/g, '').length >= 7); }
+  function gateOk() { return (spec.name || '').trim().length >= 2 && validEmail() && validPhone(); }
+  function gateError() {
+    if ((spec.name || '').trim().length < 2) return 'Please add your name.';
+    if (!validEmail()) return 'That email does not look right — check it and try again.';
+    return 'Please add a phone number we can reach you on, with the country code.';
+  }
+
+  function renderEstimate() {
+    var results = computeAll(spec);
+    var wanted = chosenZones().map(function (z) { return z.id; });
+    var shown = results.filter(function (r) { return wanted.indexOf(r.zone.id) !== -1; });
+
+    var priced = shown.filter(function (r) { return r.eligible && !r.quoteOnRequest; });
+    var cheapest = priced.length ? Math.min.apply(null, priced.map(function (r) { return r.total; })) : null;
+
+    var ordered = shown.slice().sort(function (a, b) {
+      var ao = !a.eligible, bo = !b.eligible;
+      if (ao !== bo) return ao ? 1 : -1;
+      var as = !!a.quoteOnRequest, bs = !!b.quoteOnRequest;
+      if (as !== bs) return as ? 1 : -1;
+      if (ao || as) return 0;
+      return a.total - b.total;
+    });
+
+    var head = '<div class="est-issued">' +
+      '<div><p class="est-issued-k">Prepared for</p><p class="est-issued-v">' + esc(spec.name || '—') + '</p></div>' +
+      '<div><p class="est-issued-k">Reference</p><p class="est-issued-v">' + esc(reference()) + '</p></div>' +
+      '<div><p class="est-issued-k">Position as at</p><p class="est-issued-v">' + esc(P.meta.asOf) + '</p></div>' +
+      '<div><p class="est-issued-k">Currency</p><p class="est-issued-v">AED</p></div>' +
+    '</div>';
+
+    return head +
+      renderKpis(shown) +
+      ordered.map(function (r) { return renderZoneCard(r, cheapest); }).join('') +
+      (mainlandChosen() ? renderMainland() : '') +
+      renderGate() +
+      (spec.unlocked ? renderRequirements() : '') +
+      '<p class="est-restart-wrap"><button type="button" class="text-link" id="est-restart">Start a different estimate</button></p>';
+  }
+
+  /* =====================================================================
+     THE BRIEF — what travels to the desk
+     ===================================================================== */
+  function specSummary() {
+    var dir = { services: 'Services or consulting', trading: 'Trading in physical goods',
+      ecommerce: 'E-commerce', media: 'Media, creative or publishing',
+      industrial: 'Industrial or manufacturing', generalTrading: 'General Trading' };
+    var v = totalVisas(spec);
+    var parts = [dir[spec.direction],
+      plural(spec.shareholders, 'shareholder', 'shareholders'),
+      plural(v, 'residence visa', 'residence visas') +
+        (v > 0 ? ' (' + spec.shareholderVisas + ' investor, ' + spec.employeeVisas + ' employment)' : ''),
+      plural(spec.activities, 'activity', 'activities'),
+      spec.premises === 'warehouse' ? 'Warehouse, land or industrial space' : 'Flexi desk or virtual office',
+      spec.inUAE ? 'Applicant already in the UAE' : 'Applicant entering on a permit issued at home'];
+    if (dependentCount(spec) > 0) {
+      parts.push((spec.spouse ? 'Spouse' : '') + (spec.spouse && spec.children ? ' and ' : '') +
+        (spec.children ? plural(spec.children, 'child', 'children') : ''));
+    }
+    if (spec.mainlandSales !== 'no') {
+      parts.push(spec.mainlandSales === 'core' ? 'Selling mainly into the UAE market' : 'Some UAE mainland sales');
+    }
+    if (spec.urgent) parts.push('Needs the licence fast');
+    P.nationality.options.forEach(function (o) { if (o.code === spec.nationality) parts.push(o.label + ' passport'); });
     return parts;
   }
 
-  function handoffText(s, results) {
-    var priced = results.filter(function (r) { return r.eligible && !r.quoteOnRequest; })
-      .sort(function (a, b) { return a.total - b.total; });
-    var lines = ['Hello And Again Advisory — I used the cost estimator on your site.', '', 'My brief:'];
-    specSummary(s).forEach(function (p) { lines.push('• ' + p); });
-    if (priced.length) {
+  function jurisdictionLabel() {
+    if (spec.emirate === 'all') return 'Comparing all four emirates';
+    var e = emirateById(spec.emirate);
+    if (!e) return '—';
+    if (spec.zoneChoice === 'mainland') return e.name + ' Mainland';
+    if (spec.zoneChoice === 'compare') return e.name + ', comparing ' + e.zones.map(function (z) { return zoneById(z).short; }).join(' and ');
+    var z = zoneById(spec.zoneChoice || e.zones[0]);
+    return z ? z.name + ', ' + e.name : e.name;
+  }
+
+  function figuresLines() {
+    var results = computeAll(spec);
+    var wanted = chosenZones().map(function (z) { return z.id; });
+    return results.filter(function (r) {
+      return wanted.indexOf(r.zone.id) !== -1 && r.eligible && !r.quoteOnRequest;
+    }).sort(function (a, b) { return a.total - b.total; })
+      .map(function (r) { return r.zone.name + ': AED ' + money(r.total); });
+  }
+
+  function briefText() {
+    var lines = ['Hello And Again Advisory — I used the cost estimator on your site.', '',
+      'Name: ' + spec.name, 'Email: ' + spec.email, 'Phone: ' + spec.phone,
+      'Reference: ' + reference(), '', 'Jurisdiction: ' + jurisdictionLabel(), '', 'My brief:'];
+    specSummary().forEach(function (p) { lines.push('• ' + p); });
+    var figs = figuresLines();
+    if (figs.length) {
       lines.push('', 'What the estimator returned, year one all in:');
-      priced.forEach(function (r) { lines.push('• ' + r.zone.name + ': AED ' + money(r.total)); });
+      figs.forEach(function (f) { lines.push('• ' + f); });
     }
     lines.push('', 'Please send me the formal estimate.');
     return lines.join('\n');
   }
 
-  /* ================= paint ================= */
-  var elResults, elKpis, elSpec, elCount;
+  /* ---------------- Netlify Forms ---------------- */
+  function submitLead() {
+    var payload = {
+      'form-name': 'estimator-lead',
+      'bot-field': '',
+      name: spec.name,
+      email: spec.email,
+      phone: spec.phone,
+      reference: reference(),
+      jurisdiction: jurisdictionLabel(),
+      business: specSummary().slice(0, 1).join('') + ' · ' + plural(spec.activities, 'activity', 'activities') +
+        ' · ' + (spec.premises === 'warehouse' ? 'warehouse/industrial' : 'flexi desk'),
+      people: plural(spec.shareholders, 'shareholder', 'shareholders') + ' · ' +
+        plural(totalVisas(spec), 'visa', 'visas') + ' · ' +
+        plural(dependentCount(spec), 'dependent', 'dependents'),
+      situation: (spec.inUAE ? 'In the UAE' : 'Outside the UAE') + ' · ' + spec.nationality +
+        (spec.urgent ? ' · urgent' : ''),
+      figures: figuresLines().join(' | '),
+      specification: specSummary().join(' | '),
+      consent: 'Agreed on the estimator, ' + new Date().toISOString()
+    };
+    var body = Object.keys(payload).map(function (k) {
+      return encodeURIComponent(k) + '=' + encodeURIComponent(payload[k]);
+    }).join('&');
+
+    return fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body
+    }).then(function (res) {
+      if (!res.ok) throw new Error('status ' + res.status);
+      return true;
+    });
+  }
+
+  /* =====================================================================
+     PAINT
+     ===================================================================== */
+  var elRail, elStep, elBack, elNext;
+
+  function paintRail() {
+    elRail.innerHTML = STEPS.map(function (st, i) {
+      var cls = i === stepIndex ? 'on' : (i < stepIndex ? 'done' : '');
+      return '<button type="button" class="est-rail-i ' + cls + '" data-goto="' + i + '"' +
+        (i > stepIndex ? ' disabled' : '') + '>' +
+        '<span class="est-rail-n">' + (i < stepIndex ? '&#10003;' : '0' + (i + 1)) + '</span>' +
+        '<span class="est-rail-l">' + esc(st.rail) + '</span></button>';
+    }).join('');
+  }
 
   function paint() {
-    var results = computeAll(spec);
-    var priced = results.filter(function (r) { return r.eligible && !r.quoteOnRequest; });
-    var cheapest = priced.length ? Math.min.apply(null, priced.map(function (r) { return r.total; })) : null;
+    var st = STEPS[stepIndex];
+    var last = stepIndex === STEPS.length - 1;
 
-    var ordered = results.slice().sort(function (a, b) {
-      var aOut = !a.eligible, bOut = !b.eligible;
-      if (aOut !== bOut) return aOut ? 1 : -1;
-      var aSoft = !!a.quoteOnRequest, bSoft = !!b.quoteOnRequest;
-      if (aSoft !== bSoft) return aSoft ? 1 : -1;
-      if (aOut || aSoft) return 0;
-      return a.total - b.total;
-    });
+    paintRail();
+    elStep.innerHTML =
+      '<div class="est-stephead"><p class="est-stepno">Step ' + (stepIndex + 1) + ' of ' + STEPS.length + '</p>' +
+      '<h2>' + esc(stepTitle(st)) + '</h2>' +
+      (st.sub ? '<p class="est-stepsub">' + esc(st.sub) + '</p>' : '') + '</div>' +
+      '<div class="est-stepbody' + (last ? ' est-stepbody-wide' : '') + '">' + st.render() + '</div>';
 
-    elKpis.innerHTML = renderKpis(results, spec);
-    elCount.textContent = priced.length;
+    elBack.style.visibility = stepIndex === 0 ? 'hidden' : 'visible';
+    elNext.style.display = last ? 'none' : '';
+    elNext.textContent = stepIndex === STEPS.length - 2 ? 'See the numbers' : 'Continue';
 
-    elResults.innerHTML =
-      ordered.map(function (r, i) { return renderZoneCard(r, i, spec, cheapest); }).join('') +
-      renderMainland(spec) +
-      renderRequirements(spec);
-
-    elSpec.innerHTML = specSummary(spec).map(function (p) {
-      return '<li>' + esc(p) + '</li>';
-    }).join('');
-
-    var txt = handoffText(spec, results);
+    // handoff links, only present once unlocked
+    var txt = briefText();
     var wa = document.getElementById('est-whatsapp');
     var em = document.getElementById('est-email');
     if (wa) wa.href = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(txt);
-    if (em) em.href = 'mailto:' + EMAIL +
-      '?subject=' + encodeURIComponent('Cost estimator — formal estimate request') +
-      '&body=' + encodeURIComponent(txt);
+    if (em) em.href = 'mailto:' + EMAIL + '?subject=' +
+      encodeURIComponent('Cost estimator — ' + reference()) + '&body=' + encodeURIComponent(txt);
 
-    document.querySelectorAll('[data-asof]').forEach(function (n) { n.textContent = P.meta.asOf; });
+    Array.prototype.forEach.call(document.querySelectorAll('[data-asof]'), function (n) {
+      n.textContent = P.meta.asOf;
+    });
+    bindStep();
   }
 
-  /* ================= controls ================= */
-  function bind() {
-    document.querySelectorAll('[data-field]').forEach(function (group) {
-      var field = group.dataset.field;
-      group.querySelectorAll('[data-value]').forEach(function (btn) {
+  function go(i) {
+    if (i < 0 || i >= STEPS.length) return;
+    showErrors = false;
+    stepIndex = i;
+    paint();
+    var top = document.querySelector('.est-wizard');
+    if (top) window.scrollTo({ top: top.offsetTop - 80, behavior: 'smooth' });
+  }
+
+  /* =====================================================================
+     BINDINGS — re-attached after every paint
+     ===================================================================== */
+  function bindStep() {
+    // option pills
+    Array.prototype.forEach.call(document.querySelectorAll('[data-field]'), function (group) {
+      var f = group.dataset.field;
+      Array.prototype.forEach.call(group.querySelectorAll('[data-value]'), function (btn) {
         btn.addEventListener('click', function () {
           var raw = btn.dataset.value;
-          var val = raw === 'true' ? true : raw === 'false' ? false : raw;
-          spec[field] = val;
-          group.querySelectorAll('[data-value]').forEach(function (b) {
-            b.classList.toggle('on', b === btn);
-            b.setAttribute('aria-pressed', String(b === btn));
-          });
+          spec[f] = raw === 'true' ? true : raw === 'false' ? false : raw;
           reconcile();
           paint();
         });
       });
     });
 
-    document.querySelectorAll('[data-step-field]').forEach(function (stepper) {
-      var field = stepper.dataset.stepField;
-      var min = parseInt(stepper.dataset.min, 10);
-      var max = parseInt(stepper.dataset.max, 10);
-      var out = stepper.querySelector('.est-step-v');
-      stepper.querySelectorAll('button').forEach(function (b) {
-        b.addEventListener('click', function () {
-          var d = parseInt(b.dataset.delta, 10);
-          spec[field] = Math.max(min, Math.min(max, spec[field] + d));
-          reconcile();
-          paint();
-          syncSteppers();
-        });
-      });
-      out.textContent = spec[field];
-    });
-
-    var nat = document.getElementById('est-nationality');
-    nat.innerHTML = P.nationality.options.map(function (o) {
-      return '<option value="' + o.code + '"' + (o.code === spec.nationality ? ' selected' : '') + '>' +
-        esc(o.label) + '</option>';
-    }).join('');
-    nat.addEventListener('change', function () { spec.nationality = nat.value; paint(); });
-
-    document.querySelectorAll('[data-toggle]').forEach(function (t) {
-      t.addEventListener('change', function () { spec[t.dataset.toggle] = t.checked; paint(); });
-    });
-
-    document.querySelectorAll('[data-horizon]').forEach(function (b) {
+    // emirate cards
+    Array.prototype.forEach.call(document.querySelectorAll('[data-emirate]'), function (b) {
       b.addEventListener('click', function () {
-        spec.horizon = parseInt(b.dataset.horizon, 10);
-        document.querySelectorAll('[data-horizon]').forEach(function (x) {
-          x.classList.toggle('on', x === b);
-          x.setAttribute('aria-pressed', String(x === b));
-        });
+        var id = b.dataset.emirate;
+        spec.emirate = id;
+        var e = emirateById(id);
+        spec.zoneChoice = (e && e.zones.length === 1 && !e.mainland) ? e.zones[0]
+                        : (id === 'all' ? 'compare-all' : null);
         paint();
       });
     });
 
-    // Printing. A closed <details> is not rendered by the browser at all, so
-    // CSS alone cannot reveal the itemisation on the printed page — every
-    // breakdown silently vanished from the PDF. Open them for the duration of
-    // the print, then put them back exactly as the reader had them.
+    // steppers
+    Array.prototype.forEach.call(document.querySelectorAll('[data-step-field]'), function (s) {
+      var f = s.dataset.stepField;
+      var min = parseInt(s.dataset.min, 10), max = parseInt(s.dataset.max, 10);
+      Array.prototype.forEach.call(s.querySelectorAll('button'), function (b) {
+        b.addEventListener('click', function () {
+          spec[f] = Math.max(min, Math.min(max, spec[f] + parseInt(b.dataset.delta, 10)));
+          reconcile();
+          paint();
+        });
+      });
+    });
+
+    // switches
+    Array.prototype.forEach.call(document.querySelectorAll('[data-toggle]'), function (t) {
+      t.addEventListener('change', function () { spec[t.dataset.toggle] = t.checked; paint(); });
+    });
+
+    var nm = document.getElementById('f-name');
+    if (nm) {
+      nm.addEventListener('input', function () { spec.name = nm.value; });
+      nm.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); next(); } });
+      nm.focus();
+    }
+    var nat = document.getElementById('f-nat');
+    if (nat) nat.addEventListener('change', function () { spec.nationality = nat.value; });
+
+    ['g-name', 'g-email', 'g-phone'].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      var key = id === 'g-name' ? 'name' : id === 'g-email' ? 'email' : 'phone';
+      el.addEventListener('input', function () { spec[key] = el.value; });
+      el.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); unlock(); } });
+    });
+
+    var unlockBtn = document.getElementById('est-unlock');
+    if (unlockBtn) unlockBtn.addEventListener('click', unlock);
+
     var printBtn = document.getElementById('est-print');
     if (printBtn) printBtn.addEventListener('click', function () { window.print(); });
 
-    var detailState = null;
-    function expandForPrint() {
-      var nodes = document.querySelectorAll('.est-detail');
-      if (!nodes.length) return;
-      detailState = [];
-      Array.prototype.forEach.call(nodes, function (d, i) {
-        detailState[i] = d.open;
-        d.open = true;
-      });
-    }
-    function restoreAfterPrint() {
-      if (!detailState) return;
-      Array.prototype.forEach.call(document.querySelectorAll('.est-detail'), function (d, i) {
-        d.open = detailState[i];
-      });
-      detailState = null;
-    }
+    var restart = document.getElementById('est-restart');
+    if (restart) restart.addEventListener('click', function () { location.reload(); });
 
-    // Covers the button, Ctrl/Cmd+P and File > Print alike.
+    Array.prototype.forEach.call(document.querySelectorAll('[data-goto]'), function (b) {
+      b.addEventListener('click', function () { go(parseInt(b.dataset.goto, 10)); });
+    });
+  }
+
+  function unlock() {
+    if (!gateOk()) { showErrors = true; paint(); return; }
+    leadState = 'sending';
+    paint();
+    submitLead()
+      .then(function () { leadState = 'sent'; })
+      .catch(function () { leadState = 'failed'; })
+      .then(function () {
+        // The reader gets what they were promised whether or not our form
+        // accepted it. A backend problem is ours, not theirs.
+        spec.unlocked = true;
+        showErrors = false;
+        paint();
+      });
+  }
+
+  function next() {
+    var st = STEPS[stepIndex];
+    if (!st.ok()) { showErrors = true; paint(); return; }
+    go(stepIndex + 1);
+  }
+
+  function reconcile() {
+    if (spec.shareholderVisas > spec.shareholders) spec.shareholderVisas = spec.shareholders;
+    if (spec.employeeVisas > 0 && spec.shareholderVisas === 0) spec.shareholderVisas = 1;
+  }
+
+  /* ---------------- print: open every breakdown ---------------- */
+  var detailState = null;
+  function expandForPrint() {
+    var nodes = document.querySelectorAll('details');
+    if (!nodes.length) return;
+    detailState = [];
+    Array.prototype.forEach.call(nodes, function (d, i) { detailState[i] = d.open; d.open = true; });
+  }
+  function restoreAfterPrint() {
+    if (!detailState) return;
+    Array.prototype.forEach.call(document.querySelectorAll('details'), function (d, i) {
+      d.open = detailState[i];
+    });
+    detailState = null;
+  }
+
+  /* ================= go ================= */
+  document.addEventListener('DOMContentLoaded', function () {
+    elRail = document.getElementById('est-rail');
+    elStep = document.getElementById('est-stepwrap');
+    elBack = document.getElementById('est-back');
+    elNext = document.getElementById('est-next');
+    if (!elStep) return;
+
+    elBack.addEventListener('click', function () { go(stepIndex - 1); });
+    elNext.addEventListener('click', next);
+
     window.addEventListener('beforeprint', expandForPrint);
     window.addEventListener('afterprint', restoreAfterPrint);
-
-    // Safari fires no beforeprint/afterprint; it toggles the print media query.
     if (window.matchMedia) {
       var mq = window.matchMedia('print');
       var onMq = function (e) { (e.matches ? expandForPrint : restoreAfterPrint)(); };
       if (mq.addEventListener) mq.addEventListener('change', onMq);
       else if (mq.addListener) mq.addListener(onMq);
     }
-  }
 
-  // Keep the visa split coherent: shareholder visas can never exceed
-  // shareholders, and a company with visas needs at least one investor visa.
-  function reconcile() {
-    if (spec.shareholderVisas > spec.shareholders) spec.shareholderVisas = spec.shareholders;
-    if (spec.employeeVisas > 0 && spec.shareholderVisas === 0) spec.shareholderVisas = 1;
-    if (spec.direction === 'industrial' && spec.premises === 'flexi') { /* allowed, just flagged */ }
-  }
-
-  function syncSteppers() {
-    document.querySelectorAll('[data-step-field]').forEach(function (stepper) {
-      var f = stepper.dataset.stepField;
-      stepper.querySelector('.est-step-v').textContent = spec[f];
-    });
-  }
-
-  /* ================= go ================= */
-  document.addEventListener('DOMContentLoaded', function () {
-    elResults = document.getElementById('est-results');
-    elKpis = document.getElementById('est-kpis');
-    elSpec = document.getElementById('est-spec-list');
-    elCount = document.getElementById('est-count');
-    if (!elResults) return;
-    bind();
-    syncSteppers();
     paint();
   });
 
-  // exposed for testing
-  window.AAA_ESTIMATOR = { computeZone: computeZone, computeAll: computeAll, spec: spec };
+  window.AAA_ESTIMATOR = {
+    computeZone: computeZone, computeAll: computeAll, spec: spec,
+    steps: STEPS, go: go, chosenZones: chosenZones
+  };
 })();
 
 </script>
