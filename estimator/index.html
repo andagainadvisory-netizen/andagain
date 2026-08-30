@@ -2179,6 +2179,7 @@ window.AAA_PRICING = {
 
   var stepIndex = 0;
   var leadState = 'idle';   // idle | sending | sent | failed
+  var emailState = 'idle';  // idle | sent | failed  (the copy from info@)
   var showErrors = false;
 
   function firstName() {
@@ -2572,13 +2573,19 @@ window.AAA_PRICING = {
   /* ---------------- the gate ---------------- */
   function renderGate() {
     if (spec.unlocked) {
+      var line;
+      if (emailState === 'sent') {
+        line = 'your copy is on its way to <b>' + esc(spec.email) + '</b> from info@andagain.ae — ' +
+               'check your inbox in the next few minutes, and spam once before writing to us.';
+      } else if (leadState === 'sent') {
+        line = 'our desk has your brief and will follow up on ' + esc(spec.email) +
+               '. For an instant copy, use either button below.';
+      } else {
+        line = 'send it to us with either button below and we will pick it up.';
+      }
       return '<div class="est-unlocked">' +
         '<p class="est-unlocked-h">Estimate issued to ' + esc(spec.name) + '</p>' +
-        '<p>Reference <b>' + esc(reference()) + '</b> · valid 30 days · ' +
-        (leadState === 'sent'
-          ? 'a copy is on its way to our desk, and we will follow up on ' + esc(spec.email) + '.'
-          : 'send it to us with either button below and we will pick it up.') +
-        '</p>' +
+        '<p>Reference <b>' + esc(reference()) + '</b> · valid 30 days · ' + line + '</p>' +
         '<div class="est-handoff-actions">' +
           '<a class="btn btn-gold" id="est-whatsapp" href="#" target="_blank" rel="noopener">Send this brief on WhatsApp</a>' +
           '<a class="btn btn-ghost est-btn-onnavy" id="est-email" href="#">Email it instead</a>' +
@@ -2596,7 +2603,8 @@ window.AAA_PRICING = {
 
       '<div class="est-gate-grid">' +
         '<label class="est-gf"><span>Name</span>' +
-          '<input class="est-input" id="g-name" type="text" autocomplete="name" value="' + esc(spec.name) + '"></label>' +
+          '<input class="est-input' + (bad && (spec.name || '').trim().length < 2 ? ' bad' : '') +
+          '" id="g-name" type="text" autocomplete="name" value="' + esc(spec.name) + '"></label>' +
         '<label class="est-gf"><span>Email</span>' +
           '<input class="est-input' + (bad && !validEmail() ? ' bad' : '') + '" id="g-email" type="email" ' +
           'autocomplete="email" placeholder="you@company.com" value="' + esc(spec.email) + '"></label>' +
@@ -2713,6 +2721,47 @@ window.AAA_PRICING = {
     }
     lines.push('', 'Please send me the formal estimate.');
     return lines.join('\n');
+  }
+
+  /* ---------------- the emailed estimate ---------------- */
+  function estimatePayload() {
+    var results = computeAll(spec);
+    var wanted = chosenZones().map(function (z) { return z.id; });
+    var rows = function (rr) {
+      return rr.map(function (x) {
+        return { l: x.label, d: x.detail || '',
+                 q: x.qty > 1 ? x.qty + ' \u00d7 ' + money(x.unit) : '',
+                 v: money(x.amount) };
+      });
+    };
+    var zones = results.filter(function (r) {
+      return wanted.indexOf(r.zone.id) !== -1 && r.eligible && !r.quoteOnRequest;
+    }).sort(function (a, b) { return a.total - b.total; })
+      .map(function (r) {
+        return {
+          name: r.zone.name, emirate: r.zone.emirate, pack: r.package,
+          total: money(r.total), a: money(r.sectionATotal), b: money(r.sectionBTotal),
+          threeYear: r.threeYear.available
+            ? 'AED ' + money(r.threeYear.amount) + '. ' + r.threeYear.note
+            : '',
+          aRows: rows(r.sectionA), bRows: rows(r.sectionB)
+        };
+      });
+    return {
+      name: spec.name, firstName: firstName(), email: spec.email, phone: spec.phone,
+      reference: reference(), jurisdiction: jurisdictionLabel(), asOf: P.meta.asOf,
+      mainland: mainlandChosen(), specLines: specSummary(), zones: zones,
+      website: ''   // honeypot, always empty from the page
+    };
+  }
+
+  function sendEstimate() {
+    return fetch('/api/send-estimate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(estimatePayload())
+    }).then(function (res) { return res.json(); })
+      .then(function (d) { return !!(d && d.sent); });
   }
 
   /* ---------------- Netlify Forms ---------------- */
@@ -2847,7 +2896,11 @@ window.AAA_PRICING = {
 
     // switches
     Array.prototype.forEach.call(document.querySelectorAll('[data-toggle]'), function (t) {
-      t.addEventListener('change', function () { spec[t.dataset.toggle] = t.checked; paint(); });
+      t.addEventListener('change', function () {
+        spec[t.dataset.toggle] = t.checked;
+        reconcile();   // a spouse or child needs a sponsor visa on the file
+        paint();
+      });
     });
 
     var nm = document.getElementById('f-name');
@@ -2882,19 +2935,23 @@ window.AAA_PRICING = {
   }
 
   function unlock() {
+    if (leadState === 'sending') return;           // double-fire guard (Enter + click)
     if (!gateOk()) { showErrors = true; paint(); return; }
     leadState = 'sending';
     paint();
-    submitLead()
+    var lead = submitLead()
       .then(function () { leadState = 'sent'; })
-      .catch(function () { leadState = 'failed'; })
-      .then(function () {
-        // The reader gets what they were promised whether or not our form
-        // accepted it. A backend problem is ours, not theirs.
-        spec.unlocked = true;
-        showErrors = false;
-        paint();
-      });
+      .catch(function () { leadState = 'failed'; });
+    var mail = sendEstimate()
+      .then(function (ok) { emailState = ok ? 'sent' : 'failed'; })
+      .catch(function () { emailState = 'failed'; });
+    Promise.all([lead, mail]).then(function () {
+      // The reader gets what they were promised whether or not either
+      // backend accepted it. A backend problem is ours, not theirs.
+      spec.unlocked = true;
+      showErrors = false;
+      paint();
+    });
   }
 
   function next() {
@@ -2906,6 +2963,9 @@ window.AAA_PRICING = {
   function reconcile() {
     if (spec.shareholderVisas > spec.shareholders) spec.shareholderVisas = spec.shareholders;
     if (spec.employeeVisas > 0 && spec.shareholderVisas === 0) spec.shareholderVisas = 1;
+    // A dependent is sponsored on a residence visa, so a file with dependents
+    // and no visas cannot exist. Keep at least the investor's.
+    if ((spec.spouse || spec.children > 0) && totalVisas(spec) === 0) spec.shareholderVisas = 1;
   }
 
   /* ---------------- print: open every breakdown ---------------- */
