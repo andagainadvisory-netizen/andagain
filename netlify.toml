@@ -1,6 +1,11 @@
 # And Again Advisory  ·  Pathway Session page
 # Drop this file at the ROOT of what you deploy (beside the pathway/ folder).
 
+# Functions directory, declared explicitly so manual (drag-and-drop) deploys
+# carry the estimator email function as well as git deploys.
+[functions]
+  directory = "netlify/functions"
+
 [[headers]]
   for = "/pathway/video/*"
   [headers.values]
