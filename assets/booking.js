@@ -94,7 +94,7 @@
     btn.disabled=true;btn.textContent='Sending...';
     var data={name:n.value,email:em.value,phone:ph.value,date:cal.lab,time:cal.slot,timezone:tz,business:bz.value};
     nfSubmit('consultation',data).then(function(){var o=document.getElementById('bkmOk');o.textContent='Request received. We will confirm availability by WhatsApp or email.';o.style.display='block';btn.style.display='none';window.track&&window.track('form_submit',{form:'consultation'});}).catch(function(){
-      var wa='https://wa.me/971559330941?text='+enc('Consultation request. Name: '+n.value+' | Email: '+em.value+' | Phone: '+ph.value+' | Preferred: '+cal.lab+' at '+cal.slot+' ('+tz+') | Business: '+bz.value);
+      var wa='https://wa.me/971559967220?text='+enc('Consultation request. Name: '+n.value+' | Email: '+em.value+' | Phone: '+ph.value+' | Preferred: '+cal.lab+' at '+cal.slot+' ('+tz+') | Business: '+bz.value);
       var body='Consultation booking request%0D%0A%0D%0AName: '+enc(n.value)+'%0D%0AEmail: '+enc(em.value)+'%0D%0APhone / WhatsApp: '+enc(ph.value)+'%0D%0APreferred date: '+enc(cal.lab)+'%0D%0APreferred time: '+enc(cal.slot)+'%0D%0ATime zone: '+enc(tz)+'%0D%0A%0D%0ABusiness and intentions:%0D%0A'+enc(bz.value);
       var mail='mailto:info@andagain.ae?subject='+enc('Consultation request from '+n.value)+'&body='+body;
       var o=document.getElementById('bkmOk');o.innerHTML='We could not submit automatically. <a href="'+wa+'" target="_blank" rel="noopener">Send it via WhatsApp</a> or <a href="'+mail+'">send it by email</a>. Your details are pre-filled.';o.style.display='block';

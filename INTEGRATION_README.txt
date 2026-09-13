@@ -53,7 +53,7 @@ AFTER DEPLOYING, CHECK THREE THINGS
 HER LINKS (also in the Affiliate Link Pack PDF)
 -----------------------------------------------
   Bio / primary : https://www.andagain.ae/lidya
-  WhatsApp direct: https://wa.me/971559330941?text=Hello%20And%20Again%20Advisory%21%20I%20was%20referred%20by%20Lidya%20%28code%3A%20LIDYA%29.%20I%27d%20like%20to%20book%20my%20free%20consultation.
+  WhatsApp direct: https://wa.me/971559967220?text=Hello%20And%20Again%20Advisory%21%20I%20was%20referred%20by%20Lidya%20%28code%3A%20LIDYA%29.%20I%27d%20like%20to%20book%20my%20free%20consultation.
   Promo code    : LIDYA
 
 Reference: Affiliate Promotion and Commission Agreement AAA-AFF-2026-001,
