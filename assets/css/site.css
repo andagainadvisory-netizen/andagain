@@ -18,6 +18,8 @@
      · Gold is the precision accent: 1px rules, the stepped journey
        line, small marks. Never a fill larger than a button.
      · No radius, no gradients, no shadows except the modal.
+     · No ornaments: no rules above labels, no badges, no background
+       patterns, no marquee, no scroll reveals, no hover animations.
    ===================================================================== */
 
 
@@ -43,7 +45,6 @@
   --on-indigo:rgba(255,255,255,.80);
   --on-indigo-mute:rgba(255,255,255,.58);
   --wa:#25D366;
-  --surface:var(--white);        /* set per band; used behind hex marks */
 
   /* type scale · 1.25 modular, display steps fluid */
   --fs-xs:.75rem;                        /* 12  labels, meta        */
@@ -109,28 +110,19 @@ section{padding:var(--sec) 0}
    --------------------------------------------------------------------- */
 /* spaced-caps section label, and the thin gold rule above it */
 .label{display:block;font-size:var(--fs-xs);font-weight:600;letter-spacing:var(--track-caps);text-transform:uppercase;color:var(--gold-text);margin-bottom:var(--s-5)}
-.rule{width:48px;height:1px;background:var(--gold);margin-bottom:var(--s-5)}
 
 /* section head: h2 left, supporting paragraph right, on one baseline */
 .sec-head{display:grid;gap:var(--s-4);margin-bottom:var(--s-8)}
 .sec-head p{font-size:var(--fs-md);color:var(--slate);max-width:52ch}
 @media (min-width:900px){
   .sec-head{grid-template-columns:7fr 5fr;column-gap:var(--s-9);align-items:end}
-  .sec-head .rule,.sec-head .label{grid-column:1/-1;margin-bottom:0}
-  .sec-head .rule{margin-bottom:var(--s-3)}
+  .sec-head .label{grid-column:1/-1;margin-bottom:0}
   .sec-head h2{grid-column:1}
   .sec-head p{grid-column:2;margin-bottom:5px}
 }
 
 /* zero-padded number, typographic, with a short gold hairline */
 .num{display:inline-flex;align-items:center;gap:10px;font-size:var(--fs-xs);font-weight:600;letter-spacing:.14em;color:var(--gold-text);line-height:1}
-.num::after{content:"";width:28px;height:1px;background:var(--gold)}
-
-/* hexagon hairline mark, geometry from the brand mark */
-.hex{position:relative;isolation:isolate;width:46px;height:52px;display:grid;place-items:center;font-size:var(--fs-xs);font-weight:600;letter-spacing:.08em;color:var(--indigo);line-height:1}
-.hex::before,.hex::after{content:"";position:absolute;z-index:-1;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
-.hex::before{inset:0;background:var(--gold)}
-.hex::after{inset:1px;background:var(--surface)}
 
 /* buttons: squared, one hairline, no shadow */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 var(--s-5);font-size:var(--fs-sm);font-weight:600;letter-spacing:.02em;line-height:1;border:1px solid transparent;transition:background .2s,color .2s,border-color .2s;white-space:nowrap;cursor:pointer}
@@ -149,7 +141,7 @@ section{padding:var(--sec) 0}
 .tl:hover{border-color:var(--indigo)}
 
 /* bands and transitions */
-.band{background:var(--paper);--surface:var(--paper)}
+.band{background:var(--paper)}
 .bar-top{border-top:1px solid var(--hair)}
 .cut-top{clip-path:polygon(0 0,100% var(--cut),100% 100%,0 100%);padding-top:calc(var(--sec) + var(--cut))}
 .cut-bottom{clip-path:polygon(0 0,100% 0,100% calc(100% - var(--cut)),0 100%);padding-bottom:calc(var(--sec) + var(--cut))}
@@ -159,7 +151,7 @@ section{padding:var(--sec) 0}
 /* ---------------------------------------------------------------------
    5. HEADER + MOBILE MENU
    --------------------------------------------------------------------- */
-.site-header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--hair)}
+.site-header{position:sticky;top:0;z-index:50;background:var(--white);border-bottom:1px solid var(--hair)}
 .hdr{max-width:var(--wrap);margin:0 auto;padding:0 var(--gutter);height:var(--header-h);display:flex;align-items:center;justify-content:space-between;gap:var(--s-5)}
 .brand{display:flex;align-items:center;gap:12px;color:var(--indigo)}
 .brand img{height:34px;width:auto}
@@ -168,9 +160,8 @@ section{padding:var(--sec) 0}
 .brand .b2{display:block;font-weight:500;font-size:10px;letter-spacing:.42em;color:var(--gold-text)}
 nav{display:flex;align-items:center;gap:var(--s-6)}
 nav>a,nav>a.btn{display:none}
-nav>a:not(.btn){font-size:var(--fs-sm);font-weight:500;color:var(--ink);position:relative;line-height:1}
-nav>a:not(.btn)::after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:1px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .25s}
-nav>a:not(.btn):hover::after{transform:scaleX(1)}
+nav>a:not(.btn){font-size:var(--fs-sm);font-weight:500;color:var(--ink);line-height:1;transition:color .2s}
+nav>a:not(.btn):hover{color:var(--indigo)}
 nav .btn{min-height:42px;padding:0 var(--s-4)}
 .menu{display:flex;width:44px;height:44px;align-items:center;justify-content:center;border:1px solid var(--hair-strong);color:var(--indigo);font-size:20px;flex-shrink:0;line-height:1}
 .mpanel{display:none;background:#fff;border-bottom:1px solid var(--hair);padding:var(--s-2) var(--gutter) var(--s-6)}
@@ -194,7 +185,6 @@ nav .btn{min-height:42px;padding:0 var(--s-4)}
 
 /* hero: white, editorial, stats as a ledger on the right */
 .hero{position:relative;overflow:hidden;background:var(--white)}
-.hero .hexes{position:absolute;right:-8vw;top:-30px;width:min(58vw,760px);height:auto;color:var(--indigo);opacity:.075;pointer-events:none}
 .hero .inner{position:relative;max-width:var(--wrap);margin:0 auto;padding:var(--s-8) var(--gutter)}
 .hero .lede{margin-top:var(--s-5);font-size:var(--fs-md);color:var(--slate);max-width:34em}
 .hero .cta{margin-top:var(--s-6);display:flex;flex-wrap:wrap;align-items:center;gap:var(--s-3) var(--s-4)}
@@ -216,12 +206,13 @@ nav .btn{min-height:42px;padding:0 var(--s-4)}
   .stat:last-child{border-bottom:0;padding-bottom:0}
 }
 
-/* partner ticker: hairline band, names in indigo, marks in gold */
-.ticker{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);overflow:hidden;white-space:nowrap;padding:14px 0;background:var(--white)}
-.ticker .track{display:inline-flex;gap:56px;padding-right:56px;animation:tick 42s linear infinite}
-.ticker span{display:inline-flex;align-items:center;gap:56px;font-size:var(--fs-xs);font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
-.ticker b{font-weight:600;color:var(--indigo)}
-@keyframes tick{to{transform:translateX(-50%)}}
+/* partner row: static, one hairline band, names in indigo, marks in gold */
+.ticker{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:16px var(--gutter);background:var(--white)}
+.ticker .track{max-width:var(--wrap);margin:0 auto}
+.ticker .track span:nth-child(2){display:none}
+.ticker span{display:block;text-align:center;font-size:var(--fs-xs);font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);line-height:2.3;word-spacing:.5em}
+.ticker span::before{content:"◆ "}
+.ticker b{font-weight:600;color:var(--indigo);white-space:nowrap;word-spacing:normal}
 
 /* who we serve: three columns, hairline separated */
 .gateway{display:grid;border-top:1px solid var(--hair)}
@@ -239,7 +230,6 @@ nav .btn{min-height:42px;padding:0 var(--s-4)}
 /* four pillars: hex marks, hairline columns */
 .vals{display:grid;border-top:1px solid var(--hair)}
 .val{padding:var(--s-6) 0;border-bottom:1px solid var(--hair)}
-.val .hex{margin-bottom:var(--s-5)}
 .val h3{font-size:var(--fs-xl);font-weight:700;margin-bottom:var(--s-3);letter-spacing:-.02em}
 .val p{color:var(--body);font-size:var(--fs-base);max-width:30ch}
 @media (min-width:720px){
@@ -373,10 +363,10 @@ nav .btn{min-height:42px;padding:0 var(--s-4)}
 
 /* testimonial */
 .quote{max-width:880px;margin:0 auto;text-align:center}
-.quote .qm{display:block;font-size:72px;line-height:.5;color:var(--gold);font-weight:800;margin-bottom:var(--s-5)}
+.quote .qm{display:block;font-size:34px;line-height:1;color:var(--gold);font-weight:700;margin-bottom:var(--s-3)}
 .quote blockquote{font-size:clamp(1.375rem,2.4vw,1.875rem);font-weight:600;line-height:1.35;color:var(--indigo);letter-spacing:-.015em;text-wrap:balance}
 .quote .who{margin-top:var(--s-6);display:flex;align-items:center;justify-content:center;gap:var(--s-4)}
-.quote .av{width:44px;height:44px;border:1px solid var(--gold);color:var(--gold-text);font-weight:700;font-size:15px;display:grid;place-items:center;border-radius:50%}
+.quote .av{width:40px;height:40px;border:1px solid var(--hair-strong);color:var(--indigo);font-weight:700;font-size:14px;display:grid;place-items:center}
 .quote .nm{text-align:left}
 .quote .nm b{display:block;font-size:var(--fs-sm);font-weight:700;color:var(--indigo)}
 .quote .nm span{font-size:13px;color:var(--slate)}
@@ -384,7 +374,6 @@ nav .btn{min-height:42px;padding:0 var(--s-4)}
 /* the one indigo band: narrow, slanted top and bottom */
 .finale{background:var(--indigo);color:#fff;text-align:center;clip-path:polygon(0 var(--cut),100% 0,100% calc(100% - var(--cut)),0 100%);padding:calc(var(--s-8) + var(--cut)) 0}
 .finale .sec-head{display:block;max-width:640px;margin:0 auto var(--s-6)}
-.finale .rule{background:var(--gold-bright);margin:0 auto var(--s-5)}
 .finale .label{color:var(--gold-bright)}
 .finale h2{color:#fff}
 .finale .sec-head p{color:var(--on-indigo);margin:var(--s-4) auto 0;max-width:52ch}
@@ -436,7 +425,7 @@ nav .btn{min-height:42px;padding:0 var(--s-4)}
    --------------------------------------------------------------------- */
 .modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:var(--s-5)}
 .modal.open{display:flex}
-.modal .veil{position:absolute;inset:0;background:rgba(21,19,43,.62);backdrop-filter:blur(3px)}
+.modal .veil{position:absolute;inset:0;background:rgba(21,19,43,.66)}
 .modal .box{position:relative;background:#fff;width:680px;max-width:100%;max-height:90vh;overflow-y:auto;padding:var(--s-7);border:1px solid var(--hair);box-shadow:0 30px 80px rgba(6,3,122,.18)}
 .modal .x{position:absolute;top:12px;right:14px;font-size:26px;color:var(--slate);line-height:1;width:36px;height:36px;display:grid;place-items:center}
 .modal .x:hover{color:var(--indigo)}
@@ -466,7 +455,4 @@ nav .btn{min-height:42px;padding:0 var(--s-4)}
    --------------------------------------------------------------------- */
 .wa{position:fixed;right:20px;bottom:20px;width:54px;height:54px;border-radius:50%;background:var(--wa);display:grid;place-items:center;z-index:60;box-shadow:0 4px 14px rgba(0,0,0,.18)}
 .wa svg{width:28px;height:28px;fill:#fff}
-@media (prefers-reduced-motion:reduce){
-  .ticker .track{animation:none}
-  html{scroll-behavior:auto}
-}
+@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} }
