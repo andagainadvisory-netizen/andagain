@@ -3,3 +3,5 @@
 /pathway-am   /pathway/index.html?lang=am  301
 # Standing Teams meeting room for all client calls
 /meet         /meet/index.html   200
+# Short link for the cost estimator (spoken CTAs, video end cards, bios)
+/cost         /estimator/        301

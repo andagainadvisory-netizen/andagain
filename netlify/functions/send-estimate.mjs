@@ -7,6 +7,9 @@
 //   GRAPH_CLIENT_ID      app registration client id
 //   GRAPH_CLIENT_SECRET  client secret value
 //   ESTIMATE_SENDER      optional, defaults to info@andagain.ae
+//   ESTIMATE_BCC         optional, comma-separated internal copies; defaults to
+//                        info@andagain.ae so every unlocked estimate lands in the
+//                        desk inbox the moment it is issued (lead alert)
 //
 // Until those are set the function answers 503 {sent:false,
 // reason:"not-configured"} and the page falls back gracefully.
@@ -169,6 +172,9 @@ export default async (req, context) => {
   const clientId = process.env.GRAPH_CLIENT_ID;
   const clientSecret = process.env.GRAPH_CLIENT_SECRET;
   const sender = process.env.ESTIMATE_SENDER || SENDER_DEFAULT;
+  const bcc = (process.env.ESTIMATE_BCC ?? SENDER_DEFAULT)
+    .split(",").map((a) => a.trim()).filter(validEmail)
+    .map((address) => ({ emailAddress: { address } }));
   if (!tenant || !clientId || !clientSecret)
     return json({ sent: false, reason: "not-configured" }, 503);
 
@@ -224,6 +230,7 @@ export default async (req, context) => {
             body: { contentType: "HTML", content: emailHtml(p) },
             toRecipients: [{ emailAddress: { address: p.email, name: p.name || undefined } }],
             replyTo: [{ emailAddress: { address: sender } }],
+            ...(bcc.length ? { bccRecipients: bcc } : {}),
           },
           saveToSentItems: true,
         }),
