@@ -565,6 +565,7 @@ a.btn{text-decoration:none}
 }
 .est-z-total-k { display: block; font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
 .est-z-total-txt { font-size: 1.15rem; letter-spacing: 0; }
+.est-input.est-input-num { max-width: 220px; }
 
 .est-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 13px; }
 .est-badge {
@@ -1161,7 +1162,7 @@ src="https://www.facebook.com/tr?id=961044789162213&ev=PageView&noscript=1"></no
 window.AAA_PRICING = {
 
   meta: {
-    version: '1.1',
+    version: '1.2',
     asOf: 'September 2026',
     asOfISO: '2026-09-14',
     currency: 'AED',
@@ -1544,6 +1545,34 @@ window.AAA_PRICING = {
         shareholderAmendment: 4420
       },
 
+      /* Warehouse, Al Hamra Free Zone. The first written RAKEZ warehouse rate
+         AAA holds: quotation of Mohammed Al Ahmed, RAKEZ Sales, 7 Sep 2026,
+         02_pricing/freezones/RAKEZ/RAKEZ_WAREHOUSE_AL_HAMRA_2026.md. Priced only
+         when the client asks for a warehouse; the packages above stay the
+         default. Insurance on each visa and the post-licence approvals are not
+         in the quotation and are excluded. */
+      warehouse: {
+        source: 'RAKEZ warehouse quotation, Al Hamra Free Zone, 7 September 2026.',
+        location: 'Al Hamra Free Zone',
+        registration: 1000,
+        licence: 5000,
+        licenceLabel: 'Commercial licence',
+        administration: 6000,
+        immigrationFile: 685,
+        eChannel: 2300,
+        eChannelRenewal: 1300,
+        preapprovalPerPartner: 100,
+        immigrationCharge: 100,
+        rentPerSqm: 350,
+        minSqm: 200,
+        sqmPerVisa: 10,
+        rentEscalation: 0.03,
+        depositPct: 0.10,
+        investorVisa: 4620,
+        employeeVisa: 3800,
+        changeOfStatus: 985
+      },
+
       medicalInFee: false,
 
       renewal: {
@@ -1553,7 +1582,7 @@ window.AAA_PRICING = {
       },
 
       flags: [
-        { when: 'always', tone: 'note',
+        { when: 'notWarehouse', tone: 'note',
           text: 'RAKEZ packages are all-inclusive. Preapproval, licence, lease, immigration file, ' +
                 'e-channel, entry permit, stamping, medical, Emirates ID and change of status ' +
                 'are all inside the package price.' },
@@ -1562,7 +1591,15 @@ window.AAA_PRICING = {
                 'second activity within the year, Plus One at 14,000 is the safer buy.' },
         { when: 'goods', tone: 'note',
           text: 'Certain RAKEZ industrial districts are VAT Designated Zones. We confirm the exact ' +
-                'district on the lease before relying on it.' }
+                'district on the lease before relying on it.' },
+        { when: 'warehouse', tone: 'warn',
+          text: 'Not in the RAKEZ quotation and not in this figure: insurance on each visa, and the ' +
+                'post-licence approvals a warehouse needs — approved consultant drawings, EPDA ' +
+                'environmental approval, Civil Defence, the FEWA connection deposit, CCTV, internet and ' +
+                'the yearly audit. Each is priced in writing before it goes on your estimate.' },
+        { when: 'warehouse', tone: 'note',
+          text: 'Warehouse units start at 200 square metres, first come. Power from 15 kW. Rent rises ' +
+                '3 per cent a year or to market, whichever is higher.' }
       ]
     },
 
@@ -1916,7 +1953,8 @@ window.AAA_PRICING = {
   var spec = {
     direction: 'services',
     mainlandSales: 'no',
-    premises: 'flexi',
+    premises: null,     // chosen on the business step; required when Jafza is in play
+    warehouseSqm: 200,  // asked only when premises is 'warehouse'
     shareholders: 1,
     shareholderVisas: 1,
     employeeVisas: 0,
@@ -1976,7 +2014,8 @@ window.AAA_PRICING = {
       return { ok: false, reason: z.short + ' sells no licence-only or zero-visa package. The smallest package is a workstation with ' +
                z.limits.minVisas + ' visas.' };
     }
-    if (z.limits.maxVisas !== null && z.id !== 'ifza' && v > z.limits.maxVisas) {
+    var visaCapApplies = z.limits.maxVisas !== null && z.id !== 'ifza' && !(z.id === 'rakez' && needsWarehouse(s));
+    if (visaCapApplies && v > z.limits.maxVisas) {
       return { ok: false, reason: 'You asked for ' + v + ' visas. ' + z.short +
                ' carries up to ' + z.limits.maxVisas + ' on this workspace type.' };
     }
@@ -2139,9 +2178,56 @@ window.AAA_PRICING = {
     return { rows: rows, package: 'Virtual office, 10 activities and 10 shareholders included' };
   }
 
+  // RAKEZ warehouse, Al Hamra. Every line at the rate quoted, so an invoice
+  // discrepancy is traceable. Sized to the client's square metres, the 200 sqm
+  // floor, or the visas asked for at 1 per 10 sqm, whichever is largest.
+  function rakezWarehouseSectionA(z, s) {
+    var w = z.warehouse, v = totalVisas(s), rows = [];
+    var asked = s.warehouseSqm || w.minSqm;
+    var sqm = Math.max(w.minSqm, asked, v * w.sqmPerVisa);
+    var rent = sqm * w.rentPerSqm;
+
+    rows.push(line('Registration fee', 'Year one only', 1, w.registration, w.registration));
+    rows.push(line(w.licenceLabel, 'Annual', 1, w.licence, w.licence));
+    rows.push(line('Administration fee', 'Annual', 1, w.administration, w.administration));
+    rows.push(line('Immigration file', 'Annual', 1, w.immigrationFile, w.immigrationFile));
+    rows.push(line('E-Channel registration', 'Renews at ' + money(w.eChannelRenewal), 1, w.eChannel, w.eChannel));
+    rows.push(line('Preapproval, per partner', 'One off', s.shareholders, w.preapprovalPerPartner,
+      w.preapprovalPerPartner * s.shareholders));
+    rows.push(line('Immigration charge', 'One off', 1, w.immigrationCharge, w.immigrationCharge));
+    rows.push(line('Warehouse, ' + sqm + ' square metres, at ' + money(w.rentPerSqm) + ' per square metre',
+      'Annual, ' + w.location + '. Carries 1 visa per 10 square metres. Rent rises 3 per cent a year or to market',
+      1, rent, rent));
+    if (s.shareholderVisas > 0) {
+      rows.push(line('Investor visa, 2 years', 'Medical and Emirates ID included. Insurance on top, per package',
+        s.shareholderVisas, w.investorVisa, w.investorVisa * s.shareholderVisas));
+    }
+    if (s.employeeVisas > 0) {
+      rows.push(line('Employee visa, 2 years', 'Medical and Emirates ID included. Work insurance on top, per package',
+        s.employeeVisas, w.employeeVisa, w.employeeVisa * s.employeeVisas));
+    }
+    if (s.inUAE && v > 0) {
+      rows.push(line('In-country status change', 'Applies only because you are already in the UAE',
+        v, w.changeOfStatus, w.changeOfStatus * v));
+    }
+    var renewalFixed = w.licence + w.administration + w.immigrationFile + w.eChannelRenewal;
+    var esc1 = 1 + w.rentEscalation;
+    return {
+      rows: rows,
+      package: 'Commercial licence with a ' + sqm + ' sqm warehouse, ' + w.location + ', carrying ' +
+               plural(Math.floor(sqm / w.sqmPerVisa), 'visa', 'visas'),
+      warehouse: { sqm: sqm, asked: asked, rent: rent, quota: Math.floor(sqm / w.sqmPerVisa) },
+      deposit: rent * w.depositPct,
+      yearTwo: renewalFixed + rent * esc1,
+      yearThree: renewalFixed + rent * esc1 * esc1,
+      source: w.source
+    };
+  }
+
   function rakezSectionA(z, s) {
     var v = totalVisas(s), rows = [];
-    var useDesignated = movesGoods(s) && s.premises !== 'flexi';
+    if (needsWarehouse(s)) return rakezWarehouseSectionA(z, s);
+    var useDesignated = movesGoods(s) && needsWarehouse(s);
     var pool = useDesignated
       ? z.packages.designated.slice()
       : z.packages.standard.concat(z.packages.sme);
@@ -2220,11 +2306,20 @@ window.AAA_PRICING = {
     var r = z.rates;
     if (needsWarehouse(s)) {
       var w = r.warehouse;
-      if (v > 15) return null;   // above the smallest unit's quota: built with the authority
-      return { type: 'warehouse', sqm: w.minSqm, rent: w.minSqm * w.perSqm,
-        levy: w.minSqm * w.perSqm * r.healthLevy, insurance: w.insurance, namePlate: 0, visas: 15,
-        label: 'Warehouse, ' + w.minSqm + ' square metres, at ' + money(w.perSqm) + ' per square metre',
-        detail: 'Annual, on a three-year lease. Pre-built and thermally insulated, the smallest unit Jafza builds. Carries 15 visas. Utilities metered on top' };
+      var asked = s.warehouseSqm || w.minSqm;
+      var wsqm = Math.max(w.minSqm, asked);
+      if (wsqm > w.maxSqm) return { tooBig: true, asked: asked };
+      // Visa quota on a warehouse sits between Jafza's own two published points:
+      // 313 sqm carries 15, 555 sqm carries 25. Confirmed on the unit.
+      var quota = 15 + Math.floor((wsqm - w.minSqm) / 24.2);
+      if (v > quota) return { tooMany: true, quota: quota, sqm: wsqm };
+      var wrent = wsqm * w.perSqm;
+      return { type: 'warehouse', sqm: wsqm, asked: asked, rent: wrent,
+        levy: wrent * r.healthLevy, insurance: w.insurance, namePlate: 0, visas: quota,
+        label: 'Warehouse, ' + wsqm + ' square metres, at ' + money(w.perSqm) + ' per square metre',
+        detail: 'Annual, on a three-year lease. Pre-built and thermally insulated' +
+                (wsqm === w.minSqm ? ', the smallest unit Jafza builds' : '') +
+                '. Carries about ' + quota + ' visas, confirmed on the unit. Utilities metered on top' };
     }
     var ws = r.workstation;
     if (v <= ws.visas) {
@@ -2244,10 +2339,17 @@ window.AAA_PRICING = {
   function jafzaSectionA(z, s) {
     var r = z.rates, v = totalVisas(s), rows = [];
     var fac = jafzaFacility(z, s, v);
-    if (!fac) {
+    if (fac && fac.tooBig) {
       return { quoteOnRequest: true,
-        reason: 'The smallest Jafza warehouse carries 15 visas. Above that the unit is sized with the ' +
-                'authority against your headcount, so we will not put a figure on it here.' };
+        reason: 'You asked for ' + fac.asked + ' square metres. Jafza\u2019s pre-built warehouses run 313 to ' +
+                '1,065 square metres; above that it is a plot or a combined unit sized with the authority, ' +
+                'so we will not put a figure on it here.' };
+    }
+    if (fac && fac.tooMany) {
+      return { quoteOnRequest: true,
+        reason: 'A ' + fac.sqm + ' square metre Jafza warehouse carries about ' + fac.quota + ' visas. For ' +
+                plural(v, 'visa', 'visas') + ' the unit is sized with the authority against your headcount, ' +
+                'so we will not put a figure on it here.' };
     }
     // Two visas is the floor on the workstation package, not a choice. An
     // office or warehouse is priced on the visas actually asked for (EST-00217).
@@ -2328,6 +2430,11 @@ window.AAA_PRICING = {
       return { available: true, amount: yearOneAuthority * 3,
         note: 'Ajman renews at the same package price. Three years is year one, three times.' };
     }
+    if (z.id === 'rakez' && built && built.warehouse) {
+      return { available: true, amount: sum(built.rows) + built.yearTwo + built.yearThree,
+        note: 'Year one as itemised, then two renewals at the quoted renewal lines with the rent rising 3 per ' +
+              'cent a year. Visa renewals at year three and insurance are not in the quotation and not in this figure.' };
+    }
     if (z.id === 'rakez') {
       var pool = z.packages.standard;
       var fit = pool.filter(function (p) {
@@ -2372,6 +2479,11 @@ window.AAA_PRICING = {
       if (!b0 || b0.quoteOnRequest) return null;
       return sum(b0.rows) - sum(a0.rows);
     }
+    if (z.id === 'rakez' && needsWarehouse(s)) {
+      var s3 = {}; for (var k3 in s) if (s.hasOwnProperty(k3)) s3[k3] = s[k3];
+      s3.employeeVisas = s.employeeVisas + 1;
+      return sum(rakezWarehouseSectionA(z, s3).rows) - sum(rakezWarehouseSectionA(z, s).rows);
+    }
     if (z.id === 'rakez') {
       function best(n) {
         var f = z.packages.standard.concat(z.packages.sme).filter(function (p) {
@@ -2398,13 +2510,25 @@ window.AAA_PRICING = {
         (f.when === 'generalTrading' && s.direction === 'generalTrading') ||
         (f.when === 'visas4plus' && v >= 4) ||
         (f.when === 'warehouse' && needsWarehouse(s)) ||
+        (f.when === 'notWarehouse' && !needsWarehouse(s)) ||
         (f.when === 'saver1' && extra && extra.chosen && extra.chosen.id === 'saver1');
       if (show) out.push(f);
     });
-    if (needsWarehouse(s) && z.limits.warehouse && z.id !== 'jafza') {
+    if (needsWarehouse(s) && z.limits.warehouse && z.id !== 'jafza' && z.id !== 'rakez') {
       out.push({ tone: 'note',
-        text: 'The figure above is the licence and visa package. Warehouse, yard or land is leased ' +
-              'on the facility and quoted separately once we have your square metres.' });
+        text: 'The figure above is the licence and visa package only. We hold no written ' + z.short +
+              ' warehouse rate, so the unit itself is quoted separately once we have your square metres. ' +
+              'Jafza and RAKEZ on this page include their warehouse rent.' });
+    }
+    if (z.id === 'rakez' && extra && extra.warehouse) {
+      if (extra.warehouse.sqm > extra.warehouse.asked) {
+        out.push({ tone: 'note',
+          text: 'You asked for ' + extra.warehouse.asked + ' square metres. Priced on ' + extra.warehouse.sqm +
+                ', the smallest unit that meets RAKEZ\u2019s 200 square metre floor and your visa count at one per 10.' });
+      }
+      out.push({ tone: 'note',
+        text: 'A refundable security deposit of ' + money(extra.deposit) + ', 10 per cent of the rent, is paid once ' +
+              'at signing. It is a memo line and is not in the total.' });
     }
     if (needsWarehouse(s) && z.limits.warehouse === 'limited') {
       out.push({ tone: 'warn',
@@ -2413,11 +2537,10 @@ window.AAA_PRICING = {
               'yard or production floor, Jafza, RAKEZ and Ajman are the three that carry it.' });
     }
     if (z.id === 'jafza' && extra && extra.facility) {
-      if (extra.facility.type === 'warehouse') {
+      if (extra.facility.type === 'warehouse' && extra.facility.sqm > extra.facility.asked) {
         out.push({ tone: 'note',
-          text: 'This figure includes the warehouse itself, because Jafza publishes its rent. The other zones on ' +
-                'this page show licence and visas only, with the warehouse quoted separately, so compare year one ' +
-                'with that in mind.' });
+          text: 'You asked for ' + extra.facility.asked + ' square metres. Jafza builds nothing below 313, so ' +
+                'this is priced on its smallest unit.' });
       }
       if (extra.pricedVisas > extra.requestedVisas) {
         out.push({ tone: 'warn',
@@ -2473,6 +2596,7 @@ window.AAA_PRICING = {
       zone: z,
       eligible: true,
       package: built.package,
+      source: built.source || z.source,
       sectionA: aRows,
       sectionATotal: aTotal,
       dependentRows: depRows,
@@ -2540,6 +2664,9 @@ window.AAA_PRICING = {
     }
     var z = zoneById(spec.zoneChoice);
     return z ? [z] : [];
+  }
+  function jafzaInPlay() {
+    return chosenZones().some(function (z) { return z.id === 'jafza'; });
   }
   function mainlandChosen() {
     return spec.zoneChoice === 'mainland' || spec.emirate === 'all';
@@ -2661,6 +2788,15 @@ window.AAA_PRICING = {
       title: 'What will the company do?',
       sub: 'The activity drives the licence, the approvals and sometimes the zone itself.',
       render: function () {
+        var jz = jafzaInPlay();
+        if (!jz && !spec.premises) spec.premises = 'flexi';
+        var bad = showErrors && !this.ok();
+        var jzOnly = jz && chosenZones().length === 1;
+        var premOpts = jzOnly
+          ? [{ v: 'flexi', l: 'Workstation or office' }, { v: 'warehouse', l: 'Warehouse' }]
+          : jz
+          ? [{ v: 'flexi', l: 'Flexi desk, workstation or office' }, { v: 'warehouse', l: 'Warehouse' }]
+          : [{ v: 'flexi', l: 'Flexi desk or virtual office' }, { v: 'warehouse', l: 'Warehouse, land or industrial' }];
         return field('Business direction', opts('direction', [
             { v: 'services', l: 'Services or consulting' },
             { v: 'trading', l: 'Trading in goods' },
@@ -2674,13 +2810,21 @@ window.AAA_PRICING = {
             { v: 'some', l: 'Some of it' },
             { v: 'core', l: 'Yes, that is the core' }
           ]), 'A free zone company cannot sell directly into the mainland without a mainland licence or a distributor. It matters more than price.') +
-          field('What space do you need?', opts('premises', [
-            { v: 'flexi', l: 'Flexi desk or virtual office' },
-            { v: 'warehouse', l: 'Warehouse, land or industrial' }
-          ])) +
+          field(jzOnly ? 'Which space at Jafza?' : 'What space do you need?', opts('premises', premOpts),
+            jzOnly ? 'Jafza prices the space, not the licence, so this has to be chosen. A workstation carries two visas; ' +
+                     'more than two needs an office from 27 square metres. A warehouse runs from 313 square metres. Every lease is three years.'
+            : jz ? 'Jafza is in this comparison and prices the space, not the licence, so this has to be chosen. On Jafza a ' +
+                   'flexi desk means a workstation with two visas, or an office above that; a warehouse runs from 313 square metres.'
+            : undefined) +
+          (bad ? '<p class="est-err">Choose a workstation or a warehouse to continue.</p>' : '') +
+          (spec.premises === 'warehouse'
+            ? field('Warehouse size, square metres',
+                '<input class="est-input est-input-num" id="f-sqm" type="number" inputmode="numeric" min="50" max="5000" step="10" value="' + spec.warehouseSqm + '">',
+                'Jafza builds from 313 to 1,065 square metres, RAKEZ from 200, Ajman from 100. Ask for less and each zone prices its smallest unit.')
+            : '') +
           stepper('activities', 1, 12, 'How many licensed activities?');
       },
-      ok: function () { return true; }
+      ok: function () { return !jafzaInPlay() || !!spec.premises; }
     },
 
     /* -------- 04 the people -------- */
@@ -2824,7 +2968,7 @@ window.AAA_PRICING = {
         : '<div class="est-3y est-3y-off"><span class="est-3y-k">Authority cost over three years</span>' +
           '<span class="est-3y-v est-3y-none">Not published</span>' +
           '<p class="est-3y-note">' + esc(r.threeYear.note) + '</p></div>') +
-      '<p class="est-src">Rate source: ' + esc(z.source) + '</p>';
+      '<p class="est-src">Rate source: ' + esc(r.source || z.source) + '</p>';
 
     return '<article class="est-zone">' + head +
       '<div class="est-z-total"><span class="est-z-total-v">' + money(r.total) + '</span>' +
@@ -3009,7 +3153,7 @@ window.AAA_PRICING = {
       plural(v, 'residence visa', 'residence visas') +
         (v > 0 ? ' (' + spec.shareholderVisas + ' investor, ' + spec.employeeVisas + ' employment)' : ''),
       plural(spec.activities, 'activity', 'activities'),
-      spec.premises === 'warehouse' ? 'Warehouse, land or industrial space' : 'Flexi desk or virtual office',
+      spec.premises === 'warehouse' ? 'Warehouse, ' + spec.warehouseSqm + ' square metres asked for' : (jafzaInPlay() ? 'Workstation or office' : 'Flexi desk or virtual office'),
       spec.inUAE ? 'Applicant already in the UAE' : 'Applicant entering on a permit issued at home'];
     if (dependentCount(spec) > 0) {
       parts.push((spec.spouse ? 'Spouse' : '') + (spec.spouse && spec.children ? ' and ' : '') +
@@ -3109,7 +3253,7 @@ window.AAA_PRICING = {
       reference: reference(),
       jurisdiction: jurisdictionLabel(),
       business: specSummary().slice(0, 1).join('') + ' · ' + plural(spec.activities, 'activity', 'activities') +
-        ' · ' + (spec.premises === 'warehouse' ? 'warehouse/industrial' : 'flexi desk'),
+        ' · ' + (spec.premises === 'warehouse' ? 'warehouse ' + spec.warehouseSqm + ' sqm' : 'flexi desk'),
       people: plural(spec.shareholders, 'shareholder', 'shareholders') + ' · ' +
         plural(totalVisas(spec), 'visa', 'visas') + ' · ' +
         plural(dependentCount(spec), 'dependent', 'dependents'),
@@ -3200,6 +3344,7 @@ window.AAA_PRICING = {
         btn.addEventListener('click', function () {
           var raw = btn.dataset.value;
           spec[f] = raw === 'true' ? true : raw === 'false' ? false : raw;
+          if (f === 'zoneChoice') spec.premises = null;
           reconcile();
           paint();
         });
@@ -3211,6 +3356,7 @@ window.AAA_PRICING = {
       b.addEventListener('click', function () {
         var id = b.dataset.emirate;
         spec.emirate = id;
+        spec.premises = null;   // the space question is asked again for the new place
         var e = emirateById(id);
         spec.zoneChoice = (e && e.zones.length === 1 && !e.mainland) ? e.zones[0]
                         : (id === 'all' ? 'compare-all' : null);
@@ -3245,6 +3391,14 @@ window.AAA_PRICING = {
       nm.addEventListener('input', function () { spec.name = nm.value; });
       nm.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); next(); } });
       nm.focus();
+    }
+    var sqmEl = document.getElementById('f-sqm');
+    if (sqmEl) {
+      sqmEl.addEventListener('input', function () {
+        var n = parseInt(sqmEl.value, 10);
+        if (!isNaN(n)) spec.warehouseSqm = Math.max(50, Math.min(5000, n));
+      });
+      sqmEl.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); next(); } });
     }
     var nat = document.getElementById('f-nat');
     if (nat) nat.addEventListener('change', function () { spec.nationality = nat.value; });
