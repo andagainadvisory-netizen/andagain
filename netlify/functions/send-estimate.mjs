@@ -83,13 +83,16 @@ function zoneHtml(z) {
       </table>
       <p style="margin:14px 0 4px;font-size:12px;font-weight:800;color:#06037A;border-bottom:2px solid #06037A;padding-bottom:5px">
         Section B &middot; And Again Advisory &mdash; our fee, no VAT charged</p>
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${rowsHtml(z.bRows)}
+      ${z.bRows && z.bRows.length
+        ? `<table role="presentation" width="100%" cellpadding="0" cellspacing="0">${rowsHtml(z.bRows)}
         <tr><td style="padding:8px 4px;font-size:13px;font-weight:800;color:#06037A">Total, Section B</td><td></td>
         <td style="padding:8px 4px;font-size:13px;font-weight:800;color:#06037A;text-align:right">${escapeHtml(z.b)}</td></tr>
-      </table>
+      </table>`
+        : `<p style="margin:8px 0 0;font-size:13px;color:#16142E;line-height:1.5">${escapeHtml(z.feeStatement || "Scoped to your file and quoted on the call, before you pay anything. Never a percentage of Section A, never blended into it. No hidden costs.")}</p>`}
       <p style="margin:12px 0 0;padding:10px 14px;background:#06037A;color:#fff;font-size:13px">
-        Year one total &nbsp;${escapeHtml(z.a)} + ${escapeHtml(z.b)} =
-        <b style="color:#FFD663">AED ${escapeHtml(z.total)}</b></p>
+        ${z.bRows && z.bRows.length
+          ? `Year one total &nbsp;${escapeHtml(z.a)} + ${escapeHtml(z.b)} = <b style="color:#FFD663">AED ${escapeHtml(z.total)}</b>`
+          : `Authority fees, year one &nbsp;<b style="color:#FFD663">AED ${escapeHtml(z.a)}</b> &nbsp;&middot;&nbsp; our fee quoted separately`}</p>
       ${z.threeYear ? `<p style="margin:10px 0 0;font-size:12px;color:#6B7280"><b style="color:#16142E">Authority cost over three years:</b> ${escapeHtml(z.threeYear)}</p>` : ""}
     </div>
   </div>`;
@@ -204,11 +207,12 @@ export default async (req, context) => {
     asOf: clip(b.asOf, 40) || "current month",
     mainland: !!b.mainland,
     specLines: (Array.isArray(b.specLines) ? b.specLines : []).slice(0, 15).map((s) => clip(s, 200)),
-    zones: (Array.isArray(b.zones) ? b.zones : []).slice(0, 6).map((z) => ({
+    zones: (Array.isArray(b.zones) ? b.zones : []).slice(0, 7).map((z) => ({
       name: clip(z?.name, 60), emirate: clip(z?.emirate, 40), pack: clip(z?.pack, 160),
       total: clip(z?.total, 40), a: clip(z?.a, 40), b: clip(z?.b, 40),
       threeYear: clip(z?.threeYear, 300),
       aRows: cleanRows(z?.aRows), bRows: cleanRows(z?.bRows),
+      feeStatement: clip(z?.feeStatement, 300),
     })),
   };
   if (!p.zones.length && !p.mainland)

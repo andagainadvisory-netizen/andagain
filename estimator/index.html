@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>UAE Setup Cost Estimator | And Again Advisory</title>
-<meta name="description" content="Price your UAE company across Meydan, IFZA, SPC, RAKEZ and Ajman in real time. Every government fee itemised at cost, our fee stated separately. Partner rates, not website prices.">
+<meta name="description" content="Price your UAE company across Meydan, IFZA, Jafza, SPC, RAKEZ and Ajman in real time. Every government fee itemised at cost, our fee stated separately. Partner rates, not website prices.">
 <link rel="canonical" href="https://andagain.ae/estimator/">
 <meta property="og:title" content="UAE Setup Cost Estimator | And Again Advisory">
-<meta property="og:description" content="Every government fee itemised at cost, our fee stated separately. Partner rates across five free zones.">
+<meta property="og:description" content="Every government fee itemised at cost, our fee stated separately. Partner rates across six free zones.">
 <meta property="og:url" content="https://andagain.ae/estimator/">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://andagain.ae/estimator/og.jpg">
@@ -15,7 +15,7 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="UAE Setup Cost Estimator | And Again Advisory">
-<meta name="twitter:description" content="Every government fee itemised at cost, our fee stated separately. Partner rates across five free zones.">
+<meta name="twitter:description" content="Every government fee itemised at cost, our fee stated separately. Partner rates across six free zones.">
 <meta name="twitter:image" content="https://andagain.ae/estimator/og.jpg">
 <meta name="robots" content="index,follow">
 <style>
@@ -564,6 +564,7 @@ a.btn{text-decoration:none}
   color: var(--navy); letter-spacing: -0.03em; line-height: 1.05;
 }
 .est-z-total-k { display: block; font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
+.est-z-total-txt { font-size: 1.15rem; letter-spacing: 0; }
 
 .est-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 13px; }
 .est-badge {
@@ -1044,11 +1045,12 @@ src="https://www.facebook.com/tr?id=961044789162213&ev=PageView&noscript=1"></no
       <p class="est-hero-sub" id="est-hero-sub">
         Six short steps, the way we build a real estimate: who it is for, where you want to be,
         what the business does, who needs a visa. Then the numbers — every government fee
-        itemised at cost, our fee stated separately.
+        itemised at cost. Our fee is quoted separately, once we know your file. No hidden costs.
       </p>
       <div class="est-hero-meta">
         <span class="est-chip">Partner rates as at <b data-asof>—</b></span>
         <span class="est-chip">Authority fees at cost, <b>no markup</b></span>
+        <span class="est-chip"><b>No hidden costs</b></span>
         <span class="est-chip">Takes about 90 seconds</span>
       </div>
     </div>
@@ -1071,7 +1073,8 @@ src="https://www.facebook.com/tr?id=961044789162213&ev=PageView&noscript=1"></no
 
         <p class="est-foot est-foot-slim">
           Section A is paid directly to the named authority and to immigration; we neither collect
-          it nor mark it up. Section B is our fee, and no VAT is charged on it. Figures are partner
+          it nor mark it up. Section B, our fee, is scoped to your file and quoted before you pay
+          anything; it is never a percentage of Section A and no VAT is charged on it. Figures are partner
           rates as at <span data-asof>—</span>, held for 30 days, and confirmed on the authority
           payment voucher before anything is filed. This is a calculation, not an offer, and it
           does not guarantee approval, a date or a tax outcome.
@@ -1158,9 +1161,9 @@ src="https://www.facebook.com/tr?id=961044789162213&ev=PageView&noscript=1"></no
 window.AAA_PRICING = {
 
   meta: {
-    version: '1.0',
-    asOf: 'August 2026',
-    asOfISO: '2026-08-29',
+    version: '1.1',
+    asOf: 'September 2026',
+    asOfISO: '2026-09-14',
     currency: 'AED',
     validityDays: 30,
     note: 'Partner rates as last verified. Confirmed on the authority payment voucher before filing.'
@@ -1172,6 +1175,11 @@ window.AAA_PRICING = {
      cost. Model C + Model D, current from 26 August 2026 (EST-00174).
      ------------------------------------------------------------------ */
   aaaFee: {
+    // From 14 Sep 2026 the estimator prints no fee amount. The rates below stay
+    // on file for the formal estimate; the page shows `statement` instead.
+    statement: 'Scoped to your file and quoted on the call, before you pay anything. ' +
+               'Never a percentage of Section A, never blended into it. No hidden costs.',
+    statementShort: 'Quoted on the call',
     freeZoneBase: 4000,
     freeZoneBaseLabel: 'And Again Advisory service fee',
     freeZoneBaseCovers:
@@ -1239,10 +1247,10 @@ window.AAA_PRICING = {
     {
       id: 'dubai',
       name: 'Dubai',
-      zones: ['meydan', 'ifza'],
+      zones: ['meydan', 'ifza', 'jafza'],
       mainland: true,
-      blurb: 'The address clients and banks read fastest. Two partner free zones at different price points, plus the mainland route.',
-      note: 'Meydan for the strongest banking reputation, IFZA for a Dubai address at roughly 5,000 less with the renewal price locked.'
+      blurb: 'The address clients and banks read fastest. Three partner free zones at very different price points, plus the mainland route.',
+      note: 'Meydan for the strongest banking reputation, IFZA for a Dubai address at roughly 5,000 less with the renewal price locked, Jafza for the port and a real facility.'
     },
     {
       id: 'sharjah',
@@ -1257,7 +1265,7 @@ window.AAA_PRICING = {
       name: 'Ras Al Khaimah',
       zones: ['rakez'],
       mainland: false,
-      blurb: 'Where the industrial capacity is. Land, warehousing and the deepest multi-year discount of the five.',
+      blurb: 'Where the industrial capacity is. Land, warehousing and the deepest multi-year discount of the six.',
       note: 'All-inclusive packages — nothing itemised, nothing to add but amendments.'
     },
     {
@@ -1271,7 +1279,7 @@ window.AAA_PRICING = {
   ],
 
   /* ------------------------------------------------------------------
-     THE FIVE PARTNER FREE ZONES
+     THE SIX PARTNER FREE ZONES
      ------------------------------------------------------------------ */
   zones: [
 
@@ -1283,7 +1291,7 @@ window.AAA_PRICING = {
       emirate: 'Dubai',
       model: 'itemised',
       source: 'AAA invoices and EST-00049. AAA own home zone.',
-      positioning: 'The Dubai address. Strongest banking reputation of the five.',
+      positioning: 'The Dubai address. Strongest banking reputation of the desk-based zones.',
       bestFor: ['services', 'media', 'ecommerce'],
 
       limits: {
@@ -1486,7 +1494,7 @@ window.AAA_PRICING = {
       emirate: 'Ras Al Khaimah',
       model: 'package',
       source: 'RAKEZ Package Price List 2026, Channel Partner Agreement 29 April 2026.',
-      positioning: 'All-inclusive packages with the deepest multi-year discount of the five. Land, warehousing and industrial infrastructure.',
+      positioning: 'All-inclusive packages with the deepest multi-year discount of the six. Land, warehousing and industrial infrastructure.',
       bestFor: ['industrial', 'trading', 'generalTrading'],
 
       limits: {
@@ -1541,7 +1549,7 @@ window.AAA_PRICING = {
       renewal: {
         published: true,
         note: 'Three years upfront is roughly 2.7 times the annual price — about 12,600 a year ' +
-              'effective on the Plus One package. The strongest multi-year saving of the five.'
+              'effective on the Plus One package. The strongest multi-year saving of the six.'
       },
 
       flags: [
@@ -1624,8 +1632,98 @@ window.AAA_PRICING = {
           text: 'Ajman renews at the same price every year. It does not drop like the itemised ' +
                 'zones. Worth weighing if you plan to be here three years or more.' },
         { when: 'always', tone: 'good',
-          text: 'The only one of the five with a real instalment route — Tamara or post-dated ' +
+          text: 'The only one of the six with a real instalment route — Tamara or post-dated ' +
                 'cheques, up to 4 visas, minimum 50 per cent upfront, settled within 180 days.' }
+      ]
+    },
+
+    /* ============================= JAFZA ============================ */
+    {
+      id: 'jafza',
+      name: 'Jebel Ali Free Zone',
+      short: 'Jafza',
+      emirate: 'Dubai',
+      subLocation: 'Jebel Ali',
+      model: 'facility',
+      source: 'Jafza tariff, Discover Jafza 2026 pack and Jafza Sales welcome pack of 6 September 2026. Issued on EST-00217.',
+      positioning: 'Jebel Ali Port at the fence, Al Maktoum airport next door, a VAT Designated Zone. Priced on the facility, never the licence alone.',
+      bestFor: ['trading', 'industrial', 'generalTrading'],
+
+      limits: {
+        maxVisas: null,          // tied to floor area, 1 visa per 9 sqm
+        minVisas: 2,             // the smallest package sold is a workstation with two visas
+        maxActivities: 12,
+        maxShareholders: null,
+        warehouse: true,
+        land: true,
+        designatedZone: true
+      },
+
+      issuance: '3 to 14 working days on the activities held',
+      issuanceDays: 14,
+      banking: 5,
+      prestige: 5,
+
+      rates: {
+        registration: 5000,
+        registrationLabel: 'Company registration, one off',
+        namePlate: 500,
+
+        // licence by type, annual
+        licences: {
+          trading1:       { label: 'Trading Licence 1',   amount: 5000,  activities: 7,  groups: 1 },
+          trading2:       { label: 'Trading Licence 2',   amount: 8500,  activities: 12, groups: 2 },
+          service:        { label: 'Service Licence',     amount: 5000,  activities: 7,  groups: 1 },
+          industrial:     { label: 'Industrial Licence',  amount: 5000,  activities: null, groups: 1 },
+          generalTrading: { label: 'General Trading Licence', amount: 15000, activities: null, groups: null }
+        },
+        extraActivity: 500,
+
+        // facility tariff
+        workstation: { rent: 35000, sqm: 9, visas: 2, insurancePerSqm: 4, namePlate: true, levy: false },
+        office:      { perSqm: 2500, minSqm: 27, sqmPerVisa: 9, insurancePerSqm: 4, namePlate: true, levy: false },
+        warehouse:   { perSqm: 550, minSqm: 313, maxSqm: 1065, sqmPerVisa: 9, insurance: 300, namePlate: false, levy: true },
+        healthLevy: 0.02,
+        depositPct: 0.10,
+
+        // visas, employment visa package, two years
+        visaOutside: 2923,
+        visaInside: 3723,
+        visaUrgentOutside: 3513,
+        visaUrgentInside: 4313,
+        partnerTitle: 250,
+        workGuaranteeInsurance: 498.50,
+        workGuaranteeInsuranceLabel: 'Work guarantee insurance, two-year permit, top band'
+      },
+
+      medicalInFee: false,
+
+      renewal: {
+        published: true,
+        note: 'Licence and lease are annual on a published tariff; registration is paid once. Every lease ' +
+              'is a three-year contract, so the three-year figure is the commitment, not a projection.'
+      },
+
+      flags: [
+        { when: 'always', tone: 'warn',
+          text: 'Every Jafza lease runs a minimum of three years. It is billed annually, but you are ' +
+                'committed for three. The year-one figure is the entry cost on that commitment.' },
+        { when: 'always', tone: 'note',
+          text: 'Jafza sells no licence-only or zero-visa package. Visas are tied to the space at one ' +
+                'visa per 9 square metres, and the smallest package is a workstation with two visas.' },
+        { when: 'always', tone: 'note',
+          text: 'Before this figure is firm we confirm with Jafza whether the visa package includes the ' +
+                'medical and Emirates ID, and whether VAT applies to the licence, registration and lease.' },
+        { when: 'goods', tone: 'good',
+          text: 'A VAT Designated Zone with Jebel Ali Port inside the fence and Al Maktoum airport next ' +
+                'door. If you move physical goods at volume, this is what the price buys.' },
+        { when: 'warehouse', tone: 'warn',
+          text: 'All Jafza warehouses are on a waiting list. Availability is confirmed at application, ' +
+                'so no start date is promised. Units run 313 to 1,065 square metres and nothing smaller; ' +
+                'utilities are metered on top and the power ceiling is fixed per unit.' },
+        { when: 'urgent', tone: 'note',
+          text: 'An urgent visa package is available at 3,513 from outside the UAE or 4,313 from inside. ' +
+                'The licence is not the slow part at Jafza; the facility is.' }
       ]
     }
   ],
@@ -1659,7 +1757,7 @@ window.AAA_PRICING = {
       { letter: 'D', title: 'Per person immigration',
         detail: 'Work permit for employees, entry permit or in-country status change, medical fitness, Emirates ID, residence issuance, health insurance and typing. Investor and partner visas need no work permit and consume no quota.' },
       { letter: 'E', title: 'And Again Advisory service fee',
-        detail: 'One flat line of AED 5,000, any activity, any structure, any visa count — carrying the same twelve months of coordination as a free zone file.' }
+        detail: 'One line, quoted on the call once the specification is pinned. Never a percentage of the statutory lines above. No hidden costs.' }
     ],
     verified: [
       { label: 'Dubai immigration establishment card, issuance', amount: '280' },
@@ -1748,12 +1846,12 @@ window.AAA_PRICING = {
             'mainland customers needs a mainland licence or a licensed distributor. Goods entering ' +
             'the mainland are an import, usually at 5 per cent duty.' },
     { tone: 'note', title: 'Authority fees are shown at cost, with no markup',
-      text: 'Section A is paid directly to the named authority and to immigration. Section B is ' +
-            'ours. They meet only at the grand total. Bundled quotes elsewhere commonly carry ' +
+      text: 'Section A is paid directly to the named authority and to immigration. Section B, ' +
+            'our fee, is quoted separately once we know your file, never as a percentage of ' +
+            'Section A. No hidden costs. Bundled quotes elsewhere commonly carry ' +
             '20 to 40 per cent on top of government fees.' }
   ]
 };
-
 </script>
 <script>
 /* =====================================================================
@@ -1852,6 +1950,10 @@ window.AAA_PRICING = {
     return rows.reduce(function (t, r) { return t + r.amount; }, 0);
   }
   function plural(n, one, many) { return n + ' ' + (n === 1 ? one : many); }
+  function joinAnd(list) {
+    if (list.length < 2) return list.join('');
+    return list.slice(0, -1).join(', ') + ' and ' + list[list.length - 1];
+  }
   function totalVisas(s) { return s.shareholderVisas + s.employeeVisas; }
   function dependentCount(s) { return (s.spouse ? 1 : 0) + s.children; }
   function needsWarehouse(s) { return s.premises === 'warehouse'; }
@@ -1869,6 +1971,10 @@ window.AAA_PRICING = {
 
     if (needsWarehouse(s) && !z.limits.warehouse) {
       return { ok: false, reason: z.short + ' has no warehouse, yard or land. Your facility rules it out.' };
+    }
+    if (z.limits.minVisas && v === 0) {
+      return { ok: false, reason: z.short + ' sells no licence-only or zero-visa package. The smallest package is a workstation with ' +
+               z.limits.minVisas + ' visas.' };
     }
     if (z.limits.maxVisas !== null && z.id !== 'ifza' && v > z.limits.maxVisas) {
       return { ok: false, reason: 'You asked for ' + v + ' visas. ' + z.short +
@@ -1927,6 +2033,10 @@ window.AAA_PRICING = {
      and it is the same work, so it is the same fee.
      ===================================================================== */
   function sectionB(s) {
+    // The page quotes no fee amount (decision of 14 Sep 2026): Section B is a
+    // statement, not a figure, so the rows are empty and every total on the
+    // page is authority cost only. The rate model stays on file below.
+    if (P.aaaFee.statement) return [];
     var f = P.aaaFee, rows = [];
 
     rows.push(line(f.freeZoneBaseLabel, f.freeZoneBaseCovers, 1, f.freeZoneBase, f.freeZoneBase));
@@ -2089,9 +2199,114 @@ window.AAA_PRICING = {
     return { rows: rows, package: 'Package includes 3 activities and 3 individual shareholders' };
   }
 
+
+  function jafzaLicence(z, s) {
+    var L = z.rates.licences;
+    if (s.direction === 'generalTrading') return { lic: L.generalTrading, extra: 0 };
+    if (s.direction === 'industrial') return { lic: L.industrial, extra: 0 };
+    if (s.direction === 'trading' || s.direction === 'ecommerce') {
+      if (s.activities > L.trading1.activities) {
+        return { lic: L.trading2, extra: Math.max(0, s.activities - L.trading2.activities) };
+      }
+      return { lic: L.trading1, extra: 0 };
+    }
+    return { lic: L.service, extra: Math.max(0, s.activities - L.service.activities) };
+  }
+
+  // Jafza prices the facility, and the facility carries the visas. The
+  // ladder is workstation (2 visas), office from 27 sqm (1 visa per 9 sqm),
+  // warehouse from 313 sqm (15 visas). Nothing smaller exists at any rung.
+  function jafzaFacility(z, s, v) {
+    var r = z.rates;
+    if (needsWarehouse(s)) {
+      var w = r.warehouse;
+      if (v > 15) return null;   // above the smallest unit's quota: built with the authority
+      return { type: 'warehouse', sqm: w.minSqm, rent: w.minSqm * w.perSqm,
+        levy: w.minSqm * w.perSqm * r.healthLevy, insurance: w.insurance, namePlate: 0, visas: 15,
+        label: 'Warehouse, ' + w.minSqm + ' square metres, at ' + money(w.perSqm) + ' per square metre',
+        detail: 'Annual, on a three-year lease. Pre-built and thermally insulated, the smallest unit Jafza builds. Carries 15 visas. Utilities metered on top' };
+    }
+    var ws = r.workstation;
+    if (v <= ws.visas) {
+      return { type: 'workstation', sqm: ws.sqm, rent: ws.rent, levy: 0,
+        insurance: ws.insurancePerSqm * ws.sqm, namePlate: r.namePlate, visas: ws.visas,
+        label: 'Workstation, up to ' + ws.sqm + ' square metres',
+        detail: 'Annual, on a three-year lease. Carries 2 visas, utilities included. The smallest package Jafza sells' };
+    }
+    var o = r.office;
+    var sqm = Math.max(o.minSqm, Math.ceil(v * o.sqmPerVisa));
+    return { type: 'office', sqm: sqm, rent: sqm * o.perSqm, levy: 0,
+      insurance: o.insurancePerSqm * sqm, namePlate: r.namePlate, visas: Math.floor(sqm / o.sqmPerVisa),
+      label: 'Office, ' + sqm + ' square metres, at ' + money(o.perSqm) + ' per square metre',
+      detail: 'Annual, on a three-year lease. The smallest office that carries ' + v + ' visas at one per 9 square metres. Utilities included' };
+  }
+
+  function jafzaSectionA(z, s) {
+    var r = z.rates, v = totalVisas(s), rows = [];
+    var fac = jafzaFacility(z, s, v);
+    if (!fac) {
+      return { quoteOnRequest: true,
+        reason: 'The smallest Jafza warehouse carries 15 visas. Above that the unit is sized with the ' +
+                'authority against your headcount, so we will not put a figure on it here.' };
+    }
+    // Two visas is the floor on the workstation package, not a choice. An
+    // office or warehouse is priced on the visas actually asked for (EST-00217).
+    var n = fac.type === 'workstation' ? Math.max(z.limits.minVisas, v) : v;
+    var lc = jafzaLicence(z, s);
+
+    rows.push(line(lc.lic.label, 'Annual. ' +
+      (lc.lic.activities ? 'Up to ' + lc.lic.activities + ' activities in ' + plural(lc.lic.groups, 'group', 'groups') : 'Issued under Dubai DET activity rules'),
+      1, lc.lic.amount, lc.lic.amount));
+    if (lc.extra > 0) {
+      rows.push(line('Additional activity beyond the licence allowance', 'Annual', lc.extra, r.extraActivity, r.extraActivity * lc.extra));
+    }
+    rows.push(line(r.registrationLabel,
+      s.shareholders > 1 ? 'Free Zone Company, two or more shareholders' : 'Free Zone Establishment, one shareholder',
+      1, r.registration, r.registration));
+
+    rows.push(line(fac.label, fac.detail, 1, fac.rent, fac.rent));
+    if (fac.levy > 0) {
+      rows.push(line('Public Health Levy, 2 per cent of the lease', 'Annual, on a warehouse lease', 1, fac.levy, fac.levy));
+    }
+    rows.push(line('Facility insurance', fac.type === 'warehouse' ? 'Annual, per unit' : 'Annual, 4 per square metre',
+      1, fac.insurance, fac.insurance));
+    if (fac.namePlate > 0) {
+      rows.push(line('Name plate', 'Workstation and office facility types', 1, fac.namePlate, fac.namePlate));
+    }
+
+    var visaUnit = s.inUAE ? r.visaInside : r.visaOutside;
+    rows.push(line('Residence visa, normal package, two years',
+      (s.inUAE ? 'Applicant already inside the UAE. ' : 'Applicant applying from outside the UAE. ') +
+      'Entry permit, arrival intimation, medical fitness, Emirates ID and stamping, run on the Dubai Trade portal',
+      n, visaUnit, visaUnit * n));
+    if (s.shareholderVisas > 0) {
+      rows.push(line('Job title, partner or investor', 'On each shareholder visa',
+        s.shareholderVisas, r.partnerTitle, r.partnerTitle * s.shareholderVisas));
+    }
+    rows.push(line(r.workGuaranteeInsuranceLabel,
+      'Held in place of the bank or cash guarantee Jafza requires on every residence visa',
+      n, r.workGuaranteeInsurance, r.workGuaranteeInsurance * n));
+
+    var recurring = lc.lic.amount + r.extraActivity * lc.extra + fac.rent + fac.levy + fac.insurance + fac.namePlate;
+    var visasYearOne = visaUnit * n + r.partnerTitle * s.shareholderVisas + r.workGuaranteeInsurance * n;
+    var facName = fac.type === 'workstation' ? 'workstation' : fac.type === 'office' ? fac.sqm + ' sqm office' : fac.sqm + ' sqm warehouse';
+
+    return {
+      rows: rows,
+      package: lc.lic.label + ', ' + facName + ' carrying ' + plural(fac.visas, 'visa', 'visas') + ', three-year lease',
+      facility: fac,
+      oneOff: r.registration,
+      recurring: recurring,
+      visasYearOne: visasYearOne,
+      deposit: fac.rent * r.depositPct,
+      pricedVisas: n,
+      requestedVisas: v
+    };
+  }
+
   var BUILDERS = {
     meydan: meydanSectionA, spc: spcSectionA, ajman: ajmanSectionA,
-    rakez: rakezSectionA, ifza: ifzaSectionA
+    rakez: rakezSectionA, ifza: ifzaSectionA, jafza: jafzaSectionA
   };
 
   /* =====================================================================
@@ -2099,8 +2314,15 @@ window.AAA_PRICING = {
      Published figures only. Where an authority publishes no renewal
      tariff we say so rather than inventing one.
      ===================================================================== */
-  function threeYear(z, s, yearOneAuthority) {
+  function threeYear(z, s, yearOneAuthority, built) {
     var v = totalVisas(s);
+
+    if (z.id === 'jafza' && built && built.recurring !== undefined) {
+      return { available: true, amount: built.oneOff + built.recurring * 3 + built.visasYearOne,
+        note: 'Registration once, then the licence and the lease three times at the published annual rate, ' +
+              'plus the year-one visas. The lease is a three-year contract, so this is the commitment. Visa ' +
+              'renewals at year three are not on the published tariff and are not in this figure.' };
+    }
 
     if (z.id === 'ajman') {
       return { available: true, amount: yearOneAuthority * 3,
@@ -2141,6 +2363,15 @@ window.AAA_PRICING = {
       var a = z.packages.byVisas[Math.min(v, 4)], b = z.packages.byVisas[Math.min(v + 1, 4)];
       return b.y1 - a.y1;
     }
+    if (z.id === 'jafza') {
+      var a0 = jafzaSectionA(z, s);
+      if (!a0 || a0.quoteOnRequest) return null;
+      var s2 = {}; for (var k in s) if (s.hasOwnProperty(k)) s2[k] = s[k];
+      s2.employeeVisas = s.employeeVisas + (a0.pricedVisas + 1 - v);
+      var b0 = jafzaSectionA(z, s2);
+      if (!b0 || b0.quoteOnRequest) return null;
+      return sum(b0.rows) - sum(a0.rows);
+    }
     if (z.id === 'rakez') {
       function best(n) {
         var f = z.packages.standard.concat(z.packages.sme).filter(function (p) {
@@ -2166,10 +2397,11 @@ window.AAA_PRICING = {
         (f.when === 'urgent' && s.urgent) ||
         (f.when === 'generalTrading' && s.direction === 'generalTrading') ||
         (f.when === 'visas4plus' && v >= 4) ||
+        (f.when === 'warehouse' && needsWarehouse(s)) ||
         (f.when === 'saver1' && extra && extra.chosen && extra.chosen.id === 'saver1');
       if (show) out.push(f);
     });
-    if (needsWarehouse(s) && z.limits.warehouse) {
+    if (needsWarehouse(s) && z.limits.warehouse && z.id !== 'jafza') {
       out.push({ tone: 'note',
         text: 'The figure above is the licence and visa package. Warehouse, yard or land is leased ' +
               'on the facility and quoted separately once we have your square metres.' });
@@ -2178,7 +2410,34 @@ window.AAA_PRICING = {
       out.push({ tone: 'warn',
         text: 'What SPC offers is limited storage from ' + money(z.rates.storagePerSqm) +
               ' per square metre a year, not industrial infrastructure. For a real warehouse, ' +
-              'yard or production floor, RAKEZ and Ajman are the two that carry it.' });
+              'yard or production floor, Jafza, RAKEZ and Ajman are the three that carry it.' });
+    }
+    if (z.id === 'jafza' && extra && extra.facility) {
+      if (extra.facility.type === 'warehouse') {
+        out.push({ tone: 'note',
+          text: 'This figure includes the warehouse itself, because Jafza publishes its rent. The other zones on ' +
+                'this page show licence and visas only, with the warehouse quoted separately, so compare year one ' +
+                'with that in mind.' });
+      }
+      if (extra.pricedVisas > extra.requestedVisas) {
+        out.push({ tone: 'warn',
+          text: 'You asked for ' + plural(extra.requestedVisas, 'visa', 'visas') + '. Jafza\u2019s smallest package is a ' +
+                'workstation with two, so two are priced here. Jafza sells nothing smaller.' });
+      }
+      if (extra.facility.type === 'office') {
+        out.push({ tone: 'note',
+          text: 'The workstation carries two visas. For ' + plural(extra.requestedVisas, 'visa', 'visas') + ' Jafza requires an ' +
+                'office, priced here at the smallest size that carries them, ' + extra.facility.sqm + ' square metres. ' +
+                'Jafza builds no office smaller than 27 square metres.' });
+      }
+      out.push({ tone: 'note',
+        text: 'A refundable security deposit of ' + money(extra.deposit) + ', 10 per cent of the lease, is paid at signing. ' +
+              'It is a memo line and is not in the total.' });
+      if (s.direction === 'industrial' && extra.facility.type !== 'warehouse') {
+        out.push({ tone: 'warn',
+          text: 'Jafza can insist on a minimum facility for industrial activities. A workstation or office may not be ' +
+                'accepted for what you plan to do; we confirm before anything is filed.' });
+      }
     }
     if (extra && extra.designated) {
       out.push({ tone: 'good',
@@ -2220,7 +2479,7 @@ window.AAA_PRICING = {
       sectionB: bRows,
       sectionBTotal: bTotal,
       total: aTotal + bTotal,
-      threeYear: threeYear(z, s, aTotal),
+      threeYear: threeYear(z, s, aTotal, built),
       nextVisa: nextVisaCost(z, s),
       flags: zoneFlags(z, s, built)
     };
@@ -2373,7 +2632,7 @@ window.AAA_PRICING = {
             var z = zoneById(id);
             return { v: id, l: z.short + ' — ' + z.emirate + (z.subLocation ? ', ' + z.subLocation : '') };
           });
-          if (e.zones.length > 1) list.push({ v: 'compare', l: 'Compare both, side by side' });
+          if (e.zones.length > 1) list.push({ v: 'compare', l: e.zones.length === 2 ? 'Compare both, side by side' : 'Compare all ' + e.zones.length + ', side by side' });
           if (e.mainland) list.push({ v: 'mainland', l: e.name + ' Mainland' });
           html += '<div class="est-subchoice"><p class="est-group-h">Which route in ' + esc(e.name) + '?</p>' +
             opts('zoneChoice', list) + '</div>';
@@ -2548,8 +2807,6 @@ window.AAA_PRICING = {
     if (z.limits.designatedZone === true) badges.push('<span class="est-badge est-badge-dz">VAT Designated Zone</span>');
     if (z.renewal.flat) badges.push('<span class="est-badge est-badge-warn">Renews flat</span>');
 
-    var aPct = Math.round((r.sectionATotal / r.total) * 100);
-
     var itemised =
       '<div class="est-sec"><p class="est-sec-h">Section A · Authority cost' +
       '<span>Paid directly to ' + esc(z.name) + ' and to immigration. Shown at cost, no markup.</span></p>' +
@@ -2557,12 +2814,9 @@ window.AAA_PRICING = {
       '<tr class="est-tot"><td colspan="2">Total, Section A</td><td class="est-a">' + money(r.sectionATotal) + '</td></tr>' +
       '</tbody></table></div>' +
       '<div class="est-sec"><p class="est-sec-h">Section B · And Again Advisory' +
-      '<span>Our fee. ' + esc(P.aaaFee.vatNote) + '</span></p>' +
-      '<table class="est-table"><tbody>' + renderRows(r.sectionB) +
-      '<tr class="est-tot"><td colspan="2">Total, Section B</td><td class="est-a">' + money(r.sectionBTotal) + '</td></tr>' +
-      '</tbody></table></div>' +
-      '<p class="est-grand">Year one total &nbsp;<b>' + money(r.sectionATotal) + '</b> + <b>' +
-      money(r.sectionBTotal) + '</b> = <b class="est-grand-v">AED ' + money(r.total) + '</b></p>' +
+      '<span>Our fee. ' + esc(P.aaaFee.statement) + ' ' + esc(P.aaaFee.vatNote) + '</span></p></div>' +
+      '<p class="est-grand">Authority fees, year one &nbsp;<b class="est-grand-v">AED ' + money(r.sectionATotal) + '</b>' +
+      ' &nbsp;·&nbsp; our fee quoted separately</p>' +
       (r.threeYear.available
         ? '<div class="est-3y est-3y-on"><span class="est-3y-k">Authority cost over three years</span>' +
           '<span class="est-3y-v">' + money(r.threeYear.amount) + '</span>' +
@@ -2574,15 +2828,13 @@ window.AAA_PRICING = {
 
     return '<article class="est-zone">' + head +
       '<div class="est-z-total"><span class="est-z-total-v">' + money(r.total) + '</span>' +
-      '<span class="est-z-total-k">AED, year one, all in</span></div></div>' +
+      '<span class="est-z-total-k">AED, year one, authority fees only</span></div></div>' +
       '<div class="est-badges">' + badges.join('') + '</div>' +
       '<p class="est-z-pos">' + esc(z.positioning) + '</p>' +
-      '<div class="est-split"><div class="est-split-bar">' +
-        '<span class="est-split-a" style="width:' + aPct + '%"></span>' +
-        '<span class="est-split-b" style="width:' + (100 - aPct) + '%"></span></div>' +
+      '<div class="est-split">' +
         '<div class="est-split-legend">' +
           '<span><i class="dot dot-a"></i>A · Authority, at cost <b>' + money(r.sectionATotal) + '</b></span>' +
-          '<span><i class="dot dot-b"></i>B · Our fee <b>' + money(r.sectionBTotal) + '</b></span>' +
+          '<span><i class="dot dot-b"></i>B · Our fee <b>' + esc(P.aaaFee.statementShort) + '</b></span>' +
         '</div></div>' +
       '<dl class="est-facts">' +
         '<div><dt>Issuance</dt><dd>' + esc(z.issuance) + '</dd></div>' +
@@ -2599,8 +2851,8 @@ window.AAA_PRICING = {
     return '<article class="est-mainland">' +
       '<div class="est-z-head"><div class="est-z-id"><h3>' + esc(m.name) + '</h3>' +
       '<p class="est-z-where">' + esc(m.authority) + '</p></div>' +
-      '<div class="est-z-total"><span class="est-z-total-v">' + money(m.aaaFee) + '</span>' +
-      '<span class="est-z-total-k">AED, our fee — flat, any structure</span></div></div>' +
+      '<div class="est-z-total"><span class="est-z-total-v est-z-total-txt">One fixed number</span>' +
+      '<span class="est-z-total-k">quoted against a pinned specification</span></div></div>' +
       '<p class="est-z-pos">' + esc(m.why) + '</p>' +
       '<div class="est-blocks">' + m.blocks.map(function (b) {
         return '<div class="est-block"><span class="est-block-l">' + b.letter + '</span>' +
@@ -2679,7 +2931,7 @@ window.AAA_PRICING = {
       '<p class="est-gate-eyebrow">One step left</p>' +
       '<h3>' + (firstName() ? esc(firstName()) + ', where should we send it?' : 'Where should we send it?') + '</h3>' +
       '<p class="est-gate-sub">The totals above are yours to keep. Add your email and phone and we will ' +
-      'unlock the full itemisation — every authority line, our fee broken out, the three-year view and ' +
+      'unlock the full itemisation — every authority line, the three-year view and ' +
       'a copy you can print. We will also send it over so you have it in writing.</p>' +
 
       '<div class="est-gate-grid">' +
@@ -2776,7 +3028,7 @@ window.AAA_PRICING = {
     var e = emirateById(spec.emirate);
     if (!e) return '—';
     if (spec.zoneChoice === 'mainland') return e.name + ' Mainland';
-    if (spec.zoneChoice === 'compare') return e.name + ', comparing ' + e.zones.map(function (z) { return zoneById(z).short; }).join(' and ');
+    if (spec.zoneChoice === 'compare') return e.name + ', comparing ' + joinAnd(e.zones.map(function (z) { return zoneById(z).short; }));
     var z = zoneById(spec.zoneChoice || e.zones[0]);
     return z ? z.name + ', ' + e.name : e.name;
   }
@@ -2797,7 +3049,7 @@ window.AAA_PRICING = {
     specSummary().forEach(function (p) { lines.push('• ' + p); });
     var figs = figuresLines();
     if (figs.length) {
-      lines.push('', 'What the estimator returned, year one all in:');
+      lines.push('', 'What the estimator returned, authority fees, year one:');
       figs.forEach(function (f) { lines.push('• ' + f); });
     }
     lines.push('', 'Please send me the formal estimate.', '(via estimator · ' + ATTR.label + ')');
@@ -2825,7 +3077,8 @@ window.AAA_PRICING = {
           threeYear: r.threeYear.available
             ? 'AED ' + money(r.threeYear.amount) + '. ' + r.threeYear.note
             : '',
-          aRows: rows(r.sectionA), bRows: rows(r.sectionB)
+          aRows: rows(r.sectionA), bRows: rows(r.sectionB),
+          feeStatement: P.aaaFee.statement || ''
         };
       });
     return {
@@ -3101,7 +3354,6 @@ window.AAA_PRICING = {
     steps: STEPS, go: go, chosenZones: chosenZones
   };
 })();
-
 </script>
 <script>
 (function(){
