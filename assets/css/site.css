@@ -456,3 +456,39 @@ nav .btn{min-height:42px;padding:0 var(--s-4)}
 .wa{position:fixed;right:20px;bottom:20px;width:54px;height:54px;border-radius:50%;background:var(--wa);display:grid;place-items:center;z-index:60;box-shadow:0 4px 14px rgba(0,0,0,.18)}
 .wa svg{width:28px;height:28px;fill:#fff}
 @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} }
+
+
+/* ---------------------------------------------------------------------
+   9. ANCHOR OFFSET + PHONE REFINEMENT
+   --------------------------------------------------------------------- */
+/* the header is sticky: in-page links must not land under it */
+section[id]{scroll-margin-top:calc(var(--header-h) + 8px)}
+
+@media (max-width:719px){
+  /* vertical rhythm: sections were spending most of a screen on air */
+  :root{ --sec:56px }
+  h2{font-size:clamp(1.625rem,6.2vw,1.875rem);line-height:1.15}
+  .sec-head{gap:var(--s-3);margin-bottom:var(--s-6)}
+  .sec-head .label{margin-bottom:var(--s-4)}
+  .sec-head p{font-size:var(--fs-base);line-height:1.5;max-width:none}
+
+  /* services suite: number and tag share one eyebrow line so the service
+     name takes the full column and stops wrapping mid-phrase */
+  .svc-head{display:grid;grid-template-columns:20px 1fr auto;column-gap:10px;align-items:start;padding:16px 0}
+  .svc-head .chip{width:auto;font-size:11px;line-height:1.45;letter-spacing:.1em}
+  .svc-head .t{display:flex;flex-direction:column-reverse;align-items:flex-start;min-width:0}
+  .svc-head .t .tag{margin:0 0 5px;font-size:11px;letter-spacing:.12em}
+  .svc-head .t h3{font-size:var(--fs-base);line-height:1.3}
+  .svc-head .sign{align-self:center;width:38px;height:38px;font-size:20px}
+  .svc-body{padding:0 0 var(--s-5) 30px}
+  .svc-body p{margin-bottom:var(--s-3)}
+
+  /* callout under the suite: one full-width button per line */
+  .svcta{margin-top:var(--s-6);padding:var(--s-5) 0;gap:var(--s-4)}
+  .svcta .b{display:grid;gap:10px}
+  .svcta .b .btn{width:100%}
+
+  /* keep the float clear of the last row's control */
+  .wa{width:50px;height:50px;right:16px;bottom:16px}
+  .wa svg{width:25px;height:25px}
+}
